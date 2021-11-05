@@ -20,12 +20,14 @@ namespace Done2X.Data
         public async Task<IEnumerable<TaskItem>> GetList()
         {
             var list = await _db.GetAllAsync<TaskItem>();
-            return list;
+            return list.OrderByDescending(x=>x.StatusUpdatedDate);
         }
 
         public async Task<TaskItem> Add(TaskItem taskItem)
         {
+
             taskItem.CreatedDate = DateTime.Now;
+            taskItem.StatusUpdatedDate = taskItem.CreatedDate;
             var id = await _db.InsertAsync(taskItem);
             taskItem.Id = Convert.ToInt32(id);
             return taskItem;
@@ -34,6 +36,15 @@ namespace Done2X.Data
         public async Task<TaskItem> Update(TaskItem taskItem)
         {
             taskItem.UpdatedDate = DateTime.Now;
+
+            //Not sure I like this, can we do this with a trigger
+            //We are trying to see if the status was changed
+            //if so then we change the date. trigger can get ugly
+            var baseline = await this.Get(taskItem.Id);
+            if (baseline.TaskItemStatusId != taskItem.TaskItemStatusId)
+            {
+                taskItem.StatusUpdatedDate = taskItem.UpdatedDate;
+            }
             await _db.UpdateAsync(taskItem);
             return taskItem;
         }
@@ -46,7 +57,7 @@ namespace Done2X.Data
 
         public async Task<TaskItem> Get(int taskItemId)
         {
-           return await _db.GetAsync<TaskItem>(taskItemId);
+            return await _db.GetAsync<TaskItem>(taskItemId);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Done2X.Domain
         public string Description { get; set; }
         public int TaskItemStatusId { get; set; }
         public int Priority { get; set; }
+        public DateTime? StatusUpdatedDate { get; set; }
     }
 }

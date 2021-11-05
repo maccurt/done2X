@@ -6,4 +6,7 @@ export class TaskItem {
     description?: string;
     taskItemStatusId: number = TaskItemStatus.backLog;
     priority: number = 3;
+    updatedDate!: Date;
+    createdDate!: Date;
+    statusUpdatedDate!: Date;
 }

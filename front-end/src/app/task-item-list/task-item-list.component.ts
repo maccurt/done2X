@@ -43,38 +43,74 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   actionEvent(event: TypeClickEvent<TaskItem>): void {
     switch (event.action) {
       case TypeAction.edit:
-        this.showModal(event.item)
+        this.editTaskItem(event.item)
         break;
       case TypeAction.delete:
         this.deleteTaskItem(event.item);
         break;
       case TypeAction.moveStatus:
-        this.moveStatus(event.item, event.status)
+        this.updateStatus(event.item, event.status)
         break;
     }
   }
 
-  moveStatus(taskItem: TaskItem, moveToStaus: TaskItemStatus): void {
-
+  updateStatus(taskItem: TaskItem, moveToStaus: TaskItemStatus): void {
     taskItem.taskItemStatusId = moveToStaus;
     this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
-      
-      //TODO move this code to delete to a common function, it is repeated
-      let index = this.taskItemList.indexOf(taskItem);
-      if (index > -1) {
-        this.taskItemList.splice(index, 1);
-        this.filterList();
-      }
 
-      switch (moveToStaus) {
-        case TaskItemStatus.inProgress:
-          this.taskinProgress.unshift(updatedTask);
-          break;
-        case TaskItemStatus.completed:
-          this.taskinCompleted.unshift(updatedTask);
-          break;
-      }
+      this.removeTaskItemFromList(updatedTask);
+      this.moveTaskToStatusLane(updatedTask, moveToStaus);
     });
+  }
+
+  removeTaskItemFromList(taskItem: TaskItem) {
+    let index = this.taskItemList.indexOf(taskItem);
+    if (index > -1) {
+      this.taskItemList.splice(index, 1);
+    }
+  }
+
+  
+  removeTaskFromStatusLane(taskItem: TaskItem, removeFromStatus: TaskItemStatus): void {
+
+    let list: TaskItem[] = [];
+
+    switch (removeFromStatus) {
+      case TaskItemStatus.inProgress:
+        list = this.taskinProgress
+        break;
+      case TaskItemStatus.completed:
+        list = this.taskinProgress;
+        break;
+    }
+
+    if (list.length > -1) {
+      let index = list.indexOf(taskItem);
+      if (index > -1) {
+        list.splice(index, 1);
+      }
+    }
+  }
+
+  moveTaskToStatusLane(taskItem: TaskItem, moveToStaus: TaskItemStatus, isNew = false): void {
+    switch (moveToStaus) {
+      case TaskItemStatus.inProgress:
+        if (isNew) {
+          this.taskinProgress.unshift(taskItem);
+        }
+        else if (this.taskinProgress.indexOf(taskItem) === -1) {
+          this.taskinProgress.unshift(taskItem);
+        }
+        break;
+      case TaskItemStatus.completed:
+        if (isNew) {
+          this.taskinCompleted.unshift(taskItem);
+        }
+        else if (this.taskinCompleted.indexOf(taskItem) === -1) {
+          this.taskinCompleted.unshift(taskItem);
+        }
+        break;
+    }
   }
 
   deleteTaskItem(taskItem: TaskItem) {
@@ -118,11 +154,12 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   addTask(status: TaskItemStatus): void {
     let taskItem = new TaskItem();
     taskItem.taskItemStatusId = status;
-    this.showModal(taskItem);
+    this.editTaskItem(taskItem);
   }
 
-  showModal(taskItem: TaskItem): void {
+  editTaskItem(taskItem: TaskItem): void {
 
+    const previousStatus = taskItem.taskItemStatusId
     const dialogRef = this.dialog.open(TaskItemModalComponent, {
       data: taskItem,
       disableClose: true
@@ -133,22 +170,21 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
       //Add Task Item
       if (taskItem && !taskItem.id) {
         this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((newTask) => {
-          this.taskItemList.push(newTask);
-          this.filterList();
+          this.moveTaskToStatusLane(newTask, newTask.taskItemStatusId, true);
         });
       };
 
       //Update Task Item
       if (taskItem && taskItem.id) {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
-          this.filterList();
+          if (previousStatus !== updatedTask.taskItemStatusId) {
+            this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId)
+            this.moveTaskToStatusLane(updatedTask, updatedTask.taskItemStatusId);
+          }
         });
       };
-
     })
   }
-
-
 
   ngOnDestroy(): void {
     this.getTaskItemListSub$?.unsubscribe();

@@ -21,7 +21,6 @@ export class CodeService {
   }
 
   public GetPriority(): Observable<Code[]> {
-
     const priorityList: Code[] = [];
     priorityList.push({ id: 1, name: 'High' });
     priorityList.push({ id: 2, name: 'Medium' });

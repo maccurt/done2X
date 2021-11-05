@@ -10,3 +10,6 @@ back-end/Done2X.Domain/obj/
 
 back-end/Done2X.Data/bin/
 back-end/Done2X.Domain/bin/
+
+
+front-end/cypress-test/node_modules

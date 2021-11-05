@@ -1,0 +1,11 @@
+{
+  "name": "done2x-cypress",
+  "dependencies": {
+    "cypress": "^8.7.0"
+  },
+  "scripts": {
+    "open": "cypress open",
+    "test": "cypress open --config baseUrl=https://app.profitdreamer.com/",
+    "prod": "cypress open --config baseUrl=https://profitdreamer.com/"
+  }
+}
