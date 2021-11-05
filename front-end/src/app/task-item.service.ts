@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
 import { TaskItem } from './task-item/task-item.type';
 
 export enum TaskItemStatus {
+  unknown = 0,
   backLog = 1,
   inProgress = 2,
   completed = 3
@@ -33,14 +35,15 @@ export class TaskItemService {
   }
 
   getTaskItemList = (): Observable<TaskItem[]> => {
+
     return this.httpClient
       .get<TaskItem[]>(environment.API_URL + 'taskItem/list');
   }
 
   filterTaskItemListByStatus = (taskItemList: TaskItem[], status: TaskItemStatus): TaskItem[] => {
 
-    return taskItemList.filter((t) => {     
-      return t.taskItemStatusId == status;      
+    return taskItemList.filter((t) => {
+      return t.taskItemStatusId == status;
     })
 
   }

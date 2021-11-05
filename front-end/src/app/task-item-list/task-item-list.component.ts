@@ -48,7 +48,33 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
       case TypeAction.delete:
         this.deleteTaskItem(event.item);
         break;
+      case TypeAction.moveStatus:
+        this.moveStatus(event.item, event.status)
+        break;
     }
+  }
+
+  moveStatus(taskItem: TaskItem, moveToStaus: TaskItemStatus): void {
+
+    taskItem.taskItemStatusId = moveToStaus;
+    this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
+      
+      //TODO move this code to delete to a common function, it is repeated
+      let index = this.taskItemList.indexOf(taskItem);
+      if (index > -1) {
+        this.taskItemList.splice(index, 1);
+        this.filterList();
+      }
+
+      switch (moveToStaus) {
+        case TaskItemStatus.inProgress:
+          this.taskinProgress.unshift(updatedTask);
+          break;
+        case TaskItemStatus.completed:
+          this.taskinCompleted.unshift(updatedTask);
+          break;
+      }
+    });
   }
 
   deleteTaskItem(taskItem: TaskItem) {
@@ -81,15 +107,15 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     })
   }
 
-  addTaskToBacklog():void {
+  addTaskToBacklog(): void {
     this.addTask(TaskItemStatus.backLog);
   }
 
-  addTaskToInProgress():void {
+  addTaskToInProgress(): void {
     this.addTask(TaskItemStatus.inProgress);
   }
-  
-  addTask(status:TaskItemStatus): void {
+
+  addTask(status: TaskItemStatus): void {
     let taskItem = new TaskItem();
     taskItem.taskItemStatusId = status;
     this.showModal(taskItem);
@@ -121,6 +147,8 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
 
     })
   }
+
+
 
   ngOnDestroy(): void {
     this.getTaskItemListSub$?.unsubscribe();

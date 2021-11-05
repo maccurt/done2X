@@ -22,11 +22,11 @@ export class CodeService {
 
   public GetPriority(): Observable<Code[]> {
 
-    const priorityList:Code[] = [];
-    priorityList.push({id:1, name:'High'});
-    priorityList.push({id:2, name:'Medium'});
-    priorityList.push({id:3, name:'Low'});
+    const priorityList: Code[] = [];
+    priorityList.push({ id: 1, name: 'High' });
+    priorityList.push({ id: 2, name: 'Medium' });
+    priorityList.push({ id: 3, name: 'Low' });
     return of(priorityList)
-    
+
   }
 }
