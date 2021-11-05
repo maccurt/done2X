@@ -1,0 +1,10 @@
+<div  class="card task-item status-{{taskItem.taskItemStatusId}}  ">
+    <div class="card-body">
+        <a class="task-item-name action-link " (click)="taskItemClick()" >{{taskItem.name}}</a>
+        <a style="float:right;" class="delete action-link" (click)="delete()" >delete</a>
+        <!-- <h5 class="card-title">{{taskItem.name}}</h5> -->
+        <!-- <p class="card-text">
+            {{taskItem.name}}
+        </p> -->
+    </div>
+</div>

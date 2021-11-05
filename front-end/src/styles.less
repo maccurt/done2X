@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-dialog-actions {
+  button {
+    margin-left: 20px;
+    float: right;
+  }
+}
+
+.action-link {
+  text-decoration: none;
+  cursor:default;
+}
+
+.action-link:hover {
+  text-decoration: underline;
+}
+
+.input-error {
+  visibility: hidden;
+}
+
+.has-error {
+  input {
+    background-color: #ffe6e6;
+    border: 1px solid red;
+  }
+  .input-error {
+    visibility: visible;
+  }
+}
