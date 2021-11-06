@@ -62,14 +62,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
       this.removeTaskFromStatusLane(taskItem,previousStatus);
       this.moveTaskToStatusLane(updatedTask, moveToStaus);
     });
-  }
-
-  // removeTaskItemFromList(taskItem: TaskItem) {
-  //   let index = this.taskItemList.indexOf(taskItem);
-  //   if (index > -1) {
-  //     this.taskItemList.splice(index, 1);
-  //   }
-  // }
+  }  
 
   removeTaskFromStatusLane(taskItem: TaskItem, removeFromStatus: TaskItemStatus): void {
 
@@ -189,7 +182,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
       if (taskItem && taskItem.id) {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           if (previousStatus !== updatedTask.taskItemStatusId) {
-            this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId)
+            this.removeTaskFromStatusLane(taskItem, previousStatus)
             this.moveTaskToStatusLane(updatedTask, updatedTask.taskItemStatusId);
           }
         });

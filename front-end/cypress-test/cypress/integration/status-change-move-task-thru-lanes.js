@@ -44,7 +44,9 @@ describe('status change moves task thru lanes', () => {
                     },
                     taskItem
                 );
-                cy.get('#backlog-lane').find('#task-item-101').find('.move-to-progress').click();
+                cy.get('#backlog-lane').find('#task-item-101').find('.task-item-name').click();
+                cy.get('#task-item-modal').find('#task-item-status').select('In Progress');
+                cy.get('#task-item-modal').find('#save').click();                    
             })            
         });        
         
@@ -89,5 +91,4 @@ describe('status change moves task thru lanes', () => {
             cy.get('#completed-lane').find('#task-item-101').should('exist');
         });        
     });    
-
 });

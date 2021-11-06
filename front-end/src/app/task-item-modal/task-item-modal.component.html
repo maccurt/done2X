@@ -14,7 +14,7 @@
 
             <div class="mb-3 col">
                 <label for="priority" class="form-label">Priority</label>
-                <select formControlName="priority" class="form-control">
+                <select id="priority" formControlName="priority" class="form-control">
                     <option *ngFor='let p of priorityList' [ngValue]='p'>{{p.name}}</option>
                 </select>
             </div>
