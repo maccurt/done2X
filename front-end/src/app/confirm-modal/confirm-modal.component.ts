@@ -14,7 +14,7 @@ export class Confirm {
   templateUrl: './confirm-modal.component.html',
   styleUrls: ['./confirm-modal.component.less']
 })
-export class ConfirmModalComponent implements OnInit {
+export class ConfirmModalComponent {
 
   confirm: Confirm;
 
@@ -24,8 +24,6 @@ export class ConfirmModalComponent implements OnInit {
     this.confirm = data;
   }
 
-  ngOnInit() {
-  }
 
   no = () => {
     this.dialogRef.close(false);

@@ -21,7 +21,7 @@ export class TypeClickEvent<Type> {
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.less']
 })
-export class TaskItemComponent implements OnInit {
+export class TaskItemComponent {
 
   @Input()
   taskItem!: TaskItem;
@@ -42,14 +42,10 @@ export class TaskItemComponent implements OnInit {
   }
 
   public moveToCompleted(): void {
-    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem,TaskItemStatus.completed));
+    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.completed));
   }
 
   public moveToInProgress(): void {
-    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem,TaskItemStatus.inProgress));
+    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.inProgress));
   }
-
-  ngOnInit(): void {
-  }
-
 }

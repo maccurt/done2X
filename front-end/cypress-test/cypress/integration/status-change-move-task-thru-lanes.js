@@ -1,7 +1,6 @@
 describe('status change moves task thru lanes', () => {
 
     before(() => {
-
         cy.intercept(
             {
                 method: 'GET',
@@ -10,11 +9,9 @@ describe('status change moves task thru lanes', () => {
             []
         );
         cy.visit('/task-list');
-
     });
 
     it('Add New Task To Backlog', () => {
-
         cy.fixture('taskItem').then((taskItem) => {
             cy.intercept(
                 {
@@ -23,7 +20,6 @@ describe('status change moves task thru lanes', () => {
                 },
                 taskItem
             );
-
             cy.get('#add-task-to-backlog').click();
             cy.get('#task-item-modal').find('#name').type(taskItem.name);
             cy.get('#task-item-modal').find('#description').type(taskItem.description);
