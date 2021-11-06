@@ -55,27 +55,30 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   }
 
   updateStatus(taskItem: TaskItem, moveToStaus: TaskItemStatus): void {
+    const previousStatus = taskItem.taskItemStatusId;
     taskItem.taskItemStatusId = moveToStaus;
     this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
 
-      this.removeTaskItemFromList(updatedTask);
+      this.removeTaskFromStatusLane(taskItem,previousStatus);
       this.moveTaskToStatusLane(updatedTask, moveToStaus);
     });
   }
 
-  removeTaskItemFromList(taskItem: TaskItem) {
-    let index = this.taskItemList.indexOf(taskItem);
-    if (index > -1) {
-      this.taskItemList.splice(index, 1);
-    }
-  }
+  // removeTaskItemFromList(taskItem: TaskItem) {
+  //   let index = this.taskItemList.indexOf(taskItem);
+  //   if (index > -1) {
+  //     this.taskItemList.splice(index, 1);
+  //   }
+  // }
 
-  
   removeTaskFromStatusLane(taskItem: TaskItem, removeFromStatus: TaskItemStatus): void {
 
     let list: TaskItem[] = [];
 
     switch (removeFromStatus) {
+      case TaskItemStatus.backLog:
+        list = this.taskInBacklog
+        break;
       case TaskItemStatus.inProgress:
         list = this.taskinProgress
         break;
@@ -94,6 +97,14 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
 
   moveTaskToStatusLane(taskItem: TaskItem, moveToStaus: TaskItemStatus, isNew = false): void {
     switch (moveToStaus) {
+      case TaskItemStatus.backLog:
+        if (isNew) {
+          this.taskInBacklog.unshift(taskItem);
+        }
+        else if (this.taskInBacklog.indexOf(taskItem) === -1) {
+          this.taskInBacklog.unshift(taskItem);
+        }
+        break;
       case TaskItemStatus.inProgress:
         if (isNew) {
           this.taskinProgress.unshift(taskItem);

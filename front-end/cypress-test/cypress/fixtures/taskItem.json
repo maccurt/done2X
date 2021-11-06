@@ -1,0 +1,10 @@
+{
+    "id": 101,
+    "name": "Cypress from the fixture taskitem.json",
+    "description": "description from the fixture",
+    "taskItemStatusId": 1,
+    "priority": 1,
+    "statusUpdatedDate": "2021-11-05T17:28:16.1914283-05:00",
+    "createdDate": "2021-11-05T17:28:16.1914283-05:00",
+    "updatedDate": null
+}

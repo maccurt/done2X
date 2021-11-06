@@ -1,22 +1,17 @@
-<div class="card task-item status-{{taskItem.taskItemStatusId}}  ">
+<div id="task-item-{{taskItem.id}}" class="card task-item status-{{taskItem.taskItemStatusId}}  ">
     <div class="card-body">
-        <a class="task-item-name action-link " (click)="taskItemClick()">{{taskItem.name}}</a>
+        <a class="task-item-name action-link" (click)="taskItemClick()">{{taskItem.name}}</a>
         <br>
         <div class="action-link-container">
-
+            
             <div *ngIf="taskItem.taskItemStatusId === 1">
                 <a class="delete action-link" title="delete task" (click)="delete()">delete</a>
-                <a class="delete action-link" title="move to in progress" (click)="moveToInProgress()">move to in progress</a>
+                <a class="move-to-progress action-link" title="move to in progress" (click)="moveToInProgress()">move to in progress</a>
             </div>
 
-            <a *ngIf="taskItem.taskItemStatusId === 2" class="delete action-link" title="move task to completed"
+            <a *ngIf="taskItem.taskItemStatusId === 2" class="move-to-completed action-link" title="move task to completed"
                 (click)="moveToCompleted()">move to completed</a>
-
-
         </div>
-        <!-- <h5 class="card-title">{{taskItem.name}}</h5> -->
-        <!-- <p class="card-text">
-            {{taskItem.name}}
-        </p> -->
+        
     </div>
 </div>

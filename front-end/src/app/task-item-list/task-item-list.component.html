@@ -2,10 +2,10 @@
 
     <div class="row">
 
-        <div class="col-xl-4">
+        <div id="backlog-lane" class="col-xl-4">
             <div class="header">
                 <span class='title'>Backlog</span>
-                <button type="button" class="btn btn-success header-button" (click)="addTaskToBacklog()">Add Task To Backlog</button>
+                <button id='add-task-to-backlog' type="button" class="btn btn-success header-button" (click)="addTaskToBacklog()">Add Task To Backlog</button>
             </div>
             <app-task-item *ngFor="let taskItem of taskInBacklog" (actionEvent)="actionEvent($event)"
                 [taskItem]="taskItem"></app-task-item>
@@ -14,14 +14,14 @@
         <div id='in-progress-lane' class="col-xl-4">
             <div class='header'>
                 <span class='title'>In Progress</span>
-                <button type="button" class="btn btn-primary header-button" (click)="addTaskToInProgress()">Add Task To In Progress</button>
+                <button id='add-task-to-progress' type="button" class="btn btn-primary header-button" (click)="addTaskToInProgress()">Add Task To In Progress</button>
             </div>
 
             <app-task-item *ngFor="let taskItem of taskinProgress" (actionEvent)="actionEvent($event)"
                 [taskItem]="taskItem"></app-task-item>
         </div>
 
-        <div class="col-xl-4">
+        <div id="completed-lane" class="col-xl-4">
             <div class="header">
                 <span class='title'>Completed</span>
             </div>
