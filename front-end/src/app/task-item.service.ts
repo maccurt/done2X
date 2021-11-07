@@ -34,10 +34,10 @@ export class TaskItemService {
       .delete<Boolean>(environment.API_URL + `taskItem/${taskItemId}`);
   }
 
-  getTaskItemList = (): Observable<TaskItem[]> => {
+  getTaskItemList = (goalId: number): Observable<TaskItem[]> => {
 
     return this.httpClient
-      .get<TaskItem[]>(environment.API_URL + 'taskItem/list');
+      .get<TaskItem[]>(`${environment.API_URL}taskItem/goal/${goalId}`);
   }
 
   filterTaskItemListByStatus = (taskItemList: TaskItem[], status: TaskItemStatus): TaskItem[] => {

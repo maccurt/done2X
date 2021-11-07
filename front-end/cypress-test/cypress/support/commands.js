@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add('interceptGoalList', () => {
+    cy.fixture('goalList').then((goalList) => {
+        cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/goal', }, goalList);
+    });
+})
+
+Cypress.Commands.add('interceptTaskItemList', () => {
+    cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/taskItem/goal/*', }, []);
+})
+

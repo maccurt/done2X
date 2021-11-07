@@ -1,11 +1,27 @@
+
 <div class="container">
+    <form [formGroup]="formGroup">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label for="goal" class="col-form-label form-label ">Goal</label>
+            </div>
+            <div class="col-3">
+                <select id="goal" formControlName='goal' class="form-control">
+                    <option *ngFor="let g of goalList" [ngValue]="g">{{g.name}}</option>
+                </select>            </div>
+
+        </div>
+    </form>
+
+    <hr>
 
     <div class="row">
 
         <div id="backlog-lane" class="col-xl-4">
             <div class="header">
                 <span class='title'>Backlog</span>
-                <button id='add-task-to-backlog' type="button" class="btn btn-success header-button" (click)="addTaskToBacklog()">Add Task To Backlog</button>
+                <button id='add-task-to-backlog' type="button" class="btn btn-success header-button"
+                    (click)="addTaskToBacklog()">Add Task To Backlog</button>
             </div>
             <app-task-item *ngFor="let taskItem of taskInBacklog" (actionEvent)="actionEvent($event)"
                 [taskItem]="taskItem"></app-task-item>
@@ -14,7 +30,8 @@
         <div id='in-progress-lane' class="col-xl-4">
             <div class='header'>
                 <span class='title'>In Progress</span>
-                <button id='add-task-to-progress' type="button" class="btn btn-primary header-button" (click)="addTaskToInProgress()">Add Task To In Progress</button>
+                <button id='add-task-to-progress' type="button" class="btn btn-primary header-button"
+                    (click)="addTaskToInProgress()">Add Task To In Progress</button>
             </div>
 
             <app-task-item *ngFor="let taskItem of taskinProgress" (actionEvent)="actionEvent($event)"

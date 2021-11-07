@@ -1,7 +1,11 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Confirm, ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { Goal, GoalService } from '../goal.service';
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
 import { TypeAction, TypeClickEvent } from '../task-item/task-item.component';
@@ -23,21 +27,44 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   taskinProgress: TaskItem[] = [];
   taskinCompleted: TaskItem[] = [];
   taskInBacklog: TaskItem[] = [];
+  goalList: Goal[] = [];
+  goalControl: FormControl = new FormControl();
+  formGroup!: FormGroup;
+  goal!: Goal;
 
   constructor(private taskItemService: TaskItemService,
+    private goalService: GoalService,
+    private route: ActivatedRoute,
+    private router: Router,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.getTaskItemListSub$ = this.taskItemService.getTaskItemList().subscribe((taskItemList) => {
-      this.taskItemList = taskItemList
-      this.filterList();
-    });
+
+    const goalId = this.route.snapshot.paramMap.get('goal-id');
+    this.goalService.GetGoalList().subscribe((goals) => {
+      this.goalList = goals;
+      this.goal = this.goalList.find((g) => { return g.id.toString() === goalId; }) ?? goals[0];
+      this.goalControl.setValue(this.goal);
+      this.getTask()
+    })
+
+    this.formGroup = new FormGroup({ goal: this.goalControl });
+
+    this.goalControl.valueChanges.subscribe((goal: Goal) => {
+      const prevRoute = this.goal.id;
+      this.goal = goal;
+      this.router.navigate([`task-list/${goal.id}`]);
+      this.getTask();
+    })
   }
 
-  filterList(): void {
-    this.taskinProgress = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.inProgress);
-    this.taskinCompleted = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.completed);
-    this.taskInBacklog = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.backLog);
+  getTask(): void {
+    this.getTaskItemListSub$ = this.taskItemService.getTaskItemList(this.goal.id).subscribe((taskItemList) => {
+      this.taskItemList = taskItemList
+      this.taskinProgress = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.inProgress);
+      this.taskinCompleted = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.completed);
+      this.taskInBacklog = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.backLog);
+    });
   }
 
   actionEvent(event: TypeClickEvent<TaskItem>): void {
@@ -58,16 +85,13 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     const previousStatus = taskItem.taskItemStatusId;
     taskItem.taskItemStatusId = moveToStaus;
     this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
-
-      this.removeTaskFromStatusLane(taskItem,previousStatus);
+      this.removeTaskFromStatusLane(taskItem, previousStatus);
       this.moveTaskToStatusLane(updatedTask, moveToStaus);
     });
-  }  
+  }
 
   removeTaskFromStatusLane(taskItem: TaskItem, removeFromStatus: TaskItemStatus): void {
-
     let list: TaskItem[] = [];
-
     switch (removeFromStatus) {
       case TaskItemStatus.backLog:
         list = this.taskInBacklog
@@ -118,14 +142,10 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   }
 
   deleteTaskItem(taskItem: TaskItem) {
-
     let confirm: Confirm = {
-      question: `Delete Task?`,
-      yesAnswer: 'Delete',
-      noAnswer: 'Cancel',
-      nameOfEntity: taskItem.name
-
+      question: `Delete Task?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: taskItem.name
     }
+
     const dialogRef = this.dialog.open(ConfirmModalComponent, {
       disableClose: true,
       data: confirm
@@ -136,11 +156,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
       if (confirm) {
         this.taskItemService.deleteTaskItem(taskItem.id).subscribe((deleted) => {
           if (deleted) {
-            let index = this.taskItemList.indexOf(taskItem);
-            if (index > -1) {
-              this.taskItemList.splice(index, 1);
-              this.filterList();
-            }
+            this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId);
           }
         })
       }
@@ -157,6 +173,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
 
   addTask(status: TaskItemStatus): void {
     let taskItem = new TaskItem();
+    taskItem.goalId = this.goal.id;
     taskItem.taskItemStatusId = status;
     this.editTaskItem(taskItem);
   }

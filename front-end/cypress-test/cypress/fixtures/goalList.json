@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Goal 1",
+        "description": "Description for goal 1",
+        "createdDate": "2021-11-07T08:18:09.03",
+        "updatedDate": "2021-11-07T08:18:09.03"
+    },
+    {
+        "id": 2,
+        "name": "Goal 2",
+        "description": "Description for goal 2",
+        "createdDate": "2021-11-07T08:18:47.84",
+        "updatedDate": null
+    }
+]

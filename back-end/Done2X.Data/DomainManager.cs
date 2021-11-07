@@ -15,17 +15,20 @@ namespace Done2X.Data
             this._db = new SqlConnection(connectionString);
             this.TaskItem = new TaskItemManager(this._db);
             this.Code = new CodeManager(this._db);
+            this.Goal = new GoalManager(this._db);
 
             //Map Entities to field
             FluentMapper.Initialize(config =>
             {
                 config.AddMap(new TaskItemMap());
                 config.AddMap(new TaskItemStatusMap());
+                config.AddMap(new GoalMap());
                 config.ForDommel();
             });
         }
 
         public ITaskItemManager TaskItem { get; set; }
         public ICodeManager Code { get; set; }
+        public IGoalManager Goal { get; set; }
     }
 }

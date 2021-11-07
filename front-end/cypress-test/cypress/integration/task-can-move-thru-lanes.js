@@ -2,13 +2,11 @@ describe('task can move thru lanes', () => {
 
     before(() => {
 
-        cy.intercept(
-            {
-                method: 'GET',
-                url: 'http://localhost/Done2X.API/api/taskItem/list',
-            },
-            []
-        );
+        cy.fixture('goalList').then((goalList) => {
+            cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/goal', }, goalList);
+        });
+
+        cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/taskItem/goal/*', }, []);
         cy.visit('/task-list');
 
     });
@@ -27,7 +25,7 @@ describe('task can move thru lanes', () => {
             cy.get('#add-task-to-backlog').click();
             cy.get('#task-item-modal').find('#name').type(taskItem.name);
             cy.get('#task-item-modal').find('#description').type(taskItem.description);
-            cy.get('#task-item-modal').find('#save').click();                    
+            cy.get('#task-item-modal').find('#save').click();
             cy.get('#backlog-lane').find('#task-item-101').should('exist');
         })
     });
@@ -45,20 +43,20 @@ describe('task can move thru lanes', () => {
                     taskItem
                 );
                 cy.get('#backlog-lane').find('#task-item-101').find('.move-to-progress').click();
-            })            
-        });        
-        
+            })
+        });
+
         it('should NOT exist in backlog ', () => {
             cy.get('#backlog-lane').find('#task-item-101').should('not.exist');
-        });        
+        });
 
         it('should exist in progress', () => {
             cy.get('#in-progress-lane').find('#task-item-101').should('exist');
-        });        
+        });
 
         it('should NOT exist in completed', () => {
             cy.get('#completed-lane').find('#task-item-101').should('not.exist');
-        });                
+        });
     });
 
     describe('click move to completed', () => {
@@ -74,20 +72,20 @@ describe('task can move thru lanes', () => {
                     taskItem
                 );
                 cy.get('#in-progress-lane').find('#task-item-101').find('.move-to-completed').click();
-            })            
-        });        
-        
+            })
+        });
+
         it('should NOT exist in backlog ', () => {
             cy.get('#backlog-lane').find('#task-item-101').should('not.exist');
-        });        
+        });
 
         it('should NOT exist in progress', () => {
             cy.get('#in-progress-lane').find('#task-item-101').should('not.exist');
-        });        
+        });
 
         it('should exist in completed ', () => {
             cy.get('#completed-lane').find('#task-item-101').should('exist');
-        });        
-    });    
+        });
+    });
 
 });

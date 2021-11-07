@@ -1,5 +1,7 @@
 {
+
     "id": 101,
+    "goalId":1,
     "name": "Cypress from the fixture taskitem.json",
     "description": "description from the fixture",
     "taskItemStatusId": 1,

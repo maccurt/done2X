@@ -6,7 +6,7 @@ namespace Done2X.Data
 {
   public interface ITaskItemManager
   {
-    Task<IEnumerable<TaskItem>> GetList();
+    Task<IEnumerable<TaskItem>> GetList(int goalId);
     Task<TaskItem> Add(TaskItem taskItem);
     Task<TaskItem> Update(TaskItem taskItem);
     Task<bool> Delete(int taskItemId);

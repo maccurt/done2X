@@ -1,6 +1,7 @@
 [
     {
         "id": 1,
+        "goalId":1,
         "name": "Task 1 From List",
         "description": "description 1",
         "taskItemStatusId": 1,
@@ -11,6 +12,7 @@
     },
     {
         "id": 2,
+        "goalId":1,
         "name": "Task 2 From List",
         "description": "description 1",
         "taskItemStatusId": 2,
@@ -21,6 +23,7 @@
     },
     {
         "id": 3,
+        "goalId":1,
         "name": "Task 3 From List",
         "description": "description 3",
         "taskItemStatusId": 3,
