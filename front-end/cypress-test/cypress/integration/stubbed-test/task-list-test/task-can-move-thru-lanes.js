@@ -1,14 +1,9 @@
 describe('task can move thru lanes', () => {
 
     before(() => {
-
-        cy.fixture('goalList').then((goalList) => {
-            cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/goal', }, goalList);
-        });
-
-        cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/taskItem/goal/*', }, []);
+        cy.interceptGoalList();
+        cy.interceptTaskItemList();
         cy.visit('/task-list');
-
     });
 
     it('Add New Task To Backlog', () => {

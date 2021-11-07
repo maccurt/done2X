@@ -7,7 +7,7 @@ import { Goal, GoalService } from './goal.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'done2X';
   formGroup!: FormGroup;
   goalControl: FormControl = new FormControl();
@@ -15,9 +15,5 @@ export class AppComponent implements OnInit {
   goalList: Goal[] = [];
 
   constructor(private goalService: GoalService) {
-  }
-
-  ngOnInit(): void {    
-
   }
 }

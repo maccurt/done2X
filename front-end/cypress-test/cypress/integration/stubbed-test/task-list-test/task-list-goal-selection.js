@@ -1,4 +1,4 @@
-describe('goal-baseline', () => {    
+describe('task-list-goal-selection.js', () => {    
 
     describe('visit task-list with no goal id in route', () => {
         before(() => {       

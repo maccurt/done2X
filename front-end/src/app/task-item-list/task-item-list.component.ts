@@ -154,10 +154,8 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     this.deleteAfterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
 
       if (confirm) {
-        this.taskItemService.deleteTaskItem(taskItem.id).subscribe((deleted) => {
-          if (deleted) {
-            this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId);
-          }
+        this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
+          this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId);
         })
       }
     })

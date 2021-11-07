@@ -56,7 +56,7 @@ namespace Done2X.API.Controllers
                 return NotFound();
             }
             await _domainManager.TaskItem.Delete(taskItemId);
-            return Ok(true);
+            return Ok();
         }
     }
 }
