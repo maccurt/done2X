@@ -10,8 +10,10 @@ import { TaskItemComponent } from './task-item/task-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskItemModalComponent } from './task-item-modal/task-item-modal.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { AuthModule } from '@auth0/auth0-angular';
+import { AuthButtonComponent } from './auth-button/auth-button.component';
 
 @NgModule({
   declarations: [
@@ -20,19 +22,23 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     TaskItemListComponent,
     TaskItemComponent,
     TaskItemModalComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    AuthButtonComponent
   ],
   imports: [
-    BrowserModule,    
+    BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatDialogModule
-
+    MatDialogModule,
+    AuthModule.forRoot({
+      domain: 'profitdreamer.auth0.com',
+      clientId: '1GBzlqLA7ch77mINpaqruTnSrXaKbjp2'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [TaskItemModalComponent,ConfirmModalComponent]
+  entryComponents: [TaskItemModalComponent, ConfirmModalComponent]
 })
 export class AppModule { }

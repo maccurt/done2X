@@ -2,6 +2,7 @@ import { TaskItemStatus } from "../task-item.service";
 
 export class TaskItem {
     id!: number;
+    goalId!: number;
     name!: string;
     description?: string;
     taskItemStatusId: number = TaskItemStatus.backLog;
@@ -9,4 +10,5 @@ export class TaskItem {
     updatedDate!: Date;
     createdDate!: Date;
     statusUpdatedDate!: Date;
+
 }

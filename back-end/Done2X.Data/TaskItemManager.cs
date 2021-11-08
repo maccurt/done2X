@@ -17,10 +17,10 @@ namespace Done2X.Data
         {
         }
 
-        public async Task<IEnumerable<TaskItem>> GetList()
+        public async Task<IEnumerable<TaskItem>> GetList(int goalId)
         {
-            var list = await _db.GetAllAsync<TaskItem>();
-            return list.OrderByDescending(x=>x.StatusUpdatedDate);
+            var list = await _db.SelectAsync<TaskItem>(t => t.GoalId == goalId);
+            return list.OrderByDescending(x => x.StatusUpdatedDate);
         }
 
         public async Task<TaskItem> Add(TaskItem taskItem)

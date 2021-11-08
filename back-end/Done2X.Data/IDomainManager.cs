@@ -4,5 +4,6 @@ namespace Done2X.Data
     {
         public ITaskItemManager TaskItem { get; set; }
         public ICodeManager Code { get; set; }
+        public IGoalManager Goal { get; set; }
     }
 }

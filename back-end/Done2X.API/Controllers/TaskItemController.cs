@@ -20,19 +20,19 @@ namespace Done2X.API.Controllers
         }
 
         [HttpGet()]
-        [Route("list")]
-        public async Task<IEnumerable<TaskItem>> GetTaskItemList()
+        [Route("goal/{goalId}")]
+        public async Task<IEnumerable<TaskItem>> GetTaskItemList(int goalId)
         {
-            var list = await _domainManager.TaskItem.GetList();
+            var list = await _domainManager.TaskItem.GetList(goalId);
             return list;
         }
 
-        [HttpGet()]
-        public async Task<IEnumerable<TaskItem>> GetTaskItem()
-        {
-            var list = await _domainManager.TaskItem.GetList();
-            return list;
-        }
+        //[HttpGet()]
+        //public async Task<IEnumerable<TaskItem>> GetTaskItem()
+        //{
+        //    var list = await _domainManager.TaskItem.GetList();
+        //    return list;
+        //}
 
         [HttpPost()]
         public async Task<TaskItem> AddTaskItem([FromBody] TaskItem taskItem)
@@ -56,7 +56,7 @@ namespace Done2X.API.Controllers
                 return NotFound();
             }
             await _domainManager.TaskItem.Delete(taskItemId);
-            return Ok(true);
+            return Ok();
         }
     }
 }

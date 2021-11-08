@@ -10,5 +10,7 @@ namespace Done2X.Data
         {
             _db = db;
         }
+
+        
     }
 }
