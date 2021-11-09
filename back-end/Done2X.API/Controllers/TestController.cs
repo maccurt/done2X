@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Done2X.API.Controllers
 {
@@ -10,10 +10,17 @@ namespace Done2X.API.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        [HttpGet]
+        [Route("private")]
+        [Authorize]
+        public IActionResult IsAuthorized()
+        {
+            return Ok(true);
+        }
+
         [HttpGet()]
         public async Task<IEnumerable<string>> Get()
         {
-            
             List<string> list;
             list = new List<string>();
 
@@ -26,7 +33,6 @@ namespace Done2X.API.Controllers
             }
 
             return list;
-
         }
     }
 }

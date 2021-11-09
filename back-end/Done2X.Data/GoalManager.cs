@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Dapper;
 using Dommel;
+using Done2X.Data.IMangerInterfaces;
 using Done2X.Domain;
 
 namespace Done2X.Data
@@ -15,10 +15,21 @@ namespace Done2X.Data
         {
         }
 
-        public async Task<IEnumerable<Goal>> GetGoalList()
+        public async Task<IEnumerable<Goal>> GetGoalList(int projectId)
         {
-            var list = await this._db.GetAllAsync<Goal>();
+            _db.Open();
+            var list = await this._db.SelectAsync<Goal>(g => g.ProjectId == projectId);
+            _db.Close();
             return list;
+        }
+
+        public async Task<IEnumerable<Goal>> GetGoalList(ClaimsPrincipal user)
+        {
+            var authId = user.Identity.Name;
+            _db.Open();
+            var goalList = await _db.QueryAsync<Goal>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
+            _db.Close();
+            return goalList;
         }
     }
 }

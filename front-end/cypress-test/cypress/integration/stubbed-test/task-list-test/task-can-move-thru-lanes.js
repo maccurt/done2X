@@ -17,7 +17,7 @@ describe('task can move thru lanes', () => {
                 taskItem
             );
 
-            cy.get('#add-task-to-backlog').click();
+            cy.get('#add-task-to-backlog').click();            
             cy.get('#task-item-modal').find('#name').type(taskItem.name);
             cy.get('#task-item-modal').find('#description').type(taskItem.description);
             cy.get('#task-item-modal').find('#save').click();

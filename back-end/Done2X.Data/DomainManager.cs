@@ -1,8 +1,6 @@
 using System.Data;
 using System.Data.SqlClient;
-using Dapper.FluentMap;
-using Dapper.FluentMap.Dommel;
-using Done2X.Data.EntityMap;
+using Done2X.Data.IMangerInterfaces;
 
 namespace Done2X.Data
 {
@@ -16,19 +14,21 @@ namespace Done2X.Data
             this.TaskItem = new TaskItemManager(this._db);
             this.Code = new CodeManager(this._db);
             this.Goal = new GoalManager(this._db);
+            this.Security = new AppSecurityManager(this._db);
 
             //Map Entities to field
-            FluentMapper.Initialize(config =>
-            {
-                config.AddMap(new TaskItemMap());
-                config.AddMap(new TaskItemStatusMap());
-                config.AddMap(new GoalMap());
-                config.ForDommel();
-            });
+            //FluentMapper.Initialize(config =>
+            //{
+            //    config.AddMap(new TaskItemMap());
+            //    config.AddMap(new TaskItemStatusMap());
+            //    config.AddMap(new GoalMap());
+            //    config.ForDommel();
+            //});
         }
 
         public ITaskItemManager TaskItem { get; set; }
         public ICodeManager Code { get; set; }
         public IGoalManager Goal { get; set; }
+        public IAppSecurityManager Security { get; set; }
     }
 }

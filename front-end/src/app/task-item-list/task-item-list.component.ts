@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,39 +31,50 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   formGroup!: FormGroup;
   goal!: Goal;
 
+  valueChangeSub$!: Subscription;
+  routeDataSub$!: Subscription;
+
   constructor(private taskItemService: TaskItemService,
     private goalService: GoalService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
 
-    const goalId = this.route.snapshot.paramMap.get('goal-id');
-    this.goalService.GetGoalList().subscribe((goals) => {
-      this.goalList = goals;
-      this.goal = this.goalList.find((g) => { return g.id.toString() === goalId; }) ?? goals[0];
+    this.routeDataSub$  = this.route.data.subscribe((data) => {
+      const goalId = this.route.snapshot.paramMap.get('goal-id');
+      this.goalList = data.goalList;
+      this.goal = this.goalList.find((g) => { return g.id.toString() === goalId; }) ?? this.goalList[0];
+      
+      //unsubscribe so it does not fire the value change subscription
+      this.valueChangeSub$?.unsubscribe();      
       this.goalControl.setValue(this.goal);
-      this.getTask()
-    })
+      this.taskItemList = data.taskItemList;
+      this.filtetTaskItemList();
+
+      this.valueChangeSub$ = this.goalControl.valueChanges.subscribe((goal: Goal) => {               
+        this.goal = goal;
+        this.router.navigate([`task-list/${goal.id}`]);
+        this.getTaskItemList();
+      });
+    });    
 
     this.formGroup = new FormGroup({ goal: this.goalControl });
-
-    this.goalControl.valueChanges.subscribe((goal: Goal) => {
-      const prevRoute = this.goal.id;
-      this.goal = goal;
-      this.router.navigate([`task-list/${goal.id}`]);
-      this.getTask();
-    })
   }
 
-  getTask(): void {
+  getTaskItemList(): void {
+    console.log('getTask',this.goal)
     this.getTaskItemListSub$ = this.taskItemService.getTaskItemList(this.goal.id).subscribe((taskItemList) => {
-      this.taskItemList = taskItemList
-      this.taskinProgress = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.inProgress);
-      this.taskinCompleted = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.completed);
-      this.taskInBacklog = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.backLog);
+      this.taskItemList = taskItemList;
+      this.filtetTaskItemList();
     });
+  }
+
+  filtetTaskItemList(): void {
+    this.taskinProgress = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.inProgress);
+    this.taskinCompleted = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.completed);
+    this.taskInBacklog = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.backLog);
   }
 
   actionEvent(event: TypeClickEvent<TaskItem>): void {
@@ -211,5 +221,6 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     this.updateTaskItemSub$?.unsubscribe();
     this.afterClosedSub$?.unsubscribe();
     this.deleteAfterClosedSub$?.unsubscribe();
+    this.routeDataSub$?.unsubscribe();
   }
 }

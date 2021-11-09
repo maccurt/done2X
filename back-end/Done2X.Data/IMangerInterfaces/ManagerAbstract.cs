@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace Done2X.Data
+namespace Done2X.Data.IMangerInterfaces
 {
     public abstract class ManagerAbstract
     {
@@ -10,7 +10,5 @@ namespace Done2X.Data
         {
             _db = db;
         }
-
-        
     }
 }

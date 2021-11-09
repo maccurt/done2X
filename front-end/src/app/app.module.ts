@@ -14,6 +14,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './auth-button/auth-button.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { environment } from 'src/environments/environment';
+import { GoalListResolver } from './resolvers/goal-list.resolver';
+import { TaskItemListResolver } from './resolvers/task-item-list.resolver';
 
 @NgModule({
   declarations: [
@@ -33,11 +38,20 @@ import { AuthButtonComponent } from './auth-button/auth-button.component';
     BrowserAnimationsModule,
     MatDialogModule,
     AuthModule.forRoot({
-      domain: 'profitdreamer.auth0.com',
-      clientId: '1GBzlqLA7ch77mINpaqruTnSrXaKbjp2'
-    })
+      domain: environment.auth.domain,
+      clientId: environment.auth.clientId,
+      audience: environment.auth.audience,
+      redirectUri: environment.auth.redirectUri,
+      httpInterceptor: {
+        allowedList: [`${environment.API_URL}*`],
+      }
+    }),
   ],
-  providers: [],
+  providers: [
+    GoalListResolver,
+    TaskItemListResolver,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [TaskItemModalComponent, ConfirmModalComponent]
 })
