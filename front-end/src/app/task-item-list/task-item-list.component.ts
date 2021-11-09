@@ -110,7 +110,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
         list = this.taskinProgress
         break;
       case TaskItemStatus.completed:
-        list = this.taskinProgress;
+        list = this.taskinCompleted
         break;
     }
 
@@ -195,7 +195,6 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     });
 
     this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-
       //Add Task Item
       if (taskItem && !taskItem.id) {
         this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((newTask) => {
