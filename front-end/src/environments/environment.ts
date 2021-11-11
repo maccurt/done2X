@@ -2,11 +2,11 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-
-
 export const environment = {
   production: false,
+  testing: false,
   API_URL: 'http://localhost/Done2X.API/api/',
+  allowedList: ['http://localhost/Done2X.API/api/*'],
   auth: {
     domain: 'profitdreamer.auth0.com',
     clientId: '1GBzlqLA7ch77mINpaqruTnSrXaKbjp2',

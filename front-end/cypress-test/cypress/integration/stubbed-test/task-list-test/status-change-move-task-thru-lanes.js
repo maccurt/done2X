@@ -2,23 +2,20 @@ describe('status change moves task thru lanes', () => {
     before(() => {
         cy.interceptGoalList();
         cy.interceptTaskItemList();
-        cy.visit('/task-list');
+        cy.visit('/task-list/1');
+        cy.wait('@interceptGoalList');
+        cy.wait('@interceptTaskItemList');
     });
 
     it('Add New Task To Backlog', () => {
         cy.fixture('taskItem').then((taskItem) => {
-            cy.intercept(
-                {
-                    method: 'POST',
-                    url: 'http://localhost/Done2X.API/api/taskItem',
-                },
-                taskItem
-            );
+            cy.interceptTaskItemAdd(taskItem);
             cy.get('#add-task-to-backlog').click();
             cy.get('#task-item-modal').find('#name').type(taskItem.name);
             cy.get('#task-item-modal').find('#description').type(taskItem.description);
-            cy.get('#task-item-modal').find('#save').click();
+            cy.get('#task-item-modal').find('#save').click();            
             cy.get('#backlog-lane').find('#task-item-101').should('exist');
+            cy.wait('@interceptTaskItemAdd');
         })
     });
 
@@ -26,16 +23,11 @@ describe('status change moves task thru lanes', () => {
         before(() => {
             cy.fixture('taskItem').then((taskItem) => {
                 taskItem.taskItemStatusId = 2
-                cy.intercept(
-                    {
-                        method: 'PUT',
-                        url: 'http://localhost/Done2X.API/api/taskItem',
-                    },
-                    taskItem
-                );
+                cy.interceptTaskItemUpdate(taskItem);
                 cy.get('#backlog-lane').find('#task-item-101').find('.task-item-name').click();
                 cy.get('#task-item-modal').find('#task-item-status').select('In Progress');
                 cy.get('#task-item-modal').find('#save').click();
+                cy.wait('@interceptTaskItemUpdate');
             })
         });
 
@@ -56,14 +48,9 @@ describe('status change moves task thru lanes', () => {
         before(() => {
             cy.fixture('taskItem').then((taskItem) => {
                 taskItem.taskItemStatusId = 3
-                cy.intercept(
-                    {
-                        method: 'PUT',
-                        url: 'http://localhost/Done2X.API/api/taskItem',
-                    },
-                    taskItem
-                );
+                cy.interceptTaskItemUpdate(taskItem);
                 cy.get('#in-progress-lane').find('#task-item-101').find('.move-to-completed').click();
+                cy.wait('@interceptTaskItemUpdate');
             })
         });
 

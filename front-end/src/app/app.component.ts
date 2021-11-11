@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
-import { Goal, GoalService } from './goal.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +12,13 @@ export class AppComponent {
   title = 'done2X';
   formGroup!: FormGroup;
   goalControl: FormControl = new FormControl();
+
   isAuthenticated: boolean = false;
+  testing: boolean = false;
   constructor(authService: AuthService) {
+    this.testing = environment.testing
     authService.isAuthenticated$.subscribe((isAuthenticated) => {
       this.isAuthenticated = isAuthenticated;
-    })
+    });
   }
 }
