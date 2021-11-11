@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { Subscription } from 'rxjs';
 import { Goal, GoalService } from '../goal.service';
@@ -11,24 +12,20 @@ import { Goal, GoalService } from '../goal.service';
 export class GoalListComponent implements OnInit {
 
   goalList: Goal[] = [];
+  routeData$!: Subscription;
 
-  isAuthenticated$!: Subscription;
-
-  constructor(private goalService: GoalService, private authService: AuthService) {
-
-  }
+  constructor(private goalService: GoalService, private route: ActivatedRoute,) { }
 
   public ngOnInit(): void {
-    this.isAuthenticated$ = this.authService.isAuthenticated$.subscribe(() => {
 
-      this.goalService.GetGoalList().subscribe((goalList) => {
-        this.goalList
-       });
+    this.routeData$ = this.route.data.subscribe((data) => {
+      this.goalList = data.goalList;
 
     })
+
   }
 
   public ngOnDestroy(): void {
-    this.isAuthenticated$?.unsubscribe();
+    this.routeData$?.unsubscribe();
   }
 }

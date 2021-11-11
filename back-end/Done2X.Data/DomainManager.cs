@@ -6,15 +6,18 @@ namespace Done2X.Data
 {
     public class DomainManager : IDomainManager
     {
+        private readonly string _connectionString;
         private IDbConnection _db;
+        
 
         public DomainManager(string connectionString)
         {
+            _connectionString = connectionString;
             this._db = new SqlConnection(connectionString);
-            this.TaskItem = new TaskItemManager(this._db);
-            this.Code = new CodeManager(this._db);
-            this.Goal = new GoalManager(this._db);
-            this.Security = new AppSecurityManager(this._db);
+            this.TaskItem = new TaskItemManager(connectionString);
+            this.Code = new CodeManager(connectionString);
+            this.Goal = new GoalManager(connectionString);
+            this.Security = new AppSecurityManager(connectionString);
 
             //Map Entities to field
             //FluentMapper.Initialize(config =>

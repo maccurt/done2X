@@ -13,9 +13,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) { }
 
   public ngOnInit(): void {
-    this.isAuthenticated$ = this.authService.isAuthenticated$.subscribe(() => {
-      console.log('authenticated in home');
-    })
+    // this.isAuthenticated$ = this.authService.isAuthenticated$.subscribe(() => {
+    //   console.log('authenticated in home');
+    // })
+
   }
 
   public ngOnDestroy(): void {

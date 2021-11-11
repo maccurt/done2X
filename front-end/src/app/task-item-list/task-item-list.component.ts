@@ -36,8 +36,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   valueChangesSub$!: Subscription;
   routeDataSub$!: Subscription;
 
-  constructor(private taskItemService: TaskItemService,
-    private goalService: GoalService,
+  constructor(private taskItemService: TaskItemService,    
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog) { }

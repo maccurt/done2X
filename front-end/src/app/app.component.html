@@ -2,27 +2,36 @@
     <h3 style="color:red">Testing Version Do Not Release To Production Or Development</h3>
 </div>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Done2X</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li *ngIf="isAuthenticated" class="nav-item">
-                    <a class="nav-link" routerLink="goal-list">Goal List</a>
-                </li>
-            </ul>
+<div class="container" *ngIf="authService.isLoading$ | async; else loaded">
+    loading..
+</div>
 
+<ng-template #loaded >
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Done2X</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li *ngIf="isAuthenticated" class="nav-item">
+                        <a class="nav-link" routerLink="goal-list">Goal List</a>
+                    </li>
+                </ul>
+
+            </div>
+            <app-auth-button></app-auth-button>
         </div>
-        <app-auth-button></app-auth-button>
-    </div>
-</nav>
-<br>
-<br>
-<router-outlet></router-outlet>
+    </nav>
+    <br>
+    <br>
+    <router-outlet></router-outlet>
+
+</ng-template>

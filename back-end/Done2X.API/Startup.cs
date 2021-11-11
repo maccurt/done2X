@@ -55,6 +55,7 @@ namespace Done2X.API
             //Add Injection
             var connectionString = Configuration.GetConnectionString("Done2X");
 
+            //TODO should this be here
             FluentMapper.Initialize(config =>
             {
                 config.AddMap(new TaskItemMap());

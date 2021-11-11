@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Dommel;
 using Done2X.Data.IMangerInterfaces;
@@ -11,15 +13,19 @@ namespace Done2X.Data
 {
     public class TaskItemManager : ManagerAbstract, ITaskItemManager
     {
-        public TaskItemManager(IDbConnection db) : base(db)
+        private readonly string _connectionString;
+
+        public TaskItemManager(string connectionString) : base(connectionString)
         {
+            _connectionString = connectionString;
         }
 
         public async Task<IEnumerable<TaskItem>> GetList(int goalId)
         {
-            _db.Open();
-            var list = await _db.SelectAsync<TaskItem>(t => t.GoalId == goalId);
-            _db.Close();
+
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var list = await connection.SelectAsync<TaskItem>(t => t.GoalId == goalId);
             return list.OrderByDescending(x => x.StatusUpdatedDate);
         }
 
@@ -27,10 +33,12 @@ namespace Done2X.Data
         {
             taskItem.CreatedDate = DateTime.Now;
             taskItem.StatusUpdatedDate = taskItem.CreatedDate;
-            _db.Open();
-            var id = await _db.InsertAsync(taskItem);
+
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var id = await connection.InsertAsync(taskItem);
             taskItem.Id = Convert.ToInt32(id);
-            _db.Close();
+
             return taskItem;
         }
 
@@ -45,26 +53,26 @@ namespace Done2X.Data
             {
                 taskItem.StatusUpdatedDate = taskItem.UpdatedDate;
             }
-            _db.Open();
-            await _db.UpdateAsync(taskItem);
-            _db.Close();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            await connection.UpdateAsync(taskItem);
             return taskItem;
         }
 
         public async Task<bool> Delete(int taskItemId)
         {
-            _db.Open();
-            var taskItem = await _db.GetAsync<TaskItem>(taskItemId);
-            var result = await _db.DeleteAsync(taskItem);
-            _db.Close();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var taskItem = await connection.GetAsync<TaskItem>(taskItemId);
+            var result = await connection.DeleteAsync(taskItem);
             return result;
         }
 
         public async Task<TaskItem> Get(int taskItemId)
         {
-            _db.Open();
-            var result = await _db.GetAsync<TaskItem>(taskItemId);
-            _db.Close();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var result = await connection.GetAsync<TaskItem>(taskItemId);
             return result;
         }
     }

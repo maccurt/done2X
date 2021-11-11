@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Dapper;
@@ -11,24 +12,28 @@ namespace Done2X.Data
 {
     class GoalManager : ManagerAbstract, IGoalManager
     {
-        public GoalManager(IDbConnection db) : base(db)
+        private readonly string _connectionString;
+
+        public GoalManager(string connectionString) : base(connectionString)
         {
+            _connectionString = connectionString;
         }
 
         public async Task<IEnumerable<Goal>> GetGoalList(int projectId)
         {
-            _db.Open();
-            var list = await this._db.SelectAsync<Goal>(g => g.ProjectId == projectId);
-            _db.Close();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var list = await connection.SelectAsync<Goal>(g => g.ProjectId == projectId);
+            
             return list;
         }
 
         public async Task<IEnumerable<Goal>> GetGoalList(ClaimsPrincipal user)
         {
             var authId = user.Identity.Name;
-            _db.Open();
-            var goalList = await _db.QueryAsync<Goal>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
-            _db.Close();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var goalList = await connection.QueryAsync<Goal>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
             return goalList;
         }
     }

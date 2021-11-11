@@ -1,1 +1,29 @@
+<div class="container">
+    <div class="row">
 
+
+        <h1>Goals</h1>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <div *ngFor="let g of goalList" class="col-3">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h4 class="card-title">{{g.name}}</h4>
+                    <p class="card-text">{{g.description}}</p>
+                    <a routerLink="/task-list/{{g.id}}" class="card-link">See Task</a>
+                </div>
+            </div>
+            <br>
+
+            <!-- <div style="background-color: whitesmoke;" class="card">
+                <div class="card-body">
+                    <a routerLink="/task-list/{{g.id}}">{{g.name}}</a>
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+</div>
