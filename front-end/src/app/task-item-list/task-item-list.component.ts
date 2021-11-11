@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
 import { Confirm, ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { Goal, GoalService } from '../goal.service';
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
@@ -17,12 +18,8 @@ import { TaskItem } from '../task-item/task-item.type';
 })
 
 export class TaskItemListComponent implements OnInit, OnDestroy {
+
   taskItemList: TaskItem[] = [];
-  getTaskItemListSub$!: Subscription;
-  addTaskItemSub$!: Subscription;
-  updateTaskItemSub$!: Subscription;
-  afterClosedSub$!: Subscription;
-  deleteAfterClosedSub$!: Subscription;
   taskinProgress: TaskItem[] = [];
   taskinCompleted: TaskItem[] = [];
   taskInBacklog: TaskItem[] = [];
@@ -31,7 +28,12 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   formGroup!: FormGroup;
   goal!: Goal;
 
-  valueChangeSub$!: Subscription;
+  getTaskItemListSub$!: Subscription;
+  addTaskItemSub$!: Subscription;
+  updateTaskItemSub$!: Subscription;
+  afterClosedSub$!: Subscription;
+  deleteAfterClosedSub$!: Subscription;
+  valueChangesSub$!: Subscription;
   routeDataSub$!: Subscription;
 
   constructor(private taskItemService: TaskItemService,
@@ -40,38 +42,38 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialog: MatDialog) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
 
-    this.routeDataSub$  = this.route.data.subscribe((data) => {
+    this.routeDataSub$ = this.route.data.subscribe((data) => {
       const goalId = this.route.snapshot.paramMap.get('goal-id');
       this.goalList = data.goalList;
       this.goal = this.goalList.find((g) => { return g.id.toString() === goalId; }) ?? this.goalList[0];
-      
+
       //unsubscribe so it does not fire the value change subscription
-      this.valueChangeSub$?.unsubscribe();      
+      this.valueChangesSub$?.unsubscribe();
       this.goalControl.setValue(this.goal);
       this.taskItemList = data.taskItemList;
-      this.filtetTaskItemList();
+      this.splitTaskItemsIntoLanes();
 
-      this.valueChangeSub$ = this.goalControl.valueChanges.subscribe((goal: Goal) => {               
+      this.valueChangesSub$ = this.goalControl.valueChanges.subscribe((goal: Goal) => {
         this.goal = goal;
         this.router.navigate([`task-list/${goal.id}`]);
         this.getTaskItemList();
       });
-    });    
+    });
 
     this.formGroup = new FormGroup({ goal: this.goalControl });
   }
 
   getTaskItemList(): void {
-    console.log('getTask',this.goal)
+    console.log('getTask', this.goal)
     this.getTaskItemListSub$ = this.taskItemService.getTaskItemList(this.goal.id).subscribe((taskItemList) => {
       this.taskItemList = taskItemList;
-      this.filtetTaskItemList();
+      this.splitTaskItemsIntoLanes();
     });
   }
 
-  filtetTaskItemList(): void {
+  splitTaskItemsIntoLanes(): void {
     this.taskinProgress = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.inProgress);
     this.taskinCompleted = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.completed);
     this.taskInBacklog = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.backLog);
@@ -221,5 +223,6 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     this.afterClosedSub$?.unsubscribe();
     this.deleteAfterClosedSub$?.unsubscribe();
     this.routeDataSub$?.unsubscribe();
+    this.valueChangesSub$?.unsubscribe();
   }
 }
