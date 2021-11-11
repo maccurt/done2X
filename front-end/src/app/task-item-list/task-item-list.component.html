@@ -7,7 +7,10 @@
             <div class="col-3">
                 <select id="goal" formControlName='goal' class="form-control">
                     <option *ngFor="let g of goalList" [ngValue]="g">{{g.name}}</option>
-                </select>
+                </select>                
+            </div>
+            <div class="col-6">
+              <span class="what-is-done">  {{goal.whatIsDone}}</span>
             </div>
         </div>
     </form>

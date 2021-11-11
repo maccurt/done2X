@@ -37,6 +37,12 @@
         "Key": "Value",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "Production Build": {
+      "commandName": "IIS",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
     }
   }
 }
