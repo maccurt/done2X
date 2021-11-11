@@ -11,20 +11,17 @@ export class AppAuthGuard extends AuthGuard {
         super(auth);
     }
 
-    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
-        console.log('canLoad')
+    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> { 
         return super.canLoad(route,segments);
     }
 
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        console.log('canActivateChild')
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {        
         return super.canActivateChild(childRoute,state);
     }
 
-    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        console.log('canActivate')
+    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {        
         if (environment.testing && !environment.production) {
-            console.log('running in testin mode do not release this code');
+            console.log('running in testing mode do not release this code');
             return of(true)
         }
         else {
@@ -32,4 +29,3 @@ export class AppAuthGuard extends AuthGuard {
         }
     }
 }
-
