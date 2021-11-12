@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,8 +11,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskItemModalComponent } from './task-item-modal/task-item-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
-import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './auth-button/auth-button.component';
+import { GoalListResolver } from './resolvers/goal-list.resolver';
+import { TaskItemListResolver } from './resolvers/task-item-list.resolver';
+import { AppAuthGuard } from './guards/app-auth.guard';
+import { SecurityModule } from './security-routing-module';
+import { GoalListComponent } from './goal-list/goal-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { AuthButtonComponent } from './auth-button/auth-button.component';
     TaskItemComponent,
     TaskItemModalComponent,
     ConfirmModalComponent,
-    AuthButtonComponent
+    AuthButtonComponent,
+    GoalListComponent
   ],
   imports: [
     BrowserModule,
@@ -32,12 +36,21 @@ import { AuthButtonComponent } from './auth-button/auth-button.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    AuthModule.forRoot({
-      domain: 'profitdreamer.auth0.com',
-      clientId: '1GBzlqLA7ch77mINpaqruTnSrXaKbjp2'
-    })
+    SecurityModule
+    // AuthModule.forRoot({
+    //   domain: environment.auth.domain,
+    //   clientId: environment.auth.clientId,
+    //   audience: environment.auth.audience,
+    //   redirectUri: environment.auth.redirectUri,
+    //   httpInterceptor: {
+    //     allowedList: [`${environment.API_URL}*`],
+    //   }
+    // }),
   ],
-  providers: [],
+  providers: [    
+    GoalListResolver,
+    TaskItemListResolver,    
+  ],
   bootstrap: [AppComponent],
   entryComponents: [TaskItemModalComponent, ConfirmModalComponent]
 })

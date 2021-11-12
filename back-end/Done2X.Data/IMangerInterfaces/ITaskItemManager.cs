@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Done2X.Domain;
 
-namespace Done2X.Data
+namespace Done2X.Data.IMangerInterfaces
 {
   public interface ITaskItemManager
   {

@@ -6,10 +6,9 @@ import { environment } from 'src/environments/environment';
 export class Goal {
   id!: number;
   name!: string;
-  description!: string;
-  
+  description!: string;  
+  whatIsDone!:string;  
 }
-
 
 @Injectable({
   providedIn: 'root'

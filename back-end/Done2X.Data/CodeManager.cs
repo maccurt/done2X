@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dommel;
+using Done2X.Data.IMangerInterfaces;
 using Done2X.Domain.Codes;
 
 namespace Done2X.Data
@@ -16,13 +18,20 @@ namespace Done2X.Data
 
     public class CodeManager : ManagerAbstract, ICodeManager
     {
-        public CodeManager(IDbConnection db) : base(db)
+        private readonly string _connectionString;
+
+        public CodeManager(string connectionString ) : base(connectionString)
         {
+            _connectionString = connectionString;
         }
 
         public async Task<IEnumerable<TaskItemStatus>> GetTaskStatusList()
         {
-            var list = await _db.GetAllAsync<TaskItemStatus>();
+
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var list = await connection.GetAllAsync<TaskItemStatus>();
+            
             return list;
         }
     }
