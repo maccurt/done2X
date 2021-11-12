@@ -16,7 +16,7 @@ import { GoalListResolver } from './resolvers/goal-list.resolver';
 import { TaskItemListResolver } from './resolvers/task-item-list.resolver';
 import { AppAuthGuard } from './guards/app-auth.guard';
 import { SecurityModule } from './security-routing-module';
-import { GoalListComponent } from './goal-list/goal-list.component';
+import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
 
 @NgModule({
   declarations: [

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Confirm, ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { Goal, GoalService } from '../goal.service';
+import { Goal, GoalService } from '../goal-domain/goal.service';
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
 import { TypeAction, TypeClickEvent } from '../task-item/task-item.component';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GoalListComponent } from './goal-list/goal-list.component';
+import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
 import { AppAuthGuard } from './guards/app-auth.guard';
 import { HomeComponent } from './home/home.component';
 import { GoalListResolver } from './resolvers/goal-list.resolver';
