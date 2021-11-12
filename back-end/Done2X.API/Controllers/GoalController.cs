@@ -1,14 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Done2X.Data;
-using Done2X.Data.IMangerInterfaces;
-using Done2X.Domain;
+﻿using Done2X.Data.IMangerInterfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Done2X.API.Controllers
 {
@@ -24,7 +17,7 @@ namespace Done2X.API.Controllers
             _domainManager = domainManager;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetGoalList()
         {
             var list = await _domainManager.Goal.GetGoalList(User);
@@ -32,7 +25,7 @@ namespace Done2X.API.Controllers
         }
 
 
-        [HttpGet()]
+        [HttpGet]
         [Route("project/{projectId}")]
         public async Task<IActionResult> GetGoalListByProject(int projectId)
         {

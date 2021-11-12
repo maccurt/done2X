@@ -18,6 +18,12 @@ namespace Done2X.API.Controllers
             return Ok(true);
         }
 
+        [HttpDelete]
+        public bool Delete()
+        {
+            return true;
+        }
+
         [HttpGet()]
         public async Task<IEnumerable<string>> Get()
         {

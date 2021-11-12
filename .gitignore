@@ -19,3 +19,5 @@ back-end/Done2X.API/appsettings.Production.json
 back-end/Done2X.API/appsettings.Development.json
 
 front-end/cypress-test/cypress.env.json
+
+back-end/Done2X.API/Properties/PublishProfiles/

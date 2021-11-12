@@ -1,7 +1,6 @@
 using Done2X.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Done2X.Data;
 using Done2X.Data.IMangerInterfaces;
 using Microsoft.AspNetCore.Authorization;
 
@@ -19,7 +18,7 @@ namespace Done2X.API.Controllers
             _domainManager = domainManager;
         }
 
-        [HttpGet()]
+        [HttpGet]
         [Route("goal/{goalId}")]
         public async Task<IActionResult> GetTaskItemList(int goalId)
         {
@@ -32,7 +31,7 @@ namespace Done2X.API.Controllers
             return Ok(list);
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<IActionResult> AddTaskItem([FromBody] TaskItem taskItem)
         {
             if (!await _domainManager.Security.CanAccessGoal(taskItem.GoalId, User))
@@ -43,7 +42,7 @@ namespace Done2X.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut()]
+        [HttpPut]
         public async Task<IActionResult> UpdateTaskItem([FromBody] TaskItem taskItem)
         {
             var canAlterTask = await _domainManager.Security.CanAlterTaskItem(taskItem.Id, User);
@@ -56,7 +55,8 @@ namespace Done2X.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{taskItemId}")]
+        [HttpDelete]
+        [Route("{taskItemId}")]
         public async Task<IActionResult> DeleteTaskItem([FromRoute] int taskItemId)
         {
             var canAlterTask = await _domainManager.Security.CanAlterTaskItem(taskItemId, User);
