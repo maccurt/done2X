@@ -15,7 +15,6 @@ mat-dialog-actions {
   }
 }
 
-
 .form-label{
   font-weight: bold;
 }
@@ -43,11 +42,23 @@ mat-dialog-actions {
 }
 
 .has-error {
-  input {
+  input,textarea {
     background-color: #ffe6e6;
     border: 1px solid red;
   }
   .input-error {
     visibility: visible;
+    color:red;
   }
+
+  .validation-hint{
+    color:red;
+  }
+}
+
+.input-help,.validation-hint{  
+  color:#333333;
+}
+.input-help{  
+  margin-left:4px;
 }

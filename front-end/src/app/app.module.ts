@@ -17,6 +17,7 @@ import { TaskItemListResolver } from './resolvers/task-item-list.resolver';
 import { AppAuthGuard } from './guards/app-auth.guard';
 import { SecurityModule } from './security-routing-module';
 import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
+import { GoalModalComponent } from './goal-domain/goal-modal/goal-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
     TaskItemModalComponent,
     ConfirmModalComponent,
     AuthButtonComponent,
-    GoalListComponent
+    GoalListComponent,
+    GoalModalComponent
   ],
   imports: [
     BrowserModule,
@@ -37,21 +39,12 @@ import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
     BrowserAnimationsModule,
     MatDialogModule,
     SecurityModule
-    // AuthModule.forRoot({
-    //   domain: environment.auth.domain,
-    //   clientId: environment.auth.clientId,
-    //   audience: environment.auth.audience,
-    //   redirectUri: environment.auth.redirectUri,
-    //   httpInterceptor: {
-    //     allowedList: [`${environment.API_URL}*`],
-    //   }
-    // }),
   ],
   providers: [    
     GoalListResolver,
     TaskItemListResolver,    
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TaskItemModalComponent, ConfirmModalComponent]
+  entryComponents: [TaskItemModalComponent, ConfirmModalComponent,GoalModalComponent]
 })
 export class AppModule { }

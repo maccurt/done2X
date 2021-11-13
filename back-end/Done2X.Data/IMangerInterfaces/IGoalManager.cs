@@ -9,6 +9,7 @@ namespace Done2X.Data.IMangerInterfaces
     {
         public Task<IEnumerable<Goal>> GetGoalList(int projectId);
         public Task<IEnumerable<Goal>> GetGoalList(ClaimsPrincipal user);
-
+        public Task<Goal> Add(Goal goal);
+        public Task<Goal> Update(Goal goal);
     }
 }

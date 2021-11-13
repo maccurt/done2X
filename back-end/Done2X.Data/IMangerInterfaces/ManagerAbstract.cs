@@ -1,5 +1,9 @@
+using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Dommel;
+using Done2X.Domain;
 
 namespace Done2X.Data.IMangerInterfaces
 {
@@ -13,7 +17,5 @@ namespace Done2X.Data.IMangerInterfaces
             _connectionString = connectionString;
         }
 
-        
-        
     }
 }

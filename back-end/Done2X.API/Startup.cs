@@ -56,14 +56,17 @@ namespace Done2X.API
             var connectionString = Configuration.GetConnectionString("Done2X");
 
             //TODO should this be here
+            //TODO move this somewhere else to much noise in here, it should be in Data
             FluentMapper.Initialize(config =>
             {
                 config.AddMap(new TaskItemMap());
                 config.AddMap(new TaskItemStatusMap());
                 config.AddMap(new GoalMap());
+                config.AddMap(new ProjectMap());
                 config.ForDommel();
             });
 
+            //TODO what should we do here singleton or scoped?
             //services.AddSingleton<IDomainManager>(x => new DomainManager(connectionString));
             services.AddScoped<IDomainManager>(x => new DomainManager(connectionString));
 

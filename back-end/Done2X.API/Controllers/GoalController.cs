@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Done2X.Domain;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Done2X.API.Controllers
 {
@@ -15,6 +17,34 @@ namespace Done2X.API.Controllers
         public GoalController(IDomainManager domainManager)
         {
             _domainManager = domainManager;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGoal([FromBody] Goal goal)
+        {
+
+            var canAccessProject = _domainManager.Security.CanAccessProject(goal.ProjectId, User).Result;
+            if (!canAccessProject)
+            {
+                return Unauthorized("Not Authorized For Project");
+            }
+
+            var result = await _domainManager.Goal.Add(goal);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateGoal([FromBody] Goal goal)
+        {
+
+            var canAccessProject = _domainManager.Security.CanAccessProject(goal.ProjectId, User).Result;
+            if (!canAccessProject)
+            {
+                return Unauthorized("Not Authorized For Project");
+            }
+
+            var result = await _domainManager.Goal.Update(goal);
+            return Ok(result);
         }
 
         [HttpGet]

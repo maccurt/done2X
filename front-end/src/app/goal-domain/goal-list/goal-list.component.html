@@ -1,13 +1,20 @@
 <div class="container">
+    
     <div class="row">
-        <h1>Goals</h1><br><br><br>        
-        <hr>
-
+        <div class="col-9">
+            <h1>Goals</h1>
+        </div>
+        <div class="col-3 ">
+            <button id="add-goal" (click)="addGoal()" class="btn btn-primary float-end">Add Goal</button>
+        </div>
+    </div>
+    <hr>
+    
+    <div class="row">
         <div *ngFor="let g of goalList" class="col-3">
-
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h4 class="card-title">{{g.name}}</h4>
+                    <h4 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h4>
                     <p class="card-text description ">{{g.description}}</p>
                     <h5>What Is Done?</h5>
                     <p class="card-text what-is-done">{{g.whatIsDone}}</p>
@@ -16,6 +23,6 @@
             </div>
             <br>
         </div>
-
     </div>
+
 </div>

@@ -6,5 +6,6 @@ namespace Done2X.Data.IMangerInterfaces
         public ICodeManager Code { get; set; }
         public IGoalManager Goal { get; set; }
         public IAppSecurityManager Security { get; set; }
+        public IProjectManager Project { get; set; }
     }
 }

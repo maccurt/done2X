@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Claims;
@@ -24,7 +25,7 @@ namespace Done2X.Data
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
             var list = await connection.SelectAsync<Goal>(g => g.ProjectId == projectId);
-            
+
             return list;
         }
 
@@ -36,5 +37,25 @@ namespace Done2X.Data
             var goalList = await connection.QueryAsync<Goal>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
             return goalList;
         }
+
+        public async Task<Goal> Update(Goal goal)
+        {
+            goal.UpdatedDate = DateTime.Now;
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            await connection.UpdateAsync(goal);
+            return goal;
+        }
+
+        public async Task<Goal> Add(Goal goal)
+        {
+            goal.CreatedDate = DateTime.Now;
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var id = await connection.InsertAsync(goal);
+            goal.Id = Convert.ToInt32(id);
+            return goal;
+        }
+
     }
 }

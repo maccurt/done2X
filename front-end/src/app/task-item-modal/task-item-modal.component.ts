@@ -19,6 +19,7 @@ export class TaskItemModalComponent implements OnInit, OnDestroy {
   getTaskItemStatusSub$!: Subscription;
   taskItemStatusControl!: FormControl;
   priorityControl!: FormControl;
+  showErrors: boolean = false;
 
   taskItemStatusList: Code[] = [];
   priorityList: Code[] = [];
@@ -64,16 +65,19 @@ export class TaskItemModalComponent implements OnInit, OnDestroy {
 
   public save(): void {
     if (this.formGroup.valid) {
-      Object.assign(this.taskItem, this.formGroup.value)      
+      Object.assign(this.taskItem, this.formGroup.value)
       this.taskItem.taskItemStatusId = this.taskItemStatusControl.value.id;
       this.taskItem.priority = this.priorityControl.value.id;
       this.dialogRef.close(this.taskItem)
     }
+    else {
+      this.showErrors = true;
+    }
   }
 
+  //TODO this is repeated find common place for it
   isInvalid = (control: AbstractControl): boolean => {
-    return (control.touched && control.invalid)
-    // return (control.touched && control.invalid) || (this.control.invalid && this.showErrors);
+    return (control.touched && control.invalid || control.invalid && this.showErrors);
   }
 
   ngOnDestroy(): void {

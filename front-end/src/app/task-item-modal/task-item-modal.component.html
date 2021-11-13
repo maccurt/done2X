@@ -2,12 +2,9 @@
     <form class="form-group" [formGroup]="formGroup">
 
         <div class="mb-3" [ngClass]="{'has-error':(isInvalid(nameControl))}">
-            <label for="name" class="form-label">Name</label>
-            <input id="name" type="text" [name]="nameControl" autocomplete="off" [formControl]="nameControl"
-                class="form-control">
-            <div class='input-error'>
-                required
-            </div>
+            <label for="name" class="form-label">Task</label><span class="validation-hint float-end">required</span>
+            <textarea id="name" [name]="nameControl" maxlength="150" style="resize:none;" rows="2" cols="150"
+                autocomplete="off" [formControl]="nameControl" class="form-control"></textarea>
         </div>
 
         <div class="row">
@@ -18,19 +15,19 @@
                     <option *ngFor='let p of priorityList' [ngValue]='p'>{{p.name}}</option>
                 </select>
             </div>
-    
+
             <div class="mb-3 col">
                 <label for="taskItemStatus" class="form-label">Status</label>
                 <select id="task-item-status" formControlName="taskItemStatus" class="form-control">
                     <option *ngFor='let s of taskItemStatusList' [ngValue]='s'>{{s.name}}</option>
                 </select>
             </div>
-        </div>        
+        </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea id="description" [name]="descriptionControl" maxlength="500" style="resize:none;" rows="3" cols="150"
-                autocomplete="off" [formControl]="descriptionControl" class="form-control"></textarea>
+            <textarea id="description" [name]="descriptionControl" maxlength="500" style="resize:none;" rows="3"
+                cols="150" autocomplete="off" [formControl]="descriptionControl" class="form-control"></textarea>
         </div>
 
         <mat-dialog-actions align="end">
