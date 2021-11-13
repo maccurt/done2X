@@ -10,9 +10,9 @@
     </div>
     <hr>
     
-    <div class="row">
+    <div id="goal-list" class="row">
         <div *ngFor="let g of goalList" class="col-3">
-            <div class="card" style="width: 18rem;">
+            <div id="goal-{{g.id}}" class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h4 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h4>
                     <p class="card-text description ">{{g.description}}</p>
