@@ -21,11 +21,21 @@ namespace Done2X.UnitTest
             _taskItemController = new TaskItemController(_domainManager);
         }
 
-        [Test]
-        public async Task AddTaskItem_IsIsGreaterOrEqualTo1_BadRequest()
+        [TestCase(1)]
+        [TestCase(2)]
+        public async Task AddTaskItem_IdIsInvalid_BadRequest(int id)
         {
-            var taskItem = new TaskItem { Id = 1 };
+            var taskItem = new TaskItem { Id = id };
             var response = await _taskItemController.AddTaskItem(taskItem);
+            Assert.IsInstanceOf<BadRequestObjectResult>(response);
+        }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public async Task UpdateTaskItem_IdIsInvalid_BadRequest(int id)
+        {
+            var taskItem = new TaskItem { Id = id };
+            var response = await _taskItemController.UpdateTaskItem(taskItem);
             Assert.IsInstanceOf<BadRequestObjectResult>(response);
         }
 

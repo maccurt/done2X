@@ -26,5 +26,6 @@ namespace Done2X.Data
         public IGoalManager Goal { get; set; }
         public IAppSecurityManager Security { get; set; }
         public IProjectManager Project { get; set; }
+        
     }
 }

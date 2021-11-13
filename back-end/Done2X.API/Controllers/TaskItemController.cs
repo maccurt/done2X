@@ -36,7 +36,7 @@ namespace Done2X.API.Controllers
         {
             if (taskItem.Id >= 1)
             {
-                return BadRequest("Task.Id is invalid. Task may already exist.");
+                return BadRequest("Id is invalid. Task may already exist.");
             }
 
             if (!await _domainManager.Security.CanAccessGoal(taskItem.GoalId, User))
@@ -52,7 +52,7 @@ namespace Done2X.API.Controllers
         {
             if (taskItem.Id <= 1)
             {
-                return BadRequest("Task.Id is invalid.");
+                return BadRequest("Id is invalid.");
             }
 
             var canAlterTask = await _domainManager.Security.CanAlterTaskItem(taskItem.Id, User);

@@ -23,6 +23,12 @@ namespace Done2X.API.Controllers
         public async Task<IActionResult> AddGoal([FromBody] Goal goal)
         {
 
+            if (goal.Id >= 1)
+            {
+                return BadRequest("Id is invalid. Task may already exist.");
+            }
+
+
             var canAccessProject = _domainManager.Security.CanAccessProject(goal.ProjectId, User).Result;
             if (!canAccessProject)
             {
@@ -36,6 +42,10 @@ namespace Done2X.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateGoal([FromBody] Goal goal)
         {
+            if (goal.Id <= 1)
+            {
+                return BadRequest("Id is invalid.");
+            }
 
             var canAccessProject = _domainManager.Security.CanAccessProject(goal.ProjectId, User).Result;
             if (!canAccessProject)
@@ -53,7 +63,6 @@ namespace Done2X.API.Controllers
             var list = await _domainManager.Goal.GetGoalList(User);
             return Ok(list);
         }
-
 
         [HttpGet]
         [Route("project/{projectId}")]
