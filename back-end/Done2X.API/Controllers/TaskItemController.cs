@@ -34,6 +34,11 @@ namespace Done2X.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTaskItem([FromBody] TaskItem taskItem)
         {
+            if (taskItem.Id >= 1)
+            {
+                return BadRequest("Task.Id is invalid. Task may already exist.");
+            }
+
             if (!await _domainManager.Security.CanAccessGoal(taskItem.GoalId, User))
             {
                 return Unauthorized();
@@ -45,6 +50,11 @@ namespace Done2X.API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateTaskItem([FromBody] TaskItem taskItem)
         {
+            if (taskItem.Id <= 1)
+            {
+                return BadRequest("Task.Id is invalid.");
+            }
+
             var canAlterTask = await _domainManager.Security.CanAlterTaskItem(taskItem.Id, User);
             if (!canAlterTask)
             {
