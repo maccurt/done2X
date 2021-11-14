@@ -62,7 +62,7 @@ describe('goal-form-validation.spec.js', () => {
 
     });
 
-    describe('click on save without any field being feeled out', () => {
+    describe('click on save without any field being filled out', () => {
 
         before(() => {
             cy.interceptGoalList();

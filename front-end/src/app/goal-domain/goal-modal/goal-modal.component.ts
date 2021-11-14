@@ -27,18 +27,14 @@ export class GoalModalComponent implements OnInit {
     public formControlService: FormControlService) {
     this.goal = goal;
   }
-
-
+  
   ngOnInit(): void {
 
     this.minimumTargetCompletionDate = new Date();
-
     this.nameControl = new FormControl(this.goal.name, Validators.required);
     this.descriptionControl = new FormControl(this.goal.description, Validators.required);
     this.whatIsDoneControl = new FormControl(this.goal.whatIsDone, Validators.required);
     this.targetCompletionDateControl = new FormControl(this.goal.targetCompletionDate, Validators.required);
-    
-    
 
     this.formGroup = new FormGroup({
       name: this.nameControl,
