@@ -2,16 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Goal } from './goal.type';
 
-export class Goal {
-  id!: number;
-  projectId!: number;
-  name!: string;
-  description!: string;
-  whatIsDone!: string;
-  createdDate!: Date;
-
-}
 
 @Injectable({
   providedIn: 'root'

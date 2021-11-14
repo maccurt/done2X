@@ -14,10 +14,14 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { AuthButtonComponent } from './auth-button/auth-button.component';
 import { GoalListResolver } from './resolvers/goal-list.resolver';
 import { TaskItemListResolver } from './resolvers/task-item-list.resolver';
-import { AppAuthGuard } from './guards/app-auth.guard';
 import { SecurityModule } from './security-routing-module';
 import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
 import { GoalModalComponent } from './goal-domain/goal-modal/goal-modal.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 
 @NgModule({
   declarations: [
@@ -38,13 +42,17 @@ import { GoalModalComponent } from './goal-domain/goal-modal/goal-modal.componen
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
     SecurityModule
   ],
-  providers: [    
+  providers: [
     GoalListResolver,
-    TaskItemListResolver,    
+    TaskItemListResolver,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TaskItemModalComponent, ConfirmModalComponent,GoalModalComponent]
+  entryComponents: [TaskItemModalComponent, ConfirmModalComponent, GoalModalComponent]
 })
 export class AppModule { }

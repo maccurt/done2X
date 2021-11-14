@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { GoalModalComponent } from '../goal-modal/goal-modal.component';
-import { Goal, GoalService } from '../goal.service';
+import { GoalService } from '../goal.service';
+import { Goal } from '../goal.type';
 
 @Component({
   selector: 'app-goal-list',

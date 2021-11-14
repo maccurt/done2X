@@ -1,7 +1,7 @@
 <div id="goal-modal" style="width:450px;">
     <form class="form-group" [formGroup]="formGroup">
 
-        <div class="mb-3" [ngClass]="{'has-error':(isInvalid(nameControl))}">
+        <div class="mb-3" [ngClass]="{'has-error':(formControlService.isInvalid(nameControl))}">
             <label for="name" class="form-label">What Is The Goal?</label>
             <span class="input-help">short and precise is best</span>
             <span class="validation-hint float-end">required</span>
@@ -10,19 +10,40 @@
             </textarea>
         </div>
 
-        <div class="mb-3" [ngClass]="{'has-error':(isInvalid(descriptionControl))}">
+        <div class="mb-3" [ngClass]="{'has-error':(formControlService.isInvalid(descriptionControl))}">
             <label for="description" class="form-label">Description</label><span
                 class="validation-hint float-end">required</span>
             <textarea id="description" [name]="descriptionControl" maxlength="500" style="resize:none;" rows="3"
                 cols="150" autocomplete="off" [formControl]="descriptionControl" class="form-control"></textarea>
         </div>
 
-        <div class="mb-3" [ngClass]="{'has-error':(isInvalid(whatIsDoneControl))}">
+        <div class="mb-3" [ngClass]="{'has-error':(formControlService.isInvalid(whatIsDoneControl))}">
             <label for="what-is-done" class="form-label">What Makes It Done?</label><span
                 class="validation-hint float-end">required</span>
             <textarea id="what-is-done" [name]="whatIsDoneControl" maxlength="150" style="resize:none;" rows="2"
                 cols="150" autocomplete="off" [formControl]="whatIsDoneControl" class="form-control"></textarea>
         </div>
+
+        <div class="row g-3">
+
+            <div class="mb-3 col-6">
+                <div style="display: inline-block;"
+                    [ngClass]="{'has-error': (formControlService.isInvalid(completionTargetDateControl))}">
+                    <label class="form-label">Target Completion Date</label>
+                    <input type="text" [min]="minimumTargetCompletionDate" class="form-control date-control"
+                        name="completionTargetDateControl" [formControl]="completionTargetDateControl"
+                        formControlName="completionTargetDate" matInput [matDatepicker]="targetCompletionDate" 
+                        [min]="minimumTargetCompletionDate"                        
+                        >
+                </div>
+                
+                <div style="display: inline-block;">
+                    <mat-datepicker-toggle [for]="targetCompletionDate"></mat-datepicker-toggle>
+                    <mat-datepicker #targetCompletionDate></mat-datepicker>
+                </div>
+            </div>
+        </div>
+
 
         <mat-dialog-actions align="end">
             <button id="save" mat-button type="button" class="btn btn-primary" (click)="save()">Save</button>

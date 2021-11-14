@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Goal } from '../goal.service';
+import { FormControlService } from 'src/app/form-control.service';
+import { Goal } from '../goal.type';
+
 
 @Component({
   selector: 'app-goal-modal',
@@ -15,22 +17,32 @@ export class GoalModalComponent implements OnInit {
   nameControl!: FormControl;
   descriptionControl!: FormControl;
   whatIsDoneControl!: FormControl;
-  showErrors: boolean = false;  
+  showErrors: boolean = false;
+  completionTargetDateControl!: FormControl;
+  minimumTargetCompletionDate!:Date;
+  maxTargetCompletionDate!: Date;
 
-  constructor(private dialogRef: MatDialogRef<GoalModalComponent>, @Inject(MAT_DIALOG_DATA) goal: Goal) {
+  constructor(private dialogRef: MatDialogRef<GoalModalComponent>,
+    @Inject(MAT_DIALOG_DATA) goal: Goal,
+    public formControlService: FormControlService) {
     this.goal = goal;
   }
+
 
   ngOnInit(): void {
 
     this.nameControl = new FormControl(this.goal.name, Validators.required);
     this.descriptionControl = new FormControl(this.goal.description, Validators.required);
     this.whatIsDoneControl = new FormControl(this.goal.whatIsDone, Validators.required);
+    this.completionTargetDateControl = new FormControl(new Date(), Validators.required);
+    this.minimumTargetCompletionDate = new Date(Date.now());
+    
 
     this.formGroup = new FormGroup({
       name: this.nameControl,
       description: this.descriptionControl,
-      whatIsDone: this.whatIsDoneControl
+      whatIsDone: this.whatIsDoneControl,
+      completionTargetDate: this.completionTargetDateControl
     });
   }
 
@@ -47,12 +59,8 @@ export class GoalModalComponent implements OnInit {
   }
 
   cancel(): void {
+    console.log(this.completionTargetDateControl.valid);
     this.dialogRef.close()
   }
 
-  //TODO this is repeated find common place for it
-  isInvalid = (control: AbstractControl): boolean => {
-    return (control.touched && control.invalid || control.invalid && this.showErrors);    
-  }
-  
 }
