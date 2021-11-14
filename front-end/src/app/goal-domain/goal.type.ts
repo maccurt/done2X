@@ -4,5 +4,6 @@ export class Goal {
     name!: string;
     description!: string;
     whatIsDone!: string;
+    targetCompletionDate:Date = new Date();
     createdDate!: Date;
   }

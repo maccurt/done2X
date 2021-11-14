@@ -18,7 +18,7 @@ export class GoalModalComponent implements OnInit {
   descriptionControl!: FormControl;
   whatIsDoneControl!: FormControl;
   showErrors: boolean = false;
-  completionTargetDateControl!: FormControl;
+  targetCompletionDateControl!: FormControl;
   minimumTargetCompletionDate!:Date;
   maxTargetCompletionDate!: Date;
 
@@ -31,18 +31,20 @@ export class GoalModalComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.minimumTargetCompletionDate = new Date();
+
     this.nameControl = new FormControl(this.goal.name, Validators.required);
     this.descriptionControl = new FormControl(this.goal.description, Validators.required);
     this.whatIsDoneControl = new FormControl(this.goal.whatIsDone, Validators.required);
-    this.completionTargetDateControl = new FormControl(new Date(), Validators.required);
-    this.minimumTargetCompletionDate = new Date(Date.now());
+    this.targetCompletionDateControl = new FormControl(this.goal.targetCompletionDate, Validators.required);
+    
     
 
     this.formGroup = new FormGroup({
       name: this.nameControl,
       description: this.descriptionControl,
       whatIsDone: this.whatIsDoneControl,
-      completionTargetDate: this.completionTargetDateControl
+      targetCompletionDate: this.targetCompletionDateControl
     });
   }
 
@@ -58,9 +60,7 @@ export class GoalModalComponent implements OnInit {
     }
   }
 
-  cancel(): void {
-    console.log(this.completionTargetDateControl.valid);
+  cancel(): void {    
     this.dialogRef.close()
   }
-
 }
