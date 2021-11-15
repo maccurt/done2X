@@ -18,6 +18,8 @@
                     <p class="card-text description ">{{g.description}}</p>
                     <h5>What Is Done?</h5>
                     <p class="card-text what-is-done">{{g.whatIsDone}}</p>
+                    <h5>Target Completion Date</h5>
+                    <p>{{g.targetCompletionDate | date:'MM/dd/yyyy'  }}</p>
                     <a routerLink="/task-list/{{g.id}}" class="card-link">See Task</a>
                 </div>
             </div>

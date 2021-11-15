@@ -10,5 +10,7 @@ namespace Done2X.Domain
         public string Description { get; set; }
         public string WhatIsDone { get; set; }
         public DateTimeOffset TargetCompletionDate { get; set; }
+        public bool IsCompleted { get; set; }
+        public DateTimeOffset? CompletionDate { get; set; }
     }
 }

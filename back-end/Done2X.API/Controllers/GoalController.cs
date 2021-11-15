@@ -1,9 +1,9 @@
-﻿using Done2X.Data.IMangerInterfaces;
+﻿using System.Linq;
+using Done2X.Data.IMangerInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Done2X.Domain;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Done2X.API.Controllers
 {
@@ -22,12 +22,10 @@ namespace Done2X.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGoal([FromBody] Goal goal)
         {
-
             if (goal.Id >= 1)
             {
                 return BadRequest("Id is invalid. Task may already exist.");
             }
-
 
             var canAccessProject = _domainManager.Security.CanAccessProject(goal.ProjectId, User).Result;
             if (!canAccessProject)
@@ -61,7 +59,7 @@ namespace Done2X.API.Controllers
         public async Task<IActionResult> GetGoalList()
         {
             var list = await _domainManager.Goal.GetGoalList(User);
-            return Ok(list);
+            return Ok(list.OrderBy(g => g.TargetCompletionDate));
         }
 
         [HttpGet]

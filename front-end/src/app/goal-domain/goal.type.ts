@@ -5,5 +5,7 @@ export class Goal {
     description!: string;
     whatIsDone!: string;
     targetCompletionDate:Date = new Date();
+    isCompleted:boolean = false;
+    completionDate?:Date;
     createdDate!: Date;
   }
