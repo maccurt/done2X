@@ -25,8 +25,8 @@
                             <h5>Target Completion Date</h5>
                             <p>{{g.targetCompletionDate | date:'MM/dd/yyyy' }}</p>
                             <div class="action-link-container">                                
-                                <a routerLink="/task-list/{{g.id}}">See Task</a>
-                                <a (click)="completeGoal(g)">Complete</a>
+                                <a class="see-task" routerLink="/task-list/{{g.id}}">See Task</a>
+                                <a class="complete" (click)="completeGoal(g)">Complete</a>
                             </div>
                         </div>
                     </div>

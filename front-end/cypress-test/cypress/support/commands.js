@@ -25,6 +25,16 @@ Cypress.Commands.add('interceptGoalAdd', (goal) => {
     .as('interceptGoalAdd');
 })
 
+
+Cypress.Commands.add('interceptGoalUpdate', (goal) => {
+  cy.intercept(
+    {
+      method: 'PUT',
+      url: 'http://localhost/Done2X.API/api/goal',
+    }, goal)
+    .as('interceptGoalUpdate');
+})
+
 Cypress.Commands.add('interceptDefaultProject', (taskItem) => {
   cy.intercept({
     method: 'GET',

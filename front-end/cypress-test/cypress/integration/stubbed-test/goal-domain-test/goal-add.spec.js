@@ -1,7 +1,6 @@
 describe('goal-add.spec.js', () => {
-
     describe('add a new goal', () => {
-
+        
         before(() => {
             cy.interceptGoalList();
             cy.visit('/goal-list');
