@@ -13,7 +13,7 @@
     <div class="row">
 
         <div class="col-9">
-            <div class="row">
+            <div  id="goal-list-not-completed" class="row">
 
                 <div *ngFor="let g of goalListNotCompleted" class="col-4">
                     <div id="goal-{{g.id}}" class="card" style="width: 18rem;">
@@ -37,7 +37,7 @@
 
         <div class="col-3">
 
-            <div class="row">
+            <div id="goal-list-completed" class="row">
 
                 <div *ngFor="let g of goalListCompleted" class="col-12">
                     <div id="goal-{{g.id}}" class="card goal-completed" style="width: 18rem;">

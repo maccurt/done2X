@@ -3,14 +3,33 @@
         "id": 1,
         "name": "Goal 1",
         "description": "Description for goal 1",
+        "whatIsDone": "What is done text 1",
         "createdDate": "2021-11-07T08:18:09.03",
-        "updatedDate": "2021-11-07T08:18:09.03"
+        "updatedDate": "2021-11-07T08:18:09.03",
+        "completionDate": null,
+        "targetCompletionDate": "2021-12-10T00:00:00-06:00",
+        "isCompleted": false
     },
     {
         "id": 2,
         "name": "Goal 2",
         "description": "Description for goal 2",
+        "whatIsDone": "What is done text 2",
         "createdDate": "2021-11-07T08:18:47.84",
-        "updatedDate": null
+        "updatedDate": null,
+        "completionDate": null,
+        "targetCompletionDate": "2021-12-10T00:00:00-06:00",
+        "isCompleted": false
+    },
+    {
+        "id": 3,
+        "name": "Goal 3 Completed",
+        "description": "Description for goal 3",
+        "whatIsDone": "What is done text 3",
+        "createdDate": "2021-11-07T08:18:47.84",
+        "updatedDate": "2021-11-07T08:18:47.84",
+        "completionDate": "2021-12-07T08:18:47.84",
+        "targetCompletionDate": "2021-13-10T00:00:00-06:00",
+        "isCompleted": true
     }
 ]

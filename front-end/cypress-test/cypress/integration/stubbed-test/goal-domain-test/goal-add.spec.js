@@ -1,4 +1,4 @@
-describe('goal-modal-validation.js', () => {
+describe('goal-add.spec.js', () => {
 
     describe('add a new goal', () => {
 
@@ -14,14 +14,13 @@ describe('goal-modal-validation.js', () => {
             })
         });
 
-        it('should behave...', () => {
-
+        it('goal should exist in not completed laned', () => {
             cy.fixture('goal').then((goal) => {
                 goal.id = 101;
                 cy.interceptGoalAdd(goal);
                 cy.get('#save').click();
                 cy.wait('@interceptGoalAdd');
-                cy.get('#goal-list').find('#goal-101').should('exist');
+                cy.get('#goal-list-not-completed').find('#goal-101').should('exist');
             });
         });
     });

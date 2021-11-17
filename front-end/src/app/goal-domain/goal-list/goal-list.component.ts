@@ -58,7 +58,8 @@ export class GoalListComponent implements OnInit {
     this.showGoalModal(new Goal()).afterClosed().subscribe((modalGoal) => {
       if (modalGoal) {
         this.addGoalSub$ = this.goalService.addGoal(modalGoal).subscribe((response) => {
-          this.goalList.push(response);
+          this.goalListNotCompleted.push(response);
+          //this.goalList.push(response);
         })
       }
     });
