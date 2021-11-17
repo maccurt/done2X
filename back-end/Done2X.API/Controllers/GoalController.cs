@@ -59,7 +59,7 @@ namespace Done2X.API.Controllers
         public async Task<IActionResult> GetGoalList()
         {
             var list = await _domainManager.Goal.GetGoalList(User);
-            return Ok(list.OrderBy(g => g.TargetCompletionDate));
+            return Ok(list.OrderByDescending(g => g.TargetCompletionDate));
         }
 
         [HttpGet]
@@ -72,7 +72,7 @@ namespace Done2X.API.Controllers
                 return Unauthorized("Not Authorized For Project");
             }
             var list = await _domainManager.Goal.GetGoalList(projectId);
-            return Ok(list);
+            return Ok(list.OrderByDescending(g=>g.TargetCompletionDate));
         }
     }
 }

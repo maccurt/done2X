@@ -41,6 +41,11 @@ namespace Done2X.Data
         public async Task<Goal> Update(Goal goal)
         {
             goal.UpdatedDate = DateTime.Now;
+            if (goal.IsCompleted)
+            {
+                goal.CompletionDate = goal.UpdatedDate;
+            }
+            
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
             await connection.UpdateAsync(goal);

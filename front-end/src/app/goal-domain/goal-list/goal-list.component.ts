@@ -14,8 +14,11 @@ import { Goal } from '../goal.type';
 export class GoalListComponent implements OnInit {
 
   goalList: Goal[] = [];
+  goalListCompleted: Goal[] = [];
+  goalListNotCompleted: Goal[] = [];
   routeData$!: Subscription;
   addGoalSub$!: Subscription;
+  updateGoalSub$!: Subscription;
 
   constructor(private goalService: GoalService,
     private route: ActivatedRoute,
@@ -25,6 +28,29 @@ export class GoalListComponent implements OnInit {
   public ngOnInit(): void {
     this.routeData$ = this.route.data.subscribe((data) => {
       this.goalList = data.goalList;
+      this.filterGoalList(this.goalList);
+    })
+  }
+
+  public filterGoalList(goalList: Goal[]) {
+    this.goalListCompleted = goalList.filter((g) => {
+      return g.isCompleted
+    });
+
+    this.goalListNotCompleted = goalList.filter((g) => {
+      return !g.isCompleted
+    });
+  }
+
+  public completeGoal(goal: Goal) {
+    goal.isCompleted = true;
+    this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
+
+      const index = this.goalListNotCompleted.indexOf(goal);
+      if (index > -1) {
+        this.goalListNotCompleted.splice(index, 1);
+      }
+      this.goalListCompleted.push(goal);
     })
   }
 
@@ -42,7 +68,7 @@ export class GoalListComponent implements OnInit {
 
     this.showGoalModal(goal).afterClosed().subscribe((modalGoal) => {
       if (modalGoal) {
-        this.addGoalSub$ = this.goalService.updateGoal(modalGoal).subscribe((response) => {
+        this.updateGoalSub$ = this.goalService.updateGoal(modalGoal).subscribe((response) => {
         })
       }
     });

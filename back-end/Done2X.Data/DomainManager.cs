@@ -20,7 +20,7 @@ namespace Done2X.Data
             this.Project = new ProjectManager(connectionString);
 
         }
-
+            
         public ITaskItemManager TaskItem { get; set; }
         public ICodeManager Code { get; set; }
         public IGoalManager Goal { get; set; }
