@@ -30,7 +30,7 @@
                 <div style="display: inline-block;"
                     [ngClass]="{'has-error': (formControlService.isInvalid(targetCompletionDateControl,showErrors))}">
                     <label class="form-label">Target Completion Date</label>
-                    <input type="text" [min]="minimumTargetCompletionDate" class="form-control date-control"
+                    <input id="target-completion-date" type="text" [min]="minimumTargetCompletionDate" class="form-control date-control"
                         name="targetCompletionDateControl" [formControl]="targetCompletionDateControl"
                         formControlName="targetCompletionDate" matInput [matDatepicker]="targetCompletionDate" 
                         [min]="minimumTargetCompletionDate"                        

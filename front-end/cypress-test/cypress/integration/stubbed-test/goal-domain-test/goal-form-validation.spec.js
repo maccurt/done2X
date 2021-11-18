@@ -7,20 +7,6 @@ describe('goal-form-validation.spec.js', () => {
         cy.get('#add-goal').click();
     });
 
-    // describe('baseline', () => {
-    //     it('what is the goal error should not be visible', () => {
-    //         cy.get('#name').parent().find('.validation-hint').should('exist').should('not.be.visible');
-    //     });
-
-    //     it('description should not be visible', () => {
-    //         cy.get('#description').parent().find('.input-error').should('exist').should('not.be.visible');
-    //     });
-
-    //     it('what is done error should not be visible', () => {
-    //         cy.get('#what-is-done').parent().find('.input-error').should('exist').should('not.be.visible');
-    //     });
-    // });
-
     describe('focus on each required input and blur/tab off', () => {
 
         before(() => {
@@ -60,6 +46,36 @@ describe('goal-form-validation.spec.js', () => {
             });
         });
 
+        describe('target completion date clear out', () => {
+
+            before(() => {
+                cy.get('#target-completion-date').clear().blur();
+            });
+
+            it('it should show error', () => {
+                //TODO revisit this and make function if need be in
+                //future this might have the required hint
+                cy.get('#target-completion-date').parent().should('have.class', 'has-error');                
+                cy.get('#target-completion-date').should('have.css', 'background-color').and('be.colored', '#ffe6e6');                
+                cy.get('#target-completion-date').should('have.css', 'border', '1px solid rgb(255, 0, 0)');
+            });
+
+        });
+
+        describe('target completion date put in invalid date 01/17/20', () => {
+
+            before(() => {
+                cy.get('#target-completion-date').clear().type('01/17/20');
+            });
+
+            it('it should show error', () => {
+                //TODO revisit this and make function if need be in
+                //future this might have the required hint                
+                cy.get('#target-completion-date').parent().should('have.class', 'has-error');                
+                cy.get('#target-completion-date').should('have.css', 'background-color').and('be.colored', '#ffe6e6');                
+                cy.get('#target-completion-date').should('have.css', 'border', '1px solid rgb(255, 0, 0)');
+            });
+        });
     });
 
     describe('click on save without any field being filled out', () => {
