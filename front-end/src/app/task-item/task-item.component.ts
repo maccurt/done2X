@@ -19,7 +19,7 @@ export class TypeClickEvent<Type> {
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.less']
+  styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent {
 

@@ -21,6 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BreakPointTesterComponent } from './break-point-tester/break-point-tester.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { MatInputModule } from '@angular/material/input';
     ConfirmModalComponent,
     AuthButtonComponent,
     GoalListComponent,
-    GoalModalComponent
+    GoalModalComponent,
+    BreakPointTesterComponent
   ],
   imports: [
     BrowserModule,

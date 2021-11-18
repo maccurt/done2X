@@ -8,7 +8,7 @@ import { TaskItem } from '../task-item/task-item.type';
 @Component({
   selector: 'app-task-item-modal',
   templateUrl: './task-item-modal.component.html',
-  styleUrls: ['./task-item-modal.component.less']
+  styleUrls: ['./task-item-modal.component.scss']
 })
 export class TaskItemModalComponent implements OnInit, OnDestroy {
 

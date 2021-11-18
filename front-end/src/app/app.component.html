@@ -5,7 +5,7 @@
 <div class="container" *ngIf="authService.isLoading$ | async; else loaded">
     loading..
 </div>
-
+<app-break-point-tester></app-break-point-tester>
 <ng-template #loaded >
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
