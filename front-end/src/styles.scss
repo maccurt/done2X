@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./customize-bootstrap.scss";
+@import "./variables";
+
 html,
 body {
   height: 100%;
@@ -8,6 +11,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.app-modal {
+  max-width: 450px;
+  
+}
 mat-dialog-actions {
   button {
     margin-left: 20px;
@@ -15,24 +22,24 @@ mat-dialog-actions {
   }
 }
 
-.form-label{
+.form-label {
   font-weight: bold;
 }
 
-.action-link-container{
+.action-link-container {
   text-align: right;
   border-top: 1px solid #cccccc;
   margin-top: 15px;
-  padding-top: 5px;   
-  a{
+  padding-top: 5px;
+  a {
     text-decoration: none !important;
-    cursor:default !important;
+    cursor: default !important;
     margin-left: 10px;
-    color:black;
+    color: black;
   }
   a:hover {
     text-decoration: underline !important;
-  }  
+  }
 }
 
 .input-error {
@@ -40,27 +47,29 @@ mat-dialog-actions {
 }
 
 .has-error {
-  input,textarea {
+  input,
+  textarea {
     background-color: #ffe6e6;
     border: 1px solid red;
   }
   .input-error {
     visibility: visible;
-    color:red;
+    color: red;
   }
 
-  .validation-hint{
-    color:red;
+  .validation-hint {
+    color: red;
   }
 }
 
-.input-help,.validation-hint{  
-  color:#333333;
+.input-help,
+.validation-hint {
+  color: #333333;
 }
-.input-help{  
-  margin-left:4px;
+.input-help {
+  margin-left: 4px;
 }
 
-.date-control{
+.date-control {
   width: 175px;
 }

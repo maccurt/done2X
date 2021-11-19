@@ -8,7 +8,7 @@ import { Goal } from '../goal.type';
 @Component({
   selector: 'app-goal-modal',
   templateUrl: './goal-modal.component.html',
-  styleUrls: ['./goal-modal.component.less']
+  styleUrls: ['./goal-modal.component.scss']
 })
 export class GoalModalComponent implements OnInit {
 

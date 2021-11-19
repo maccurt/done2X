@@ -1,55 +1,84 @@
-<div class="container">
+<div class="container-fluid px-4">
     <form [formGroup]="formGroup">
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label for="goal" class="col-form-label form-label ">Goal</label>
-            </div>
-            <div class="col-3">
+        <div class="row ">
+
+            <div class="form-group col-12 col-md-6 col-xl-4">
+                <label for="goal" class="form-label">Goal</label>
                 <select id="goal" formControlName='goal' class="form-control">
                     <option *ngFor="let g of goalList" [ngValue]="g">{{g.name}}</option>
-                </select>                
+                </select>
             </div>
-            <div class="col-6">
-              <span class="what-is-done">  {{goal.whatIsDone}}</span>
+
+            <div class="form-group col-12 col-md-6 col-xl-8 ">
+                <label for="goal" class="form-label">What Is Done?</label>
+                <div class="what-is-done">
+                    {{goal.whatIsDone}}
+                </div>
             </div>
         </div>
     </form>
-
     <hr>
 
-    <div class="row">
+    <div class="row gx-5">
 
-        <div id="backlog-lane" class="col-xl-4">
-            <div class="header">
-                <span class='title'>Backlog</span>
-                <button id='add-task-to-backlog' type="button" class="btn btn-success header-button"
-                    (click)="addTaskToBacklog()">Add Task To Backlog</button>
+        <div id="backlog-lane" class="col-4 col-xxxl-4">
+
+            <div class="row">
+
+                <div class="header">
+                    <div class='title'>Backlog</div>
+                    <button id='add-task-to-backlog' type="button" class="btn btn-success header-button"
+                        (click)="addTaskToBacklog()">
+                    
+                        <span class="d-none d-md-block">Add Task To Backlog </span>
+                        <span class="d-none d-sm-block d-md-none">Add Task</span>
+                        
+                    
+                    </button>
+                </div>
             </div>
-            <app-task-item *ngFor="let taskItem of taskInBacklog" (actionEvent)="actionEvent($event)"
-                [taskItem]="taskItem"></app-task-item>
+
+
+            <div class="row">
+                <app-task-item class="col-xxxl-6" *ngFor="let taskItem of taskInBacklog"
+                    (actionEvent)="actionEvent($event)" [taskItem]="taskItem"></app-task-item>
+            </div>
         </div>
 
-        <div id='in-progress-lane' class="col-xl-4">
-            <div class='header'>
-                <span class='title'>In Progress</span>
-                <button id='add-task-to-progress' type="button" class="btn btn-primary header-button"
-                    (click)="addTaskToInProgress()">Add Task To In Progress</button>
+        <div id='in-progress-lane' class="col-4 col-xxxl-4">
+
+            <div class="row">
+                <div class="header">
+                    <div class='title'>In Progress</div>
+                    <button id='add-task-to-progress' type="button" class="btn btn-primary header-button"
+                        (click)="addTaskToInProgress()">
+                        
+                        <span class="d-none d-md-block">Add Task To In Progress</span>
+                        <span class="d-none d-sm-block d-md-none">Add Task</span>
+                    
+                    </button>
+                </div>
             </div>
 
-            <app-task-item *ngFor="let taskItem of taskinProgress" (actionEvent)="actionEvent($event)"
-                [taskItem]="taskItem"></app-task-item>
+            <div class="row">
+                <app-task-item class="col-xxxl-6" *ngFor="let taskItem of taskinProgress"
+                    (actionEvent)="actionEvent($event)" [taskItem]="taskItem"></app-task-item>
+            </div>
         </div>
 
-        <div id="completed-lane" class="col-xl-4">
-            <div class="header">
-                <span class='title'>Completed</span>
+        <div id="completed-lane" class="col-4 col-xxxl-4">
+            
+            <div class="row">
+                <div class="header">
+                    <span class='title'>Completed</span>      
+                </div>
             </div>
 
-            <app-task-item *ngFor="let taskItem of taskinCompleted" (actionEvent)="actionEvent($event)"
-                [taskItem]="taskItem"></app-task-item>
-
+            <div class="row">
+                <app-task-item class="col-xxxl-6" *ngFor="let taskItem of taskinCompleted"
+                    (actionEvent)="actionEvent($event)" [taskItem]="taskItem"></app-task-item>
+            </div>
         </div>
 
     </div>
-
 </div>

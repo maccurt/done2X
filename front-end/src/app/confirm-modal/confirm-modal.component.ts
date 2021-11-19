@@ -12,7 +12,7 @@ export class Confirm {
 @Component({
   selector: 'app-confirm-modal',
   templateUrl: './confirm-modal.component.html',
-  styleUrls: ['./confirm-modal.component.less']
+  styleUrls: ['./confirm-modal.component.scss']
 })
 export class ConfirmModalComponent {
 

@@ -1,0 +1,61 @@
+// https://getbootstrap.com/docs/4.0/layout/overview/
+
+// @mixin for-small-and-below {
+//     @media screen and (min-width: 578px) {
+//         @content;
+//     }        
+// }
+
+@mixin for-xsmall(){
+    @media screen and (max-width: 575.98px){
+        @content;
+    }        
+}
+
+@mixin for-small(){
+    @media screen and (min-width: 576px) and (max-width: 767.98px){
+        @content;
+    }        
+}
+
+@mixin for-medium(){
+    @media screen and (min-width: 768px) and (max-width: 991.98px){
+        @content;
+    }        
+}
+
+@mixin for-large(){
+    @media screen and (min-width: 992px) and (max-width: 1199.98px){
+        @content;
+    }        
+}
+
+@mixin for-xlarge(){
+    @media screen and (min-width: 1200px) and (max-width: 1399.98px){
+        @content;
+    }        
+}
+
+@mixin for-medium-and-above(){
+    @media screen and (min-width: 768px) {
+        @content;
+    }        
+}
+
+@mixin for-medium-and-below(){
+    @media screen and (max-width: 768px) {
+        @content;
+    }        
+}
+
+@mixin for-large-and-above(){
+    @media screen and  (min-width: 992px){
+        @content;
+    }        
+}
+
+@mixin for-xl-large-and-above(){
+    @media screen and  (min-width: 1200px){
+        @content;
+    }        
+}

@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container-fluid">
 
     <div class="row">
-        <div class="col-9">
+        <div class="col-9 ">
             <h1>Goals</h1>
         </div>
-        <div class="col-3 ">
+        <div class="col-3">
             <button id="add-goal" (click)="addGoal()" class="btn btn-primary float-end">Add Goal</button>
         </div>
     </div>
@@ -12,19 +12,19 @@
 
     <div class="row">
 
-        <div class="col-9">
-            <div  id="goal-list-not-completed" class="row">
-
-                <div *ngFor="let g of goalListNotCompleted" class="col-4">
-                    <div id="goal-{{g.id}}" class="card" style="width: 18rem;">
+        <div class="col-sm-7 col-md-7 col-lg-9 col-xl-9 col-xxl-9 col-xxxl-9">
+            <h5>Up Next</h5>
+            <div id="goal-list-not-completed" class="row">
+                <div *ngFor="let g of goalListNotCompleted" class="col-sm-12 col-md-12 col-lg-6 col-xxl-4 col-xxxl-3">
+                    <div id="goal-{{g.id}}" class="card" >
                         <div class="card-body">
-                            <h5 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h5>
+                            <h6 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h6>
                             <p class="card-text description ">{{g.description}}</p>
-                            <h5>What Is Done?</h5>
+                            <h6>What Is Done?</h6>
                             <p class="card-text what-is-done">{{g.whatIsDone}}</p>
-                            <h5>Target Completion Date</h5>
+                            <h6>Target Completion Date</h6>
                             <p>{{g.targetCompletionDate | date:'MM/dd/yyyy' }}</p>
-                            <div class="action-link-container">                                
+                            <div class="action-link-container">
                                 <a class="see-task" routerLink="/task-list/{{g.id}}">See Task</a>
                                 <a class="complete" (click)="completeGoal(g)">Complete</a>
                             </div>
@@ -35,20 +35,14 @@
             </div>
         </div>
 
-        <div class="col-3">
-
+        <div class="col-sm-5 col-md-5 col-lg-3 col-xl-3 col-xxl-3 col-xxxl-3">
+            <h5>Completed</h5>
             <div id="goal-list-completed" class="row">
 
-                <div *ngFor="let g of goalListCompleted" class="col-12">
-                    <div id="goal-{{g.id}}" class="card goal-completed" style="width: 18rem;">
+                <div *ngFor="let g of goalListCompleted" class="col-12 col-xxxl-6">
+                    <div id="goal-{{g.id}}" class="card goal-completed">
                         <div class="card-body">
-                            <h5 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h5>
-                            <!-- <p class="card-text description ">{{g.description}}</p>
-                            <h5>What Is Done?</h5>
-                            <p class="card-text what-is-done">{{g.whatIsDone}}</p>
-                            <h5>Target Completion Date</h5>
-                            <p>{{g.targetCompletionDate | date:'MM/dd/yyyy' }}</p>
-                            <a routerLink="/task-list/{{g.id}}" class="card-link">See Task</a> -->
+                            <h6 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h6>
                         </div>
                     </div>
                     <br>
@@ -56,12 +50,6 @@
 
             </div>
         </div>
-
-    </div>
-
-
-    <div id="goal-list-completed">
-
-    </div>
+    </div>    
 
 </div>

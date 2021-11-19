@@ -14,7 +14,7 @@ import { TaskItem } from '../task-item/task-item.type';
 @Component({
   selector: 'app-task-item-list',
   templateUrl: './task-item-list.component.html',
-  styleUrls: ['./task-item-list.component.less']
+  styleUrls: ['./task-item-list.component.scss']
 })
 
 export class TaskItemListComponent implements OnInit, OnDestroy {
