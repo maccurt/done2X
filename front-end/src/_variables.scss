@@ -42,6 +42,12 @@
     }        
 }
 
+@mixin for-medium-and-below(){
+    @media screen and (max-width: 768px) {
+        @content;
+    }        
+}
+
 @mixin for-large-and-above(){
     @media screen and  (min-width: 992px){
         @content;
