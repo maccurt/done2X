@@ -15,6 +15,9 @@ import { GoalService } from '../goal.service';
 import { faCoffee, faEdit, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
+import { Chart } from 'angular-highcharts';
+import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
+import { PieChartData } from "src/app/chart-domain/pie-chart-date-type";
 
 export class Column {
   text!: string;
@@ -49,9 +52,7 @@ export class GoalComponent implements OnInit {
   priorityList: Code[] = [];
 
 
-  //form controls
-  // taskListFormGroup!: FormGroup
-  // taskItemStatusControl!: FormControl;
+  //form controls  
   formGroup!: FormGroup
   nameControl!: FormControl;
   descriptionControl!: FormControl;
@@ -61,6 +62,11 @@ export class GoalComponent implements OnInit {
   minimumTargetCompletionDate!: Date;
   maxTargetCompletionDate!: Date;
   panelOpenState = false;
+
+  //chart
+  completedChart!: Chart;
+
+  //Subscriptions
   updateGoalSub$!: Subscription;
   deleteAfterClosedSub$!: Subscription;
 
@@ -69,6 +75,7 @@ export class GoalComponent implements OnInit {
     private dialog: MatDialog,
     private codeService: CodeService,
     private goalService: GoalService,
+    private chartService: ChartServiceDone2x,
     public formControlService: FormControlService) { }
 
   ngOnInit(): void {
@@ -82,6 +89,8 @@ export class GoalComponent implements OnInit {
       this.taskItemList.forEach((taskItem) => {
         taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
       })
+
+      this.createCompletedChart(this.taskItemList);
 
       this.codeService.GetPriority().subscribe((priorityList) => {
         this.priorityList = priorityList
@@ -101,6 +110,16 @@ export class GoalComponent implements OnInit {
       });
 
     });
+  }
+
+  public createCompletedChart(taskItemList: TaskItem[]) {
+    const completedCount = taskItemList.filter((t) => {
+      return (t.completed)
+    }).length;
+    let pieChartDataList: PieChartData[] = [];
+    pieChartDataList.push({ name: 'Completed', color: '#00FF00', y: completedCount });
+    pieChartDataList.push({ name: 'Not Completed', color: '#FF0000', y: taskItemList.length - completedCount });
+    this.completedChart = this.chartService.getPieChart('Completed', pieChartDataList)
   }
 
   public getPriorityText(taskItem: TaskItem): string {
@@ -144,7 +163,7 @@ export class GoalComponent implements OnInit {
         console.log('response', response);
       })
       this.showErrors = false;
-
+      this.createCompletedChart(this.taskItemList);
     }
     else {
       this.showErrors = true;
@@ -168,6 +187,7 @@ export class GoalComponent implements OnInit {
       this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
         response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
         this.taskItemList.unshift(response);
+        this.createCompletedChart(this.taskItemList);
       });
     })
   }
@@ -190,8 +210,8 @@ export class GoalComponent implements OnInit {
           let index = this.taskItemList.indexOf(taskItem);
           if (index > -1) {
             this.taskItemList.splice(index, 1);
+            this.createCompletedChart(this.taskItemList);
           }
-
         })
       }
     })
@@ -210,6 +230,7 @@ export class GoalComponent implements OnInit {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           Object.assign(taskItem, updatedTask);
           taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
+          this.createCompletedChart(this.taskItemList);
         });
       }
     })
@@ -220,6 +241,7 @@ export class GoalComponent implements OnInit {
     taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;
     this.taskItemService.updateTaskItem(taskItem).subscribe((response) => {
       Object.assign(taskItem, response);
+      this.createCompletedChart(this.taskItemList);
     })
   }
 }

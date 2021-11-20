@@ -28,6 +28,7 @@ import { GoalComponent } from './goal-domain/goal/goal.component';
 import { GoalResolver } from './resolvers/goal-resolver';
 import { TaskItemStatusListResolver } from './resolvers/task-item-status-List-resolver';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatCheckboxModule,
     MatExpansionModule,
     SecurityModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ChartModule
   ],
   providers: [
     GoalResolver,
