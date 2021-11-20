@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { Code, CodeService } from '../code.service';
+import { Code, CodeService } from '../../code.service';
 import { TaskItem } from '../task-item/task-item.type';
 
 @Component({

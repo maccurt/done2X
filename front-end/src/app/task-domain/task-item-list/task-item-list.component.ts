@@ -4,10 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Confirm, ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { Goal } from '../goal-domain/goal.type';
+import { Confirm, ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
+import { Goal } from '../../goal-domain/goal.type';
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
+
 import { TypeAction, TypeClickEvent } from '../task-item/task-item.component';
 import { TaskItem } from '../task-item/task-item.type';
 

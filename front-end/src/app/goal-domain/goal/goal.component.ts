@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Code, CodeService } from 'src/app/code.service';
-import { TaskItemModalComponent } from 'src/app/task-item-modal/task-item-modal.component';
-import { TaskItemService, TaskItemStatus } from 'src/app/task-item.service';
-import { TaskItem } from 'src/app/task-item/task-item.type';
+import { TaskItemModalComponent } from 'src/app/task-domain/task-item-modal/task-item-modal.component';
+
+import { TaskItem } from 'src/app/task-domain/task-item/task-item.type';
 import { Goal } from '../goal.type';
 import { orderBy } from 'lodash';
 import { FormControlService } from 'src/app/form-control.service';
@@ -14,6 +14,7 @@ import { GoalService } from '../goal.service';
 //Icons
 import { faCoffee, faEdit, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
+import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 
 export class Column {
   text!: string;

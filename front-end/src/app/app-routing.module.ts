@@ -8,7 +8,7 @@ import { GoalListResolver } from './resolvers/goal-list.resolver';
 import { GoalResolver } from "./resolvers/goal-resolver";
 import { TaskItemListResolver } from './resolvers/task-item-list.resolver';
 import { TaskItemStatusListResolver } from './resolvers/task-item-status-List-resolver';
-import { TaskItemListComponent } from './task-item-list/task-item-list.component';
+import { TaskItemListComponent } from './task-domain/task-item-list/task-item-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Observable, of } from "rxjs";
-import { TaskItemService } from "../task-item.service";
-import { TaskItem } from "../task-item/task-item.type";
+import { TaskItemService } from "../task-domain/task-item.service";
+
+import { TaskItem } from "../task-domain/task-item/task-item.type";
 
 @Injectable()
 export class TaskItemListResolver implements Resolve<TaskItem[]>{
