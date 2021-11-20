@@ -22,3 +22,4 @@ export class TaskItemListResolver implements Resolve<TaskItem[]>{
         }
     }
 }
+

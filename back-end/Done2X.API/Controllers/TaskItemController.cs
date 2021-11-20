@@ -1,3 +1,4 @@
+using System.Linq;
 using Done2X.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Done2X.API.Controllers
                 return Unauthorized();
             };
             var list = await _domainManager.TaskItem.GetList(goalId);
-            return Ok(list);
+            return Ok(list.OrderBy(t=>t.Priority));
         }
 
         [HttpPost]

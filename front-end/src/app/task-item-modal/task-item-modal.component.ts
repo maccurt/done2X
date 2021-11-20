@@ -63,6 +63,10 @@ export class TaskItemModalComponent implements OnInit, OnDestroy {
     })
   }
 
+  public cancel() {
+    this.dialogRef.close(undefined);
+  }
+  
   public save(): void {
     if (this.formGroup.valid) {
       Object.assign(this.taskItem, this.formGroup.value)

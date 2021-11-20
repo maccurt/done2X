@@ -114,7 +114,8 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
         list = this.taskinCompleted
         break;
     }
-
+    
+    //TODO why -1 here, greater than 0 right?
     if (list.length > -1) {
       let index = list.indexOf(taskItem);
       if (index > -1) {

@@ -20,22 +20,27 @@ export class AppComponent {
   getDefaultProjectSub$!: Subscription;
   constructor(public authService: AuthService, private projectService: ProjectService) {
 
+    //DO NOT CHECK THIS IN
     this.testing = environment.testing
-
-    authService.isAuthenticated$.subscribe((isAuthenticated) => {
-      this.isAuthenticated = isAuthenticated;
-
-      if (this.isAuthenticated) {
-
-        if (!localStorage.getItem('project-id')) {
-
-          this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {
-            console.log('set project to', project);
-            localStorage.setItem('project-id', project.id.toString());
-          });
-        }
-      }
-
+    this.isAuthenticated = true;
+    this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {
+      localStorage.setItem('project-id', project.id.toString());
     });
+
+    //DO NOT CHECK THIS IN
+    // authService.isAuthenticated$.subscribe((isAuthenticated) => {
+    //   this.isAuthenticated = isAuthenticated;
+
+    //   if (this.isAuthenticated) {
+    //     if (!localStorage.getItem('project-id')) {
+
+    //       this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {
+    //         console.log('set project to', project);
+    //         localStorage.setItem('project-id', project.id.toString());
+    //       });
+    //     }
+    //   }
+    // });
+
   }
 }

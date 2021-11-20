@@ -20,6 +20,14 @@ namespace Done2X.Data
             _connectionString = connectionString;
         }
 
+        public async Task<Goal> GetGoal(int goalId)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var goal = await connection.GetAsync<Goal>(goalId);
+            return goal;
+        }
+
         public async Task<IEnumerable<Goal>> GetGoalList(int projectId)
         {
             await using var connection = new SqlConnection(_connectionString);
@@ -45,7 +53,7 @@ namespace Done2X.Data
             {
                 goal.CompletionDate = goal.UpdatedDate;
             }
-            
+
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
             await connection.UpdateAsync(goal);

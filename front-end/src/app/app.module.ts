@@ -9,7 +9,7 @@ import { TaskItemComponent } from './task-item/task-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskItemModalComponent } from './task-item-modal/task-item-modal.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { AuthButtonComponent } from './auth-button/auth-button.component';
 import { GoalListResolver } from './resolvers/goal-list.resolver';
@@ -21,8 +21,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BreakPointTesterComponent } from './break-point-tester/break-point-tester.component';
-
+import { GoalComponent } from './goal-domain/goal/goal.component';
+import { GoalResolver } from './resolvers/goal-resolver';
+import { TaskItemStatusListResolver } from './resolvers/task-item-status-List-resolver';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -35,11 +40,13 @@ import { BreakPointTesterComponent } from './break-point-tester/break-point-test
     AuthButtonComponent,
     GoalListComponent,
     GoalModalComponent,
-    BreakPointTesterComponent
+    BreakPointTesterComponent,
+    GoalComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -48,11 +55,16 @@ import { BreakPointTesterComponent } from './break-point-tester/break-point-test
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    SecurityModule
+    MatCheckboxModule,
+    MatExpansionModule,
+    SecurityModule,
+    FontAwesomeModule
   ],
   providers: [
+    GoalResolver,
     GoalListResolver,
     TaskItemListResolver,
+    TaskItemStatusListResolver
   ],
   bootstrap: [AppComponent],
   entryComponents: [TaskItemModalComponent, ConfirmModalComponent, GoalModalComponent]
