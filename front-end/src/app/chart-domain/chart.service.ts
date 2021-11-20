@@ -79,6 +79,8 @@ export class ChartServiceDone2x {
 
   getPieChart = (title: string, data: PieChartData[]): Chart => {
 
+    //TODO What was the purpose of this? name it so you makes sense
+    //I assume it is removing anything that is not greater than zero?
     let dataSanitized = data.filter((d) => {
       return d.y > 0;
     })
@@ -109,18 +111,21 @@ export class ChartServiceDone2x {
           allowPointSelect: true,
           cursor: 'pointer',
           showInLegend: false,
-          dataLabels: {
-            enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-
+          dataLabels:{
+            enabled:false,
+            distance:0
           }
+          // dataLabels: {
+          //   enabled: true,
+          //   format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          // }
         }
       },
       series: [
         {
           type: 'pie' as any,
           name: '',
-          data: dataSanitized
+          data: dataSanitized,          
         }
       ]
     });
