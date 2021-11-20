@@ -65,7 +65,7 @@ describe('goal-form-validation.spec.js', () => {
         describe('target completion date put in invalid date 01/17/20', () => {
 
             before(() => {
-                cy.get('#target-completion-date').clear().type('01/17/20');
+                cy.get('#target-completion-date').clear().type('01/17/20').blur();
             });
 
             it('it should show error', () => {
