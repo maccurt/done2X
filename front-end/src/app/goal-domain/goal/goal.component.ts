@@ -12,7 +12,7 @@ import { orderBy } from 'lodash';
 import { FormControlService } from 'src/app/form-control.service';
 import { GoalService } from '../goal.service';
 //Icons
-import { faCoffee, faEdit, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { Chart } from 'angular-highcharts';

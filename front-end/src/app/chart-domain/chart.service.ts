@@ -10,7 +10,8 @@ import { PieChartData } from './pie-chart-date-type';
 })
 export class ChartServiceDone2x {
 
-  constructor() { }  
+  constructor() { }
+
 
   getBarChart = (title: string, data: any[], xAxisCategories: any[] = []): Chart => {
 
@@ -36,7 +37,7 @@ export class ChartServiceDone2x {
           x: 0,
           y: -25, /* to be adjusted according to number of bars*/
           style: {
-            width: 350            
+            width: 350
           }
         }
       },
@@ -77,6 +78,49 @@ export class ChartServiceDone2x {
     return chartLocal;
   }
 
+
+  getSimplePieChart = (title: string, y1: number, y2: number): Chart => {
+
+    let pieChartDataList: PieChartData[] = [];
+    pieChartDataList.push({ name: 'Completed', color: '#006666', y: y1 });
+    pieChartDataList.push({ name: 'Not Completed', color: '#999966', y: y2 });
+ 
+    const chartLocal = new Chart({
+      chart: {
+        type: 'pie'
+      },
+      title: {
+        text: title,
+        style: { fontWeight: 'bold' }
+      },
+      credits: {
+        enabled: false
+      },
+      plotOptions: {
+        pie: {
+          innerSize: 75,
+          allowPointSelect: true,
+          cursor: 'pointer',
+          showInLegend: false,
+          dataLabels: {
+            enabled: false,
+            distance: 0
+          }
+        }
+      },
+      series: [
+        {
+          type: 'pie' as any,
+          name: '',
+          data: pieChartDataList,
+        }
+      ]
+    });
+
+    return chartLocal
+
+  }
+
   getPieChart = (title: string, data: PieChartData[]): Chart => {
 
     //TODO What was the purpose of this? name it so you makes sense
@@ -111,9 +155,9 @@ export class ChartServiceDone2x {
           allowPointSelect: true,
           cursor: 'pointer',
           showInLegend: false,
-          dataLabels:{
-            enabled:false,
-            distance:0
+          dataLabels: {
+            enabled: false,
+            distance: 0
           }
           // dataLabels: {
           //   enabled: true,
@@ -125,7 +169,7 @@ export class ChartServiceDone2x {
         {
           type: 'pie' as any,
           name: '',
-          data: dataSanitized,          
+          data: dataSanitized,
         }
       ]
     });
