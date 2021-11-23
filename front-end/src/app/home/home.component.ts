@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       { y: 34, color: '#ffff33' }
     ];
 
-    this.chart2 = this.chartService.getBarChart('Completd Priority', barChartData, ['High', 'Medium', 'Low']);
+    this.chart2 = this.chartService.getBarChart('Completd Task Priority', barChartData, ['High', 'Medium', 'Low']);
     this.chart3 = this.chartService.getGoalPieChart();
   }
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TaskItemStatus } from '../task-item.service';
 import { TaskItem } from './task-item.type';
-
+import { faTrashAlt, faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 
 export enum TypeAction {
   add = 1,
@@ -23,13 +23,20 @@ export class TypeClickEvent<Type> {
 })
 export class TaskItemComponent {
 
+  //icons
+  deleteIcon = faTrashAlt;
+  moveLeft = faArrowAltCircleLeft;
+  moveRight = faArrowAltCircleRight;
+
+  //input & output
   @Input()
   taskItem!: TaskItem;
   @Output()
   actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
-
   @Output()
   deleteClicked = new EventEmitter<TaskItem>();
+
+
 
   constructor() { }
 
@@ -41,6 +48,9 @@ export class TaskItemComponent {
     this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.delete, this.taskItem));
   }
 
+  public moveToBacklog(): void {
+    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.backLog));
+  }
   public moveToCompleted(): void {
     this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.completed));
   }

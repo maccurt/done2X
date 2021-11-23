@@ -2,16 +2,35 @@
     <div class="card-body">
         <a class="task-item-name action-link" (click)="taskItemClick()">{{taskItem.name}}</a>
         <br>
-        <div class="action-link-container">
-            
-            <div *ngIf="taskItem.taskItemStatusId === 1">
-                <a class="delete-task-item action-link" title="delete task" (click)="delete()">delete</a>
-                <a class="move-to-progress action-link" title="move to in progress" (click)="moveToInProgress()">move to in progress</a>
+        <div class="icon-action-container">            
+            <div style="float:left;" class="move-left-container">
+                <a *ngIf="taskItem.taskItemStatusId === 3" class="move-to-progress action-link"
+                    title="move to in progress" (click)="moveToInProgress()">
+                    <fa-icon [icon]="moveLeft"></fa-icon>
+                </a>
+                <a *ngIf="taskItem.taskItemStatusId === 2" class="move-to-progress action-link" title="move to backlog"
+                    (click)="moveToBacklog()">
+                    <fa-icon [icon]="moveLeft"></fa-icon>
+                </a>
             </div>
 
-            <a *ngIf="taskItem.taskItemStatusId === 2" class="move-to-completed action-link" title="move task to completed"
-                (click)="moveToCompleted()">move to completed</a>
+
+            <div style="float:right;" class="move-right-container">
+
+                <a *ngIf="taskItem.taskItemStatusId === 1" class="move-to-progress action-link"
+                    title="move to in progress" (click)="moveToInProgress()">
+                    <fa-icon [icon]="moveRight"></fa-icon>
+                </a>
+
+
+                <a *ngIf="taskItem.taskItemStatusId === 2" class="move-to-completed action-link"
+                    title="move task to completed" (click)="moveToCompleted()">
+                    <fa-icon class="far" [icon]="moveRight"></fa-icon>
+                </a>
+
+            </div>
+
         </div>
-        
+
     </div>
 </div>

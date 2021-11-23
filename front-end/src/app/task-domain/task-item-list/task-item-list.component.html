@@ -28,16 +28,12 @@
                 <div class="header">
                     <div class='title'>Backlog</div>
                     <button id='add-task-to-backlog' type="button" class="btn btn-success header-button"
-                        (click)="addTaskToBacklog()">
-                    
+                        (click)="addTaskToBacklog()">                    
                         <span class="d-none d-md-block">Add Task To Backlog </span>
-                        <span class="d-none d-sm-block d-md-none">Add Task</span>
-                        
-                    
+                        <span class="d-none d-sm-block d-md-none">Add Task</span>                                           
                     </button>
                 </div>
             </div>
-
 
             <div class="row">
                 <app-task-item class="col-xxxl-6" *ngFor="let taskItem of taskInBacklog"
