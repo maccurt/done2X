@@ -29,6 +29,7 @@ import { GoalResolver } from './resolvers/goal-resolver';
 import { TaskItemStatusListResolver } from './resolvers/task-item-status-List-resolver';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ChartModule } from 'angular-highcharts';
+import { DashBoardComponent } from './dash-board/dash-board.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ChartModule } from 'angular-highcharts';
     GoalListComponent,
     GoalModalComponent,
     BreakPointTesterComponent,
-    GoalComponent
+    GoalComponent,
+    DashBoardComponent
   ],
   imports: [
     BrowserModule,

@@ -26,25 +26,30 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   chart2!: Chart;
   chart3!: Chart;
 
-
   constructor(private authService: AuthService,
     private chartService: ChartServiceDone2x
 
   ) { }
 
-  
-
   public ngOnInit(): void {
     // this.isAuthenticated$ = this.authService.isAuthenticated$.subscribe(() => {
     //   console.log('authenticated in home');
     // })    
-
   }
 
   ngAfterViewInit(): void {
-    this.chart1 = this.chartService.getSimplePieChart('Goals Completed', 100, 50);
-    this.chart2 = this.chartService.getSimplePieChart('title 2', 75, 50);
-    this.chart3 = this.chartService.getSimplePieChart('title 3', 100, 62);
+    //pie chart
+    this.chart1 = this.chartService.getGoalPieChart();
+
+    //bar chart
+    const barChartData = [
+      { y: 50, color: '#ff3333' },
+      { y: 17, color: '#00b300' },
+      { y: 34, color: '#ffff33' }
+    ];
+
+    this.chart2 = this.chartService.getBarChart('Completd Priority', barChartData, ['High', 'Medium', 'Low']);
+    this.chart3 = this.chartService.getGoalPieChart();
   }
 
   public ngOnDestroy(): void {

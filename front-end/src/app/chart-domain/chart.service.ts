@@ -12,18 +12,51 @@ export class ChartServiceDone2x {
 
   constructor() { }
 
+  getLineChart = (): any => {
+
+    let chart = new Chart({
+      chart: {
+        type: 'spline',
+      },
+      title: {
+        text: 'Task Priority'
+      },
+      credits: {
+        enabled: false
+      },
+      xAxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      },
+      series: [
+        {
+          name: 'High',
+          color:'red',
+          data: [10, 13, 14, 14, 17, 18, 17, 12, 14, 17, 15, 14]
+        },
+        {
+          name: 'Medium',
+          color:'yellow',
+          data: [8, 12, 17, 14, 17, 16, 14, 12, 14, 13, 15, 11]
+        },
+        {
+          color:'green',
+          data: [11, 8, 14, 14, 9, 18, 10, 12, 14, 17, 15, 12]
+        }
+      ]
+    } as any);
+
+    return chart;
+  }
 
   getBarChart = (title: string, data: any[], xAxisCategories: any[] = []): Chart => {
 
-    // see https://stackoverflow.com/questions/42866870/highcharts-progress-bar-chart/42871005#42871005
     Highcharts.setOptions({ lang: { thousandsSep: ',' } });
 
     const chartLocal = new Chart({
-      tooltip: { valueDecimals: 2, valuePrefix: '$', valueSuffix: ' USD' },
+      // tooltip: { valueDecimals: 2, valuePrefix: '$', valueSuffix: ' USD' },
       chart: {
         type: 'bar',
         borderColor: 'red'
-
       },
       title: {
         text: title.length > 0 ? title : undefined, // If you want the title text you need to set this
@@ -48,26 +81,27 @@ export class ChartServiceDone2x {
         enabled: false
       },
       legend: {
-        enabled: false // This removed the legend
+        enabled: false
       },
       plotOptions: {
         bar: {
+          borderColor: 'black',
           dataLabels: {
             enabled: true,  // I don't think this is currently show, you turned off labels below
-            format: '${point.y:,.2f}',
+            // format: '${point.y:,.2f}',
             style: {
               fontWeight: 'bold',
               fontSize: '14px',
               color: 'black'
             }
-          },  // This is how you put 2 decimal points
+          },
         }
       },
       series: [
         {
           type: 'bar' as any,
           name: '',
-          data,
+          data: data,
           dataLabels: {
             enabled: false // This will turn of the labels
           }
@@ -79,18 +113,24 @@ export class ChartServiceDone2x {
   }
 
 
-  getSimplePieChart = (title: string, y1: number, y2: number): Chart => {
+  getGoalPieChart = (): Chart => {
 
     let pieChartDataList: PieChartData[] = [];
-    pieChartDataList.push({ name: 'Completed', color: '#006666', y: y1 });
-    pieChartDataList.push({ name: 'Not Completed', color: '#999966', y: y2 });
- 
+
+    pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: 100 });
+    pieChartDataList.push({ name: 'Completed', color: '#006666', y: 150, sliced: true });
+    // pieChartDataList.push({ name: 'Low', color: '#009999', y: 100 });    
+    // pieChartDataList.push({ name: 'High', color: '#999966', y: 100 });
+
     const chartLocal = new Chart({
       chart: {
-        type: 'pie'
+        type: 'pie',
+        style: {
+          float: 'left'
+        }
       },
       title: {
-        text: title,
+        text: 'Goals',
         style: { fontWeight: 'bold' }
       },
       credits: {
@@ -98,13 +138,14 @@ export class ChartServiceDone2x {
       },
       plotOptions: {
         pie: {
-          innerSize: 75,
-          allowPointSelect: true,
+          // innerSize: 150,
+          allowPointSelect: false,
           cursor: 'pointer',
           showInLegend: false,
+          borderColor: 'black',
           dataLabels: {
-            enabled: false,
-            distance: 0
+            enabled: true,
+            distance: 5
           }
         }
       },

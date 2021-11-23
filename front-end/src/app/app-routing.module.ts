@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashBoardComponent } from './dash-board/dash-board.component';
 import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
 import { GoalComponent } from './goal-domain/goal/goal.component';
 import { AppAuthGuard } from './guards/app-auth.guard';
@@ -11,7 +12,9 @@ import { TaskItemStatusListResolver } from './resolvers/task-item-status-List-re
 import { TaskItemListComponent } from './task-domain/task-item-list/task-item-list.component';
 
 const routes: Routes = [
+  
   { path: '', component: HomeComponent },
+  { path: 'dashboard', component: DashBoardComponent },
   { path: 'home', component: HomeComponent },
   {
     path: 'task-list/:goal-id',
