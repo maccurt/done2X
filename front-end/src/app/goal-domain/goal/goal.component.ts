@@ -116,10 +116,7 @@ export class GoalComponent implements OnInit {
     const completedCount = taskItemList.filter((t) => {
       return (t.completed)
     }).length;
-    let pieChartDataList: PieChartData[] = [];
-    pieChartDataList.push({ name: 'Completed', color: '#00FF00', y: completedCount });
-    pieChartDataList.push({ name: 'Not Completed', color: '#FF0000', y: taskItemList.length - completedCount });
-    this.completedChart = this.chartService.getPieChart('Completed', pieChartDataList)
+    this.completedChart = this.chartService.getGoalPieChart('Completed', completedCount, taskItemList.length - completedCount)
   }
 
   public getPriorityText(taskItem: TaskItem): string {
