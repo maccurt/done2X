@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashBoardComponent } from './dash-board/dash-board.component';
+import { ExperimentComponent } from './experiment/experiment.component';
 import { GoalListComponent } from './goal-domain/goal-list/goal-list.component';
 import { GoalComponent } from './goal-domain/goal/goal.component';
 import { AppAuthGuard } from './guards/app-auth.guard';
@@ -15,6 +16,7 @@ const routes: Routes = [
   
   { path: '', component: HomeComponent },
   { path: 'dashboard', component: DashBoardComponent },
+  { path: 'experiment', component: ExperimentComponent },
   { path: 'home', component: HomeComponent },
   {
     path: 'task-list/:goal-id',

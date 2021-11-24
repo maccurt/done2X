@@ -30,6 +30,7 @@ import { TaskItemStatusListResolver } from './resolvers/task-item-status-List-re
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ChartModule } from 'angular-highcharts';
 import { DashBoardComponent } from './dash-board/dash-board.component';
+import { ExperimentComponent } from './experiment/experiment.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { DashBoardComponent } from './dash-board/dash-board.component';
     GoalModalComponent,
     BreakPointTesterComponent,
     GoalComponent,
-    DashBoardComponent
+    DashBoardComponent,
+    ExperimentComponent
   ],
   imports: [
     BrowserModule,
