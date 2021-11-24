@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./customize-bootstrap.scss";
 @import "./variables";
+@import "./chart.styles.scss";
 
 html,
 body {
@@ -10,6 +11,9 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+
+
 
 .app-modal {
   max-width: 450px;

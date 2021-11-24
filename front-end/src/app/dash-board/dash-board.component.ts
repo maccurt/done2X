@@ -9,16 +9,29 @@ import { ChartServiceDone2x } from '../chart-domain/chart.service';
 })
 export class DashBoardComponent implements OnInit, AfterViewInit {
 
-  lineChart!: Chart;
+  chartList:Chart[] = [];
 
-  constructor(private chartService: ChartServiceDone2x) { }
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  constructor(public chartService: ChartServiceDone2x) { } 
+  
 
   ngOnInit(): void {
 
-    this.lineChart = this.chartService.getLineChart();
   }
+
+
+  ngAfterViewInit(): void {
+
+
+    this.chartList.push(this.chartService.getRandomGoalChart());
+    this.chartList.push(this.chartService.getRandomBarChart());
+    this.chartList.push(this.chartService.getRandomGoalChart());
+    this.chartList.push(this.chartService.getRandomGoalChart());
+    this.chartList.push(this.chartService.getRandomGoalChart());
+    this.chartList.push(this.chartService.getRandomBarChart());
+    // this.chartList.push(this.chartService.getRandomBarChart());
+    // this.chartList.push(this.chartService.getRandomGoalChart());
+    
+  }
+
 
 }

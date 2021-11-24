@@ -1,5 +1,5 @@
 
-import { Injectable } from '@angular/core';
+import { ComponentFactoryResolver, Injectable } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 //TODO is this blowing up the package check
 import * as Highcharts from 'highcharts';
@@ -10,7 +10,13 @@ import { PieChartData } from './pie-chart-date-type';
 })
 export class ChartServiceDone2x {
 
+
   constructor() { }
+
+  getRandomInteger(multiplier: number): number {
+    let x = Math.random() * multiplier;
+    return parseInt(x.toString());
+  }
 
   getLineChart = (): any => {
 
@@ -30,22 +36,32 @@ export class ChartServiceDone2x {
       series: [
         {
           name: 'High',
-          color:'red',
+          color: 'red',
           data: [10, 13, 14, 14, 17, 18, 17, 12, 14, 17, 15, 14]
         },
         {
           name: 'Medium',
-          color:'yellow',
+          color: 'yellow',
           data: [8, 12, 17, 14, 17, 16, 14, 12, 14, 13, 15, 11]
         },
         {
-          color:'green',
+          color: 'green',
           data: [11, 8, 14, 14, 9, 18, 10, 12, 14, 17, 15, 12]
         }
       ]
     } as any);
 
     return chart;
+  }
+
+  getRandomBarChart(): Chart {
+    const barChartData = [
+      { y: this.getRandomInteger(10) + 1, color: '#ff3333', name: 'High' },
+      { y: this.getRandomInteger(10) + 1, color: '#00b300' },
+      { y: this.getRandomInteger(10) + 1, color: '#ffff33' }
+    ];
+
+    return this.getBarChart('Task Priority ', barChartData, ["High", "Medium", "Low"]);
   }
 
   getBarChart = (title: string, data: any[], xAxisCategories: any[] = []): Chart => {
@@ -56,7 +72,8 @@ export class ChartServiceDone2x {
       // tooltip: { valueDecimals: 2, valuePrefix: '$', valueSuffix: ' USD' },
       chart: {
         type: 'bar',
-        borderColor: 'red'
+        borderColor: 'red',
+        className: "bar-chart"
       },
       title: {
         text: title.length > 0 ? title : undefined, // If you want the title text you need to set this
@@ -87,7 +104,7 @@ export class ChartServiceDone2x {
         bar: {
           borderColor: 'black',
           dataLabels: {
-            enabled: true,  // I don't think this is currently show, you turned off labels below
+            enabled: false,
             // format: '${point.y:,.2f}',
             style: {
               fontWeight: 'bold',
@@ -103,7 +120,7 @@ export class ChartServiceDone2x {
           name: '',
           data: data,
           dataLabels: {
-            enabled: false // This will turn of the labels
+            enabled: true // This will turn of the labels
           }
         }
       ]
@@ -113,14 +130,66 @@ export class ChartServiceDone2x {
   }
 
 
-  getGoalPieChart = (): Chart => {
+  pieChartOptions(pieChartDataList: any) {
 
-    let pieChartDataList: PieChartData[] = [];
+    let options = {
+      chart: {
+        type: 'pie',
+        style: {
+          float: 'left'
+        }
+      },
+      title: {
+        text: 'Design Home Page',
+        style: { fontWeight: 'bold' }
+      },
+      credits: {
+        enabled: false
+      },
+      plotOptions: {
+        pie: {
+          // innerSize: 150,
+          allowPointSelect: false,
+          cursor: 'pointer',
+          showInLegend: false,
+          borderColor: 'black',
+          dataLabels: {
+            enabled: true,
+            distance: 5
+          }
+        }
+      },
+      series: [
+        {
+          type: 'pie' as any,
+          name: '',
+          data: pieChartDataList,
+        }
+      ]
+    }
+  }
 
-    pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: 100 });
-    pieChartDataList.push({ name: 'Completed', color: '#006666', y: 150, sliced: true });
-    // pieChartDataList.push({ name: 'Low', color: '#009999', y: 100 });    
-    // pieChartDataList.push({ name: 'High', color: '#999966', y: 100 });
+  getGoalChartEasy(completed: number, notCompleted: number): Chart {
+    console.log(completed, notCompleted);
+    const pieChartDataList: PieChartData[] = [];
+    pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
+    pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
+    return this.getGoalPieChart(pieChartDataList);
+  }
+
+
+  getRandomDonutlChart = (): Chart => {
+    let chart = this.getGoalChartEasy(this.getRandomInteger(100), this.getRandomInteger(100));
+
+
+    return chart;
+  }
+
+  getRandomGoalChart = (): Chart => {
+    return this.getGoalChartEasy(this.getRandomInteger(100), this.getRandomInteger(100));
+  }
+
+  getGoalPieChart = (pieChartDataList: PieChartData[]): Chart => {
 
     const chartLocal = new Chart({
       chart: {
@@ -130,7 +199,7 @@ export class ChartServiceDone2x {
         }
       },
       title: {
-        text: 'Goals',
+        text: 'Design Home Page',
         style: { fontWeight: 'bold' }
       },
       credits: {

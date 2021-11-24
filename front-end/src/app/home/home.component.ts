@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { faGraduationCap, faFrog, faChalkboardTeacher, faCheckSquare, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
 import { ChartServiceDone2x } from '../chart-domain/chart.service';
 import { Chart } from 'angular-highcharts';
+import { PieChartData } from '../chart-domain/pie-chart-date-type';
 
 @Component({
   selector: 'app-home',
@@ -38,18 +39,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    //pie chart
-    this.chart1 = this.chartService.getGoalPieChart();
+    
 
-    //bar chart
-    const barChartData = [
-      { y: 50, color: '#ff3333' },
-      { y: 17, color: '#00b300' },
-      { y: 34, color: '#ffff33' }
-    ];
 
-    this.chart2 = this.chartService.getBarChart('Completd Task Priority', barChartData, ['High', 'Medium', 'Low']);
-    this.chart3 = this.chartService.getGoalPieChart();
+    //random pie chart
+    this.chart1 = this.chartService.getRandomGoalChart();
+    setInterval(() => {
+      this.chart1 = this.chartService.getRandomGoalChart();
+    }, 30000);    
+
+    //random bar chart
+    this.chart2 = this.chartService.getRandomBarChart();
+    setInterval(() => {
+      this.chart2 = this.chartService.getRandomBarChart();
+    }, 15000);
+
+
   }
 
   public ngOnDestroy(): void {
