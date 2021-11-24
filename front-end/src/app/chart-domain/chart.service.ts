@@ -60,8 +60,19 @@ export class ChartServiceDone2x {
       { y: this.getRandomInteger(10) + 1, color: '#00b300' },
       { y: this.getRandomInteger(10) + 1, color: '#ffff33' }
     ];
-
     return this.getBarChart('Task Priority ', barChartData, ["High", "Medium", "Low"]);
+  }
+
+  getTaskPriorityPieChart(title: string): Chart {
+
+
+    const data: PieChartData[] = [
+      { y: this.getRandomInteger(10) + 1, color: '#ff3333', name: 'High' },
+      { y: this.getRandomInteger(10) + 1, color: '#00b300', name: 'Medium' },
+      { y: this.getRandomInteger(10) + 1, color: '#ffff33', name: 'Low' }
+    ];
+
+    return this.getPieChart(title, data)
   }
 
   getBarChart = (title: string, data: any[], xAxisCategories: any[] = []): Chart => {
@@ -130,17 +141,16 @@ export class ChartServiceDone2x {
   }
 
 
-  pieChartOptions(pieChartDataList: any) {
+  pieChartOptions(title: string, pieChartDataList: any): Highcharts.Options {
 
     let options = {
       chart: {
-        type: 'pie',
-        style: {
+        type: 'pie', style: {
           float: 'left'
         }
       },
       title: {
-        text: 'Design Home Page',
+        text: title,
         style: { fontWeight: 'bold' }
       },
       credits: {
@@ -148,7 +158,7 @@ export class ChartServiceDone2x {
       },
       plotOptions: {
         pie: {
-          // innerSize: 150,
+          innerSize: 0,
           allowPointSelect: false,
           cursor: 'pointer',
           showInLegend: false,
@@ -167,39 +177,44 @@ export class ChartServiceDone2x {
         }
       ]
     }
+
+    return options
   }
 
-  getGoalChartEasy(completed: number, notCompleted: number): Chart {
-    console.log(completed, notCompleted);
+  getGoalChartEasy(title: string, completed: number, notCompleted: number): Chart {
     const pieChartDataList: PieChartData[] = [];
     pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
     pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
-    return this.getGoalPieChart(pieChartDataList);
+    return this.getPieChart(title, pieChartDataList);
   }
 
 
-  getRandomDonutlChart = (): Chart => {
-    let chart = this.getGoalChartEasy(this.getRandomInteger(100), this.getRandomInteger(100));
+  getDonutChart = (title: string): Chart => {
 
+    const pieChartDataList: PieChartData[] = [];
+    pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: this.getRandomInteger(100) });
+    pieChartDataList.push({ name: 'Completed', color: '#006666', y: this.getRandomInteger(100) });
 
-    return chart;
+    let options = this.pieChartOptions(title, pieChartDataList);
+    if (options.plotOptions?.pie) {
+      options.plotOptions.pie.innerSize = 90;
+    }
+
+    return new Chart(options);
   }
 
-  getRandomGoalChart = (): Chart => {
-    return this.getGoalChartEasy(this.getRandomInteger(100), this.getRandomInteger(100));
+  getRandomGoalChart = (title: string): Chart => {
+    return this.getGoalChartEasy(title, this.getRandomInteger(100), this.getRandomInteger(100));
   }
 
-  getGoalPieChart = (pieChartDataList: PieChartData[]): Chart => {
+  getGoalPieChart = (title: string, pieChartDataList: PieChartData[]): Chart => {
 
     const chartLocal = new Chart({
       chart: {
-        type: 'pie',
-        style: {
-          float: 'left'
-        }
+        type: 'pie'
       },
       title: {
-        text: 'Design Home Page',
+        text: title,
         style: { fontWeight: 'bold' }
       },
       credits: {
@@ -207,7 +222,7 @@ export class ChartServiceDone2x {
       },
       plotOptions: {
         pie: {
-          // innerSize: 150,
+          innerSize: 0,
           allowPointSelect: false,
           cursor: 'pointer',
           showInLegend: false,
@@ -233,9 +248,7 @@ export class ChartServiceDone2x {
 
   getPieChart = (title: string, data: PieChartData[]): Chart => {
 
-    //TODO What was the purpose of this? name it so you makes sense
-    //I assume it is removing anything that is not greater than zero?
-    let dataSanitized = data.filter((d) => {
+    let removeNumberLessThan1 = data.filter((d) => {
       return d.y > 0;
     })
 
@@ -279,7 +292,7 @@ export class ChartServiceDone2x {
         {
           type: 'pie' as any,
           name: '',
-          data: dataSanitized,
+          data: removeNumberLessThan1,
         }
       ]
     });

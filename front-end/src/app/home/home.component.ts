@@ -43,9 +43,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     //random pie chart
-    this.chart1 = this.chartService.getRandomGoalChart();
+    this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");
     setInterval(() => {
-      this.chart1 = this.chartService.getRandomGoalChart();
+      this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");
     }, 30000);    
 
     //random bar chart
