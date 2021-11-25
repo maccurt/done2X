@@ -4,6 +4,18 @@ import { Chart } from 'angular-highcharts';
 //TODO is this blowing up the package check
 import * as Highcharts from 'highcharts';
 import { PieChartData } from './pie-chart-date-type';
+import { filter } from 'lodash';
+
+
+const appColor = {
+  priority: {
+    low: '#ffff33',
+    medium: '#00b300',
+    high: '#ff3333',
+  }
+}
+
+ 
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +23,24 @@ import { PieChartData } from './pie-chart-date-type';
 export class ChartServiceDone2x {
 
   constructor() { }
+
+
+
+
+
+  getTaskPriorityPieChartX(title: string, priorityList: { priority: number }[]): Chart {
+
+    const high = filter(priorityList, { priority: 1 }).length;
+    const medium = filter(priorityList, { priority: 2 }).length;
+    const low = filter(priorityList, { priority: 3 }).length;
+
+    const data: PieChartData[] = [
+      { y: high, color: '#ff3333', name: 'High', sliced: true },
+      { y: medium, color: '#00b300', name: 'Medium' },
+      { y: low, color: '#ffff33', name: 'Low' }];
+
+    return new Chart(this.pieChartOptions(title, data));
+  }
 
   getTaskPriorityPieChart(title: string): Chart {
     const data: PieChartData[] = [
@@ -39,7 +69,7 @@ export class ChartServiceDone2x {
       options.plotOptions.pie.size = '150%'
       options.plotOptions.pie.innerSize = 150;
       if (options.plotOptions.pie.dataLabels) {
-        options.plotOptions.pie.dataLabels = { enabled:true, distance: 20 }
+        options.plotOptions.pie.dataLabels = { enabled: true, distance: 20 }
       }
 
     }
@@ -71,7 +101,7 @@ export class ChartServiceDone2x {
 
   pieChartOptions(title: string, pieChartDataList: any): Highcharts.Options {
 
-    let options:Highcharts.Options = {
+    let options: Highcharts.Options = {
       chart: {
         type: 'pie', style: {
           float: 'left'

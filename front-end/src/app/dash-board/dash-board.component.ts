@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from '../chart-domain/chart.service';
+import { TaskItem } from '../task-domain/task-item/task-item.type';
 
 @Component({
   selector: 'app-dash-board',
@@ -10,6 +11,7 @@ import { ChartServiceDone2x } from '../chart-domain/chart.service';
 export class DashBoardComponent implements OnInit, AfterViewInit {
 
   chartList: Chart[] = [];
+  taskItemList: TaskItem[] = [];
 
   constructor(public chartService: ChartServiceDone2x) { }
 
@@ -18,12 +20,14 @@ export class DashBoardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
+    
+
     this.chartList.push(this.chartService.getRandomGoalChart('Add Auth To Backend'));
     this.chartList.push(this.chartService.getRandomBarChart());
     this.chartList.push(this.chartService.getDonutChart("Design Homepage"));
-    this.chartList.push(this.chartService.getTaskPriorityPieChart('Design Home Page Priority'));    
+    this.chartList.push(this.chartService.getTaskPriorityPieChart('Design Home Page Priority'));
     this.chartList.push(this.chartService.getTaskPrioritySemiCircleChart('Design Dashboard Priority'));    
-    // this.chartList.push(this.chartService.getRandomBarChart());
-    // this.chartList.push(this.chartService.getRandomGoalChart());
   }
+
 }

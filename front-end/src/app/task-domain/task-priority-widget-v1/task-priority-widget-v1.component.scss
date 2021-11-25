@@ -1,0 +1,30 @@
+thead {
+    th {
+        font-weight: normal !important;        
+    }
+}
+
+#version-2 {
+    .mat-button-toggle-group {
+        height: 37px;
+        align-items: center;
+    }
+
+    .priority-1 {
+        .mat-button-toggle-checked {
+            background-color: red;
+        }
+    }
+
+    .priority-2 {
+        .mat-button-toggle-checked {
+            background-color: green;
+        }
+    }
+
+    .priority-3 {
+        .mat-button-toggle-checked {
+            background-color: yellow;
+        }
+    }
+}

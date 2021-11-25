@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BreakPointTesterComponent } from './break-point-tester/break-point-tester.component';
 import { GoalComponent } from './goal-domain/goal/goal.component';
 import { GoalResolver } from './resolvers/goal-resolver';
@@ -31,6 +32,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ChartModule } from 'angular-highcharts';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import { ExperimentComponent } from './experiment/experiment.component';
+import { PriorityPipe } from './pipes/priority.pipe';
+import { TaskPriorityWidgetV1Component } from './task-domain/task-priority-widget-v1/task-priority-widget-v1.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,9 @@ import { ExperimentComponent } from './experiment/experiment.component';
     BreakPointTesterComponent,
     GoalComponent,
     DashBoardComponent,
-    ExperimentComponent
+    ExperimentComponent,
+    PriorityPipe,
+    TaskPriorityWidgetV1Component
   ],
   imports: [
     BrowserModule,
@@ -62,6 +67,7 @@ import { ExperimentComponent } from './experiment/experiment.component';
     MatInputModule,
     MatCheckboxModule,
     MatExpansionModule,
+    MatButtonToggleModule,
     SecurityModule,
     FontAwesomeModule,
     ChartModule
