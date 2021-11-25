@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from '../chart-domain/chart.service';
 import { IconService } from '../icon.service';
 import { TaskItemStatus } from '../task-domain/task-item.service';
@@ -13,11 +12,10 @@ import { TaskItem } from '../task-domain/task-item/task-item.type';
 export class ExperimentComponent implements OnInit, AfterViewInit {
 
   loaded: boolean = false;
-  chart1!: Chart;
-  chart2!: Chart;
-  taskItemList!: TaskItem[];
+  hideA: boolean = false;
+  hideB: boolean = false;
 
-  //ICONS
+  taskItemList!: TaskItem[];
 
   constructor(public chartService: ChartServiceDone2x,
     public fontService: IconService,
@@ -33,9 +31,6 @@ export class ExperimentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loaded = true;
-    this.chart1 = this.chartService.getTaskPriorityPieChartX('Task Priority', this.taskItemList)
-    // this.chart1 = this.chartService.getTaskPriorityPieChart('Task')
-    // this.chart2 = this.chartService.getTaskPrioritySemiCircleChart('Task')
   }
 
   //MOCKS
@@ -69,5 +64,4 @@ export class ExperimentComponent implements OnInit, AfterViewInit {
     };
     return taskItem;
   }
-
 }

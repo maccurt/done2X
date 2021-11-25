@@ -1,15 +1,39 @@
 <br>
 <div *ngIf="loaded" class="container">
-    <div class="row">
-        <div class="col-6">
-            <d2x-task-priority-widget-v1 [version]="1" [title]="'Get House Ready For Thanksgiving'"
-                [taskItemList]="this.taskItemList"></d2x-task-priority-widget-v1>
-        </div>
 
-        <div class="col-6">
-            <d2x-task-priority-widget-v1 [version]="2" [title]="'Get House Ready For Thanksgiving'"
-                [taskItemList]="this.taskItemList"></d2x-task-priority-widget-v1>
+    <div class="row">
+        <div class="col-12">
+            <ol>
+                <li>Which one is better to set priority (med, high low)? </li>
+            </ol>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-6">  
+            <button (click)="hideA =!hideA" class="hide btn btn-primary"><span *ngIf="!hideA" >Hide A</span> <span *ngIf="hideA" >Show A</span> </button>
+        </div>
+
+        <div class="col-6">
+            <button (click)="hideB =!hideB" class="hide btn btn-primary"><span *ngIf="!hideB" >Hide B</span> <span *ngIf="hideB" >Show B</span></button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-6">
+            <div *ngIf="!hideA">
+                <d2x-task-priority-widget-v1 [version]="1" [title]="'Get House Ready For Thanksgiving'"
+                    [taskItemList]="this.taskItemList"></d2x-task-priority-widget-v1>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div *ngIf="!hideB">
+                <d2x-task-priority-widget-v1 [version]="2" [title]="'Get House Ready For Thanksgiving'"
+                    [taskItemList]="this.taskItemList"></d2x-task-priority-widget-v1>
+            </div>
+        </div>
+    </div>
 </div>
