@@ -34,6 +34,7 @@ import { DashBoardComponent } from './dash-board/dash-board.component';
 import { ExperimentComponent } from './experiment/experiment.component';
 import { PriorityPipe } from './pipes/priority.pipe';
 import { TaskPriorityWidgetV1Component } from './task-domain/task-priority-widget-v1/task-priority-widget-v1.component';
+import { TaskPriorityChartV1Component } from './task-domain/task-priority-chart-v1/task-priority-chart-v1.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { TaskPriorityWidgetV1Component } from './task-domain/task-priority-widge
     DashBoardComponent,
     ExperimentComponent,
     PriorityPipe,
-    TaskPriorityWidgetV1Component
+    TaskPriorityWidgetV1Component,
+    TaskPriorityChartV1Component
   ],
   imports: [
     BrowserModule,

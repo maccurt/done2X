@@ -14,8 +14,10 @@ export class ExperimentComponent implements OnInit, AfterViewInit {
   loaded: boolean = false;
   hideA: boolean = false;
   hideB: boolean = false;
-
   taskItemList!: TaskItem[];
+
+  versionList = [1, 2, 3]
+  version = 1;
 
   constructor(public chartService: ChartServiceDone2x,
     public fontService: IconService,

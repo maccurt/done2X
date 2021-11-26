@@ -1,21 +1,20 @@
 
-import { ComponentFactoryResolver, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 //TODO is this blowing up the package check
 import * as Highcharts from 'highcharts';
 import { PieChartData } from './pie-chart-date-type';
 import { filter } from 'lodash';
+import { ChartOptions } from './ChartOptions';
 
+export const appColor = {
+  priority: [
+    { low: '#ffff33', medium: '#00b300', high: '#ff3333' },
+    { low: '#ffffb3', medium: '#b3ffb3', high: '#ffb3b3' },
+    { low: '#ffff4d', medium: '#9fff80', high: '#ffccd5' }
+  ]
+};
 
-const appColor = {
-  priority: {
-    low: '#ffff33',
-    medium: '#00b300',
-    high: '#ff3333',
-  }
-}
-
- 
 
 @Injectable({
   providedIn: 'root'
@@ -24,22 +23,27 @@ export class ChartServiceDone2x {
 
   constructor() { }
 
-
-
-
-
-  getTaskPriorityPieChartX(title: string, priorityList: { priority: number }[]): Chart {
+  taskPriorityChart1(title: string, priorityList: { priority: number }[], version: number = 1): Chart {
 
     const high = filter(priorityList, { priority: 1 }).length;
     const medium = filter(priorityList, { priority: 2 }).length;
     const low = filter(priorityList, { priority: 3 }).length;
 
+    let color = appColor.priority[version - 1];
     const data: PieChartData[] = [
-      { y: high, color: '#ff3333', name: 'High', sliced: true },
-      { y: medium, color: '#00b300', name: 'Medium' },
-      { y: low, color: '#ffff33', name: 'Low' }];
+      { y: high, color: color.high, name: 'High', sliced: true },
+      { y: medium, color: color.medium, name: 'Medium' },
+      { y: low, color: color.low, name: 'Low' }];
 
-    return new Chart(this.pieChartOptions(title, data));
+
+    let chartOptions = new ChartOptions();
+    if (version === 3) {
+      chartOptions.slicedOffset = 25;
+    }
+
+    let options = this.pieChartOptions(title, data, chartOptions);
+
+    return new Chart(options);
   }
 
   getTaskPriorityPieChart(title: string): Chart {
@@ -99,13 +103,11 @@ export class ChartServiceDone2x {
     return this.getGoalPieChart(title, this.getRandomInteger(100), this.getRandomInteger(100));
   }
 
-  pieChartOptions(title: string, pieChartDataList: any): Highcharts.Options {
+  pieChartOptions(title: string, pieChartDataList: any, chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
 
     let options: Highcharts.Options = {
       chart: {
-        type: 'pie', style: {
-          float: 'left'
-        }
+        type: 'pie'
       },
       title: {
         text: title,
@@ -132,6 +134,8 @@ export class ChartServiceDone2x {
           type: 'pie' as any,
           name: '',
           data: pieChartDataList,
+          slicedOffset: chartOptions.slicedOffset
+
         }
       ]
     }

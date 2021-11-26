@@ -5,6 +5,8 @@ import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
 import { IconService } from 'src/app/icon.service';
 import { TaskItem } from '../task-item/task-item.type';
 import { orderBy } from 'lodash';
+import { Code, CodeService } from 'src/app/code.service';
+import { Subject } from 'rxjs';
 
 interface IPriority {
   priority: number;
@@ -16,16 +18,28 @@ interface IPriority {
   styleUrls: ['./task-priority-widget-v1.component.scss']
 })
 export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
-
+  //event
   @Input() version = 1;
   @Input() title: string = '';
   @Input() taskItemList: TaskItem[] = [];
+
+  change: Subject<Boolean> = new Subject();
+
   chart!: Chart;
   proprtyToSort = 'priority';
+  priorityList: Code[] = [];
 
-  constructor(public iconService: IconService, private chartService: ChartServiceDone2x) { }
+  constructor(public iconService: IconService,
+    private codeService: CodeService,
+    private chartService: ChartServiceDone2x) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.codeService.GetPriority().subscribe((codes) => {
+      this.priorityList = codes;
+    })
+
+  }
 
   ngAfterViewInit(): void {
     this.setChart();
@@ -50,8 +64,11 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   }
 
   setChart() {
-    this.chart = this.chartService.getTaskPriorityPieChartX("Task Priority", this.taskItemList);
+    //this.chart = this.chartService.taskPriorityChart1("Task Priority", this.taskItemList);
+    this.change.next(true);
   }
+
+
 
   changeStatus(item: IPriority) {
     const max = 3

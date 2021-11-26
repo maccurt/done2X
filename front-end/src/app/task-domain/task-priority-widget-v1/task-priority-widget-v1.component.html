@@ -9,7 +9,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <a class="action-link" (click)="sort('priority')" >  Priority </a>
+                            <a class="action-link" (click)="sort('priority')"> Priority </a>
                         </th>
                         <th>Name</th>
                     </tr>
@@ -49,10 +49,29 @@
                         <td>{{t.name }}</td>
                     </tr>
                 </tbody>
+
+
+                 <!-- version 3 -->
+                <tbody id="version-3" *ngIf="version==3">
+
+                    <tr *ngFor="let t of taskItemList;let i = index">
+
+                        <td class="priority-col" class="priority-{{t.priority}}">
+                            
+                            <select [(ngModel)]="t.priority" (change)="setChart()" >
+                                <option class="option-{{p.id}}"  *ngFor="let p of priorityList"  [ngValue]="p.id" > {{p.name}} </option>
+                            </select>
+                        
+                        </td>
+
+                        <td>{{t.name }}</td>
+                    </tr>
+                </tbody>
+
             </table>
         </div>
-        <div class="col-5">
-            <div class="chart-1" [chart]="chart"></div>
+        <div class="col-5">            
+            <d2x-task-priority-chart-v1 [change]="change" [taskItemList]="taskItemList" ></d2x-task-priority-chart-v1>
         </div>
 
 
