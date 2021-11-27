@@ -7,6 +7,7 @@ import { TaskItem } from '../task-item/task-item.type';
 import { orderBy } from 'lodash';
 import { Code, CodeService } from 'src/app/code.service';
 import { Subject } from 'rxjs';
+import { TaskItemStatus } from '../task-item.service';
 
 interface IPriority {
   priority: number;
@@ -43,6 +44,12 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.setChart();
+  }
+
+
+  public updateTaskItemStatus(taskItem: TaskItem) {
+    console.log(taskItem);
+    taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;   
   }
 
   sort(property: string) {

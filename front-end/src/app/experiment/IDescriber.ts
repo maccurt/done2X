@@ -1,3 +1,3 @@
-export interface IDescriber {
-    text: string;
-}
+// export interface IDescriber {
+//     text: string;
+// }

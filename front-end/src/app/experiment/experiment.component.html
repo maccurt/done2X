@@ -1,32 +1,26 @@
 <br>
 <div *ngIf="loaded" class="container">
 
-
     <div class="row">
-        <div class="col-4">
-
-            <select [(ngModel)]="version" class="form-control">
-                <option [ngValue]="v" *ngFor="let v of versionList">version-{{v}} </option>
-            </select>
-
+        <div col-6>
+            <mat-button-toggle-group [value]="experiment.id.toString()"   name="fontStyle" aria-label="Font Style" (change)="experimentClick($event)">
+                <mat-button-toggle *ngFor="let e of experimentList"  value={{e.id}}>{{e.name}}</mat-button-toggle>
+            </mat-button-toggle-group>            
         </div>
     </div>
-
-
     <hr>
 
     <div class="row">
-        <div class="col-6">
+        <div class="col-8">
             <div>
-                <d2x-task-priority-widget-v1 [version]="version" [title]="'Get House Ready For Thanksgiving'"
+                <d2x-task-priority-widget-v1 [version]="experiment.version" [title]="'Get House Ready For Thanksgiving'"
                     [taskItemList]="this.taskItemList"></d2x-task-priority-widget-v1>
             </div>
         </div>
     </div>
 
 
-    <div class="row">
-
+    <!-- <div class="row">
 
         <div class="col-2">
             <d2x-task-priority-chart-v1 [version]="1" [taskItemList]="this.taskItemList">
@@ -44,8 +38,6 @@
             </d2x-task-priority-chart-v1>
         </div>
 
-
-
-    </div>
+    </div> -->
 
 </div>

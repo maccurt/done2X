@@ -1,8 +1,12 @@
-import { IDescriber } from "./IDescriber";
+import { IDescriber } from "../abstract types/describer.interface";
+
 
 export class Experiment implements IDescriber {
-    
-    constructor(public text: string) {
 
-    }
+    constructor() {  }
+
+    id!: number;
+    name!: string;
+    version!: number;
+    text?: string;
 }
