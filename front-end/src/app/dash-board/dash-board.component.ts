@@ -8,26 +8,18 @@ import { TaskItem } from '../task-domain/task-item/task-item.type';
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.scss']
 })
-export class DashBoardComponent implements OnInit, AfterViewInit {
+export class DashBoardComponent implements AfterViewInit {
 
   chartList: Chart[] = [];
   taskItemList: TaskItem[] = [];
 
   constructor(public chartService: ChartServiceDone2x) { }
 
-
-  ngOnInit(): void {
-  }
-
   ngAfterViewInit(): void {
-
-    
-
     this.chartList.push(this.chartService.getRandomGoalChart('Add Auth To Backend'));
     this.chartList.push(this.chartService.getRandomBarChart());
     this.chartList.push(this.chartService.getDonutChart("Design Homepage"));
     this.chartList.push(this.chartService.getTaskPriorityPieChart('Design Home Page Priority'));
-    this.chartList.push(this.chartService.getTaskPrioritySemiCircleChart('Design Dashboard Priority'));    
+    this.chartList.push(this.chartService.getTaskPrioritySemiCircleChart('Design Dashboard Priority'));
   }
-
 }

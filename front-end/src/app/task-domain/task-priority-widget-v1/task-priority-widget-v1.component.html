@@ -18,7 +18,7 @@
                 </thead>
 
                 <!-- version 1 -->
-                <tbody *ngIf="version==1">
+                <tbody *ngIf="version===1">
 
                     <tr *ngFor="let t of taskItemList;let i = index">
                         <td>
@@ -38,7 +38,7 @@
                 </tbody>
 
                 <!-- version 2 -->
-                <tbody id="version-2" class="version-2" *ngIf="version==2">
+                <tbody id="version-2" class="version-2" *ngIf="version===2">
 
                     <tr *ngFor="let t of taskItemList;let i = index">
 
@@ -65,7 +65,7 @@
 
 
                 <!-- version 3 -->
-                <tbody id="version-3" *ngIf="version==3">
+                <tbody id="version-3" *ngIf="version===3">
 
                     <tr *ngFor="let t of taskItemList;let i = index">
                         <td>

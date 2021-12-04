@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './break-point-tester.component.html',
   styleUrls: ['./break-point-tester.component.scss']
 })
-export class BreakPointTesterComponent implements OnInit {
+export class BreakPointTesterComponent  {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor() { }  
 }

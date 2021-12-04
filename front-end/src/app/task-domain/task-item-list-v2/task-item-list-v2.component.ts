@@ -17,7 +17,7 @@ import { TypeClickEvent } from '../task-item/TypeClickEvent';
   templateUrl: './task-item-list-v2.component.html',
   styleUrls: ['./task-item-list-v2.component.scss']
 })
-export class TaskItemListV2Component implements OnInit, OnDestroy {
+export class TaskItemListV2Component implements OnDestroy {
   @Input() completedMode: boolean = false;
   @Input() taskItemList: TaskItem[] = [];
   @Input() goal!: Goal;
@@ -34,9 +34,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private taskItemService: TaskItemService,
     public iconService: IconService
-  ) { }
-
-  ngOnInit(): void { }
+  ) { }  
 
   public sort(property: string) {
     if (this.proprtyToSort !== property) {

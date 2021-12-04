@@ -12,7 +12,7 @@ import { Experiment } from './experiment.type';
   templateUrl: './experiment.component.html',
   styleUrls: ['./experiment.component.scss']
 })
-export class ExperimentComponent implements OnInit, AfterViewInit {
+export class ExperimentComponent implements AfterViewInit {
 
   loaded: boolean = false;
   hideA: boolean = false;
@@ -22,9 +22,7 @@ export class ExperimentComponent implements OnInit, AfterViewInit {
   experimentList: Experiment[] = [{ id: 1, name: 'Experiment 1', version: 1 },
   { id: 2, name: 'Experiment 2', version: 2 },
   { id: 3, name: 'Experiment 3', version: 3 }]
-  experiment!: Experiment;
-
-  //version = 1;
+  experiment!: Experiment; 
 
   constructor(public chartService: ChartServiceDone2x,
     public fontService: IconService,
@@ -32,10 +30,7 @@ export class ExperimentComponent implements OnInit, AfterViewInit {
   ) {
     this.experiment = this.experimentList[0];
     this.taskItemList = this.getTaskItemList_mock();
-  }
-
-  ngOnInit(): void {
-  }
+  }  
 
   ngAfterViewInit(): void {
     this.loaded = true;

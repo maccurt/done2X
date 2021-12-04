@@ -9,16 +9,14 @@ import { TaskItem } from '../task-item/task-item.type';
   templateUrl: './task-priority-chart-v1.component.html',
   styleUrls: ['./task-priority-chart-v1.component.scss']
 })
-export class TaskPriorityChartV1Component implements OnInit, AfterViewInit {
+export class TaskPriorityChartV1Component implements  AfterViewInit {
 
   @Input() version = 1
   @Input() taskItemList: TaskItem[] = [];
   chart!: Chart
   @Input() change!: Subject<Boolean>
 
-  constructor(private chartService: ChartServiceDone2x) { }
-
-  ngOnInit(): void { }
+  constructor(private chartService: ChartServiceDone2x) { }  
 
   ngAfterViewInit(): void {
 
