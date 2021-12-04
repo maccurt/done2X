@@ -10,5 +10,5 @@ export class TaskItem {
     updatedDate!: Date;
     createdDate!: Date;
     statusUpdatedDate!: Date;
-
+    completed: boolean = false;
 }

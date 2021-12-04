@@ -1,0 +1,4 @@
+<div *ngIf="completed > 0 || notCompleted > 0" class="completed-chart" [chart]="chart"></div>
+<div *ngIf="completed === 0 && notCompleted === 0" class="no-data-chart">
+    <span>No Data</span>
+</div>

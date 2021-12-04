@@ -17,6 +17,7 @@ export class CodeService {
   constructor(private httpClient: HttpClient) { }
 
   public GetTaskItemStatus(): Observable<Code[]> {
+    //TODO in the future find a way to cache this. OR re-think, do you need API could you hard code them here perhaps?
     return this.httpClient.get<Code[]>(environment.API_URL + 'code/TaskItemStatus');
   }
 

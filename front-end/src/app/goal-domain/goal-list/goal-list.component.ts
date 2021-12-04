@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { Goal } from '../goal.type';
   templateUrl: './goal-list.component.html',
   styleUrls: ['./goal-list.component.scss']
 })
-export class GoalListComponent implements OnInit {
+export class GoalListComponent implements OnInit, OnDestroy {
 
   goalList: Goal[] = [];
   goalListCompleted: Goal[] = [];
@@ -80,7 +80,6 @@ export class GoalListComponent implements OnInit {
     return this.dialog.open(GoalModalComponent, {
       data: goal,
       disableClose: true
-
     })
   }
 

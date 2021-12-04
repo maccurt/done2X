@@ -1,0 +1,23 @@
+<div id="dash-board" class="container-fluid">
+
+    <div class="row">
+        <div class="col-12" >
+
+            <h3>DashBoard</h3>
+            <br>
+            <br>
+            <br>
+            <br>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div *ngFor="let c of chartList" class="col-3">
+            <div class="dashboard-chart" [chart]="c"> </div>
+        </div>
+
+    </div>
+
+</div>

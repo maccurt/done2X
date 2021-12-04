@@ -56,6 +56,24 @@ namespace Done2X.API.Controllers
         }
 
         [HttpGet]
+        [Route("{goalId}")]
+        public async Task<IActionResult> GetGoal(int goalId)
+        {
+            if (!_domainManager.Security.CanAccessGoal(goalId, User).Result)
+            {
+                return Unauthorized("Not Authorized");
+            }
+            var goal = await _domainManager.Goal.GetGoal(goalId);
+
+            if (goal == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(goal);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetGoalList()
         {
             var list = await _domainManager.Goal.GetGoalList(User);
@@ -72,7 +90,7 @@ namespace Done2X.API.Controllers
                 return Unauthorized("Not Authorized For Project");
             }
             var list = await _domainManager.Goal.GetGoalList(projectId);
-            return Ok(list.OrderByDescending(g=>g.TargetCompletionDate));
+            return Ok(list.OrderByDescending(g => g.TargetCompletionDate));
         }
     }
 }

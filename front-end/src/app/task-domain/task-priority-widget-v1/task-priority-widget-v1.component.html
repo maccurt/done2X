@@ -1,0 +1,98 @@
+<div class="card-body">
+    <h3 class="card-title">{{title}}</h3>
+    <hr>
+    <div class="row">
+
+        <div class="col-7">
+
+            <table style="border:1px solid #cccccc" class="table table-sm ">
+                <thead>
+                    
+                    <tr>
+                        <th>Done</th>
+                        <th>
+                            <a class="action-link" (click)="sort('priority')"> Priority </a>
+                        </th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+
+                <!-- version 1 -->
+                <tbody *ngIf="version===1">
+
+                    <tr *ngFor="let t of taskItemList;let i = index">
+                        <td>
+                            <mat-checkbox id="task-item-{{t.id}}" class="task-item" [(ngModel)]="t.completed"
+                                (ngModelChange)="updateTaskItemStatus(t)">
+                            </mat-checkbox>
+                        </td>
+
+                        <td class="priority-col" class="priority-{{t.priority}}">
+                            <a (click)="changeStatus(t)">
+                                <fa-icon class="fa" [icon]="iconService.priority[1]"></fa-icon>
+                            </a>
+                        </td>
+
+                        <td>{{t.name }} </td>
+                    </tr>
+                </tbody>
+
+                <!-- version 2 -->
+                <tbody id="version-2" class="version-2" *ngIf="version===2">
+
+                    <tr *ngFor="let t of taskItemList;let i = index">
+
+                        <td>
+                            <mat-checkbox id="task-item-{{t.id}}" class="task-item" [(ngModel)]="t.completed"
+                                (ngModelChange)="updateTaskItemStatus(t)">
+                            </mat-checkbox>
+                        </td>
+
+                        <td class="priority-col" class="priority-{{t.priority}}">
+                            <mat-button-toggle-group class="priority-toggle priority-{{t.priority}}"
+                                (change)="priorityToggle($event,t)" name="priority" [value]="t.priority.toString()"
+                                aria-label="Font Style">
+                                <mat-button-toggle name="priority" class="priority-low" value="3">L</mat-button-toggle>
+                                <mat-button-toggle name="priority" class="priority-medium" value="2">M
+                                </mat-button-toggle>
+                                <mat-button-toggle name="priority" class="priority-high" value="1">H</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </td>
+
+                        <td>{{t.name }}</td>
+                    </tr>
+                </tbody>
+
+
+                <!-- version 3 -->
+                <tbody id="version-3" *ngIf="version===3">
+
+                    <tr *ngFor="let t of taskItemList;let i = index">
+                        <td>
+                            <mat-checkbox id="task-item-{{t.id}}" class="task-item" [(ngModel)]="t.completed"
+                                (ngModelChange)="updateTaskItemStatus(t)">
+                            </mat-checkbox>
+                        </td>
+
+                        <td class="priority-col" class="priority-{{t.priority}}">
+
+                            <select [(ngModel)]="t.priority" (change)="setChart()">
+                                <option class="option-{{p.id}}" *ngFor="let p of priorityList" [ngValue]="p.id">
+                                    {{p.name}} </option>
+                            </select>
+
+                        </td>
+
+                        <td>{{t.name }}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="col-5">
+            <d2x-task-priority-chart-v1 [change]="change" [taskItemList]="taskItemList"></d2x-task-priority-chart-v1>
+        </div>
+    </div>
+
+    
+</div>

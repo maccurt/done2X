@@ -1,20 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TaskItemStatus } from '../task-item.service';
 import { TaskItem } from './task-item.type';
-
-
-export enum TypeAction {
-  add = 1,
-  edit,
-  delete,
-  moveStatus
-}
-
-export class TypeClickEvent<Type> {
-  constructor(public action: TypeAction, public item: Type, public status: TaskItemStatus = TaskItemStatus.unknown) {
-
-  }
-}
+import { faTrashAlt, faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
+import { TypeAction } from './TypeAction';
+import { TypeClickEvent } from './TypeClickEvent';
 
 @Component({
   selector: 'app-task-item',
@@ -23,11 +12,16 @@ export class TypeClickEvent<Type> {
 })
 export class TaskItemComponent {
 
+  //icons
+  deleteIcon = faTrashAlt;
+  moveLeft = faArrowAltCircleLeft;
+  moveRight = faArrowAltCircleRight;
+
+  //input & output
   @Input()
   taskItem!: TaskItem;
   @Output()
   actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
-
   @Output()
   deleteClicked = new EventEmitter<TaskItem>();
 
@@ -41,6 +35,9 @@ export class TaskItemComponent {
     this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.delete, this.taskItem));
   }
 
+  public moveToBacklog(): void {
+    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.backLog));
+  }
   public moveToCompleted(): void {
     this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.completed));
   }

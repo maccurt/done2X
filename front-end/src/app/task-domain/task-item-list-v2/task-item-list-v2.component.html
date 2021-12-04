@@ -1,0 +1,51 @@
+<table class="task-item-list-v2 table table-striped table-bordered table-sm">
+    <thead>
+        <tr>
+            <th id="completed-col">
+                Move To
+            </th>
+
+            <th id="task-col">
+                <a (click)="sort('name')">Task</a>
+                <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
+                    class="add-task-item btn btn-primary btn-sm">Add Task</button>
+            </th>
+
+            <th id="priority-col">
+                <a (click)="sort('priority')">Priority</a>
+            </th>
+            <th id="action-col">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="task-item-{{t.id}}" *ngFor="let t of taskItemList">
+            <td>
+                <a class="action-link move-task" (click)="moveTaskStatus(t)" title="move to completed">
+                    <span title="Move to in-progress..." *ngIf="completedMode">in progress</span>
+                    <span title="Move to completed..." *ngIf="!completedMode">complete</span>
+                </a>
+            </td>
+
+            <td>
+                <a class="action-link name" (click)="editTaskItem(t)">{{t.name}}</a>
+            </td>
+
+            <td>
+                <a class="action-link priority" (click)="editTaskItem(t)">{{ t.priority | priority }}</a>
+            </td>
+
+            <td>
+                <div class="action-icon-container">
+                    <a title="edit task..." class="action-link edit-task-item" (click)="editTaskItem(t)">
+                        <fa-icon [icon]="iconService.edit"></fa-icon>
+                    </a>
+                    <a title="delete task..." class="action-link delete-task-item" (click)="deleteTaskItem(t)">
+                        <fa-icon [icon]="iconService.delete"></fa-icon>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

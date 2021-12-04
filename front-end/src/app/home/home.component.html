@@ -1,3 +1,85 @@
 <div class="container">
-    <h1>Homepage</h1>
+
+    <div class="row">
+
+        <div class="col-3">
+            <h1><b>Done2X.com</b> </h1>
+            <h3>You Are Never Done!</h3>
+        </div>
+
+        <div class="col-3">
+            <div class="chart" [chart]="chart1"></div>
+        </div>
+
+        <div class="col-3 ">
+            <div class="chart" [chart]="chart2"></div>
+        </div>                 
+
+    </div>
+</div>
+
+<br>
+
+<div id="the-vision">
+
+    <div class="container">
+
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <div class="title">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-xl-3 col-11 col-md-6 col-xl-4 col-xxl-3">
+
+                <h3>Goals & Task</h3>
+                <hr>
+                <p class="p-wrapper">
+                    <fa-icon class="fa-4x" [icon]="goalsTaskIcon"></fa-icon>
+                    <br>
+                    Get off your ass to perform the tasks to complete your goals.
+                </p>
+            </div>
+
+            <div class="col-11 col-md-6 col-xl-4 col-xxl-3">
+                <h3>Experiment & Learn</h3>
+                <hr>
+                <p class="p-wrapper">
+                    <fa-icon class="fa-4x" [icon]="experimentLearnIcon"></fa-icon>
+                    <br>
+                    Try something, measure your progress and learn.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-xl-3 col-11 col-md-6 col-xl-4 col-xxl-3">
+
+                <h3>Warts & All</h3>
+                <hr>
+                <p class="p-wrapper">
+                    <fa-icon style="color:green"  class="fa-4x" [icon]="wartsAndAllIcon"></fa-icon>
+                    <br>
+                    Give it to the world and do not worry about negative feedback.
+                </p>
+
+            </div>
+
+            <div class="col-11 col-md-6 col-xl-4 col-xxl-3">
+                <h3>Reward & Celebrate</h3>
+                <hr>
+                <p class="p-wrapper">
+                    <fa-icon  style="color:purple"  class="fa-4x" [icon]="celebrateIcon"></fa-icon>
+                    <br>
+                    Reward small successes and get to back to work.
+                </p>
+            </div>
+        </div>
+
+
+    </div>
 </div>

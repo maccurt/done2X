@@ -4,11 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Confirm, ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { Goal } from '../goal-domain/goal.type';
+import { Confirm, ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
+import { Goal } from '../../goal-domain/goal.type';
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
-import { TypeAction, TypeClickEvent } from '../task-item/task-item.component';
+
+import { TypeClickEvent } from "../task-item/TypeClickEvent";
+import { TypeAction } from "../task-item/TypeAction";
 import { TaskItem } from '../task-item/task-item.type';
 
 @Component({
@@ -65,7 +67,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   }
 
   getTaskItemList(): void {
-    console.log('getTask', this.goal)
+    
     this.getTaskItemListSub$ = this.taskItemService.getTaskItemList(this.goal.id).subscribe((taskItemList) => {
       this.taskItemList = taskItemList;
       this.splitTaskItemsIntoLanes();
@@ -114,7 +116,8 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
         list = this.taskinCompleted
         break;
     }
-
+    
+    //TODO why -1 here, greater than 0 right?
     if (list.length > -1) {
       let index = list.indexOf(taskItem);
       if (index > -1) {

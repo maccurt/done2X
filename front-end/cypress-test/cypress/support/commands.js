@@ -16,6 +16,15 @@ Cypress.Commands.add('interceptGoalList', () => {
   });
 });
 
+Cypress.Commands.add('interceptGoalGet', (goal) => {
+  cy.intercept(
+    {
+      method: 'GET',
+      url: 'http://localhost/Done2X.API/api/goal/*',
+    }, goal)
+    .as('interceptGoalGet');
+})
+
 Cypress.Commands.add('interceptGoalAdd', (goal) => {
   cy.intercept(
     {
@@ -24,7 +33,6 @@ Cypress.Commands.add('interceptGoalAdd', (goal) => {
     }, goal)
     .as('interceptGoalAdd');
 })
-
 
 Cypress.Commands.add('interceptGoalUpdate', (goal) => {
   cy.intercept(
@@ -35,16 +43,16 @@ Cypress.Commands.add('interceptGoalUpdate', (goal) => {
     .as('interceptGoalUpdate');
 })
 
-Cypress.Commands.add('interceptDefaultProject', (taskItem) => {
+Cypress.Commands.add('interceptDefaultProject', () => {
   cy.intercept({
     method: 'GET',
     url: 'http://localhost/Done2X.API/api/projectg',
   }, { projectId: 1 }).as('interceptDefaultProject');
 });
 
-Cypress.Commands.add('interceptTaskItemList', () => {
+Cypress.Commands.add('interceptTaskItemList', (taskItemList = []) => {
   cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/taskItem/goal/*', },
-    []).as('interceptTaskItemList');
+    taskItemList).as('interceptTaskItemList');
 });
 
 Cypress.Commands.add('interceptTaskItemAdd', (taskItem) => {
@@ -61,3 +69,9 @@ Cypress.Commands.add('interceptTaskItemUpdate', (taskItem) => {
 Cypress.Commands.add('interceptTaskItemDelete', () => {
   cy.intercept('DELETE', '*/api/taskItem/*', { statusCode: 200 }).as('interceptTaskItemDelete');
 });
+
+Cypress.Commands.add('populateTaskItemModal', (taskItem) => {
+
+  cy.get('#task-item-modal').find('#name').type(taskItem.name);
+  cy.get('#task-item-modal').find('#description').type(taskItem.description);  
+})

@@ -8,9 +8,7 @@
     "jsonwebtoken": "^8.5.1"
   },
   "scripts": {
-    "open": "cypress open",
-    "test": "cypress open --config baseUrl=https://app.profitdreamer.com/",
-    "prod": "cypress open --config baseUrl=https://profitdreamer.com/"
+    "open": "cypress open"
   },
   "devDependencies": {
     "cypress-localstorage-commands": "^1.6.0"

@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./customize-bootstrap.scss";
 @import "./variables";
+@import "./chart.styles.scss";
 
 html,
 body {
@@ -9,6 +10,19 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.priority-1{
+  color:red;
+}
+
+.priority-2{
+  color:green;
+}
+
+.priority-3{
+  color:yellow;
 }
 
 .app-modal {
@@ -26,6 +40,12 @@ mat-dialog-actions {
   font-weight: bold;
 }
 
+.action-icon-container {
+  .action-link {
+      margin-left: 15px;
+  }
+}
+
 .action-link-container {
   text-align: right;
   border-top: 1px solid #cccccc;
@@ -40,6 +60,16 @@ mat-dialog-actions {
   a:hover {
     text-decoration: underline !important;
   }
+}
+
+
+.action-link {
+  text-decoration: none !important;
+  cursor: default !important;  
+  color: black;
+}
+.action-link:hover {
+  text-decoration: underline !important;
 }
 
 .input-error {

@@ -27,7 +27,6 @@ import { AppAuthGuard } from './guards/app-auth.guard';
 
 })
 export class SecurityModule {
-    constructor(){
-        console.log('security module')
+    constructor(){        
     }
  }
