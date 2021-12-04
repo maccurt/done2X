@@ -21,13 +21,11 @@
                 <tbody *ngIf="version==1">
 
                     <tr *ngFor="let t of taskItemList;let i = index">
-
                         <td>
                             <mat-checkbox id="task-item-{{t.id}}" class="task-item" [(ngModel)]="t.completed"
                                 (ngModelChange)="updateTaskItemStatus(t)">
                             </mat-checkbox>
                         </td>
-
 
                         <td class="priority-col" class="priority-{{t.priority}}">
                             <a (click)="changeStatus(t)">

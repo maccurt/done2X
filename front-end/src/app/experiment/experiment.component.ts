@@ -49,7 +49,7 @@ export class ExperimentComponent implements OnInit, AfterViewInit {
 
     if (x) {
       this.experiment = x;
-      console.log(this.experiment)
+      //console.log(this.experiment)
     }
   }
 

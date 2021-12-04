@@ -80,10 +80,23 @@ export class ChartServiceDone2x {
     return new Chart(options);
   }
 
-  getGoalPieChart(title: string, completed: number, notCompleted: number): Chart {
+  completedPieChart(title: string, completed: number, notCompleted: number) {
     const pieChartDataList: PieChartData[] = [];
     pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
     pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
+    return new Chart(this.pieChartOptions(title, pieChartDataList));
+  }
+
+  getGoalPieChart(title: string, completed: number, notCompleted: number): Chart {
+    const pieChartDataList: PieChartData[] = [];
+    if (notCompleted > 0) {
+      pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
+    }
+
+    if (completed > 0) {
+      pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
+    }
+
     return new Chart(this.pieChartOptions(title, pieChartDataList));
   }
 

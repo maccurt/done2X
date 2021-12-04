@@ -14,6 +14,7 @@ import { PieChartData } from '../chart-domain/pie-chart-date-type';
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //Font Awesome Icons
+  //TODO move these to the icon service, perhaps have on service for icons and color also
   learnIcon = faGraduationCap;
   wartsAndAllIcon = faFrog;
   experimentLearnIcon = faChalkboardTeacher;
@@ -36,25 +37,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.isAuthenticated$ = this.authService.isAuthenticated$.subscribe(() => {
     //   console.log('authenticated in home');
     // })    
+
+    this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");
+    this.chart2 = this.chartService.getRandomBarChart();
   }
 
   ngAfterViewInit(): void {
-    
 
-
-    //random pie chart
-    this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");
+    //random pie chart    
     setInterval(() => {
       this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");
-    }, 30000);    
+    }, 30000);
 
-    //random bar chart
-    this.chart2 = this.chartService.getRandomBarChart();
+    //random bar chart    
     setInterval(() => {
       this.chart2 = this.chartService.getRandomBarChart();
     }, 15000);
-
-
   }
 
   public ngOnDestroy(): void {

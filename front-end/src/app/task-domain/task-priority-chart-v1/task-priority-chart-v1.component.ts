@@ -25,14 +25,10 @@ export class TaskPriorityChartV1Component implements OnInit, AfterViewInit {
     this.chart = this.chartService.taskPriorityChart1('Task Priority', this.taskItemList, this.version);
 
     if (this.change) {
-      this.change.subscribe(() => {
-        console.log('changing');
+      this.change.subscribe(() => {        
         this.chart = this.chartService.taskPriorityChart1('Task Priority', this.taskItemList, this.version);
       })
-    }
-    else {
-      console.log('subject not set');
-    }
+    }   
 
   }
 }

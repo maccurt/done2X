@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Code, CodeService } from 'src/app/code.service';
-import { TaskItemModalComponent } from 'src/app/task-domain/task-item-modal/task-item-modal.component';
 
 import { TaskItem } from 'src/app/task-domain/task-item/task-item.type';
 import { Goal } from '../goal.type';
@@ -13,11 +12,12 @@ import { FormControlService } from 'src/app/form-control.service';
 import { GoalService } from '../goal.service';
 //Icons
 import { faCoffee, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
-import { PieChartData } from "src/app/chart-domain/pie-chart-date-type";
+import { TypeClickEvent } from 'src/app/task-domain/task-item/TypeClickEvent';
+import { TypeAction } from 'src/app/task-domain/task-item/TypeAction';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 export class Column {
   text!: string;
@@ -30,6 +30,7 @@ export class Column {
   styleUrls: ['./goal.component.scss']
 })
 export class GoalComponent implements OnInit {
+  @ViewChild(MatExpansionPanel, {static: true}) matExpansionPanelElement!: MatExpansionPanel;
   //icons
   faCoffee = faCoffee;
   editIcon = faWrench;
@@ -38,6 +39,8 @@ export class GoalComponent implements OnInit {
   routeDataSub$!: Subscription;
   goal!: Goal;
   taskItemList: TaskItem[] = [];
+  completedTaskItemList: TaskItem[] = [];
+  notCompletedTaskItemList: TaskItem[] = [];
   afterClosedSub$!: Subscription;
   addTaskItemSub$!: Subscription;
   updateTaskItemSub$!: Subscription;
@@ -51,6 +54,7 @@ export class GoalComponent implements OnInit {
   proprtyToSort: string = 'completed';
   priorityList: Code[] = [];
 
+  hideCompleted = false;
 
   //form controls  
   formGroup!: FormGroup
@@ -86,11 +90,15 @@ export class GoalComponent implements OnInit {
       this.taskItemList = data.taskItemList;
       this.taskItemStatusList = data.taskItemStatusList;
 
+      //TODO re-think this, should this be in the service OR in the back end.
       this.taskItemList.forEach((taskItem) => {
         taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
       })
 
-      this.createCompletedChart(this.taskItemList);
+      this.completedTaskItemList = this.taskItemService.getCompletedTaskItems(this.taskItemList);
+      this.notCompletedTaskItemList = this.taskItemService.getNotCompletedTaskItems(this.taskItemList);
+
+      this.createCompletedChart();
 
       this.codeService.GetPriority().subscribe((priorityList) => {
         this.priorityList = priorityList
@@ -108,15 +116,26 @@ export class GoalComponent implements OnInit {
         whatIsDone: this.whatIsDoneControl,
         targetCompletionDate: this.targetCompletionDateControl
       });
-
     });
   }
 
-  public createCompletedChart(taskItemList: TaskItem[]) {
-    const completedCount = taskItemList.filter((t) => {
-      return (t.completed)
-    }).length;
-    this.completedChart = this.chartService.getGoalPieChart('Completed', completedCount, taskItemList.length - completedCount)
+  public actionEvent(event: TypeClickEvent<TaskItem>) {
+    switch (event.action) {
+      case TypeAction.moveStatus:
+        //TODO in the future perhaps put in order of priority
+        if (event.item.taskItemStatusId === TaskItemStatus.completed) {
+          this.completedTaskItemList.unshift(event.item);
+        }
+        else {
+          this.notCompletedTaskItemList.unshift(event.item);
+        }
+    }
+    this.createCompletedChart();
+  }
+
+  public createCompletedChart() {
+    this.completedChart = this.chartService.getGoalPieChart('Completed', this.completedTaskItemList.length,
+      this.notCompletedTaskItemList.length)
   }
 
   public getPriorityText(taskItem: TaskItem): string {
@@ -157,88 +176,97 @@ export class GoalComponent implements OnInit {
     if (this.formGroup.valid) {
       Object.assign(this.goal, this.formGroup.value);
       this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
-        console.log('response', response);
       })
-      this.showErrors = false;
-      this.createCompletedChart(this.taskItemList);
+      this.showErrors = false;      
+      this.createCompletedChart();
+      this.matExpansionPanelElement.close();
     }
     else {
       this.showErrors = true;
     }
+  }
+
+  hideCompletedClick() {
+
+    this.hideCompleted = !this.hideCompleted;
 
   }
 
   public cancel() {
 
   }
-  public addTaskItem() {
+  // public addTaskItem() {
 
-    const taskItem = new TaskItem();
-    taskItem.goalId = this.goal.id;
-    const dialogRef = this.dialog.open(TaskItemModalComponent, {
-      data: taskItem,
-      disableClose: true
-    });
+  //   const taskItem = new TaskItem();
+  //   taskItem.goalId = this.goal.id;
+  //   const dialogRef = this.dialog.open(TaskItemModalComponent, {
+  //     data: taskItem,
+  //     disableClose: true
+  //   });
 
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-      this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
-        response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-        this.taskItemList.unshift(response);
-        this.createCompletedChart(this.taskItemList);
-      });
-    })
-  }
+  //   this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
+  //     this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
+  //       //TODO remove this if we are not going to use the completed property
+  //       response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
+  //       if (response.taskItemStatusId === TaskItemStatus.completed) {
+  //         this.completedTaskItemList.unshift(response);
+  //       }
+  //       else {
+  //         this.notCompletedTaskItemList.unshift(response);
+  //       }
+  //       this.taskItemList.unshift(response);
+  //       this.createCompletedChart(this.taskItemList);
+  //     });
+  //   })
+  // }
 
-  deleteTaskItem(taskItem: TaskItem) {
-    let confirm: Confirm = {
-      question: `Delete Task?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: taskItem.name
-    }
+  // deleteTaskItem(taskItem: TaskItem) {
+  //   let confirm: Confirm = {
+  //     question: `Delete Task?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: taskItem.name
+  //   }
 
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-      disableClose: true,
-      data: confirm
-    });
+  //   const dialogRef = this.dialog.open(ConfirmModalComponent, {
+  //     disableClose: true,
+  //     data: confirm
+  //   });
 
-    this.deleteAfterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
-      if (confirm) {
-        this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
+  //   this.deleteAfterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
+  //     if (confirm) {
+  //       this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
 
-          //remove task item form list
-          let index = this.taskItemList.indexOf(taskItem);
-          if (index > -1) {
-            this.taskItemList.splice(index, 1);
-            this.createCompletedChart(this.taskItemList);
-          }
-        })
-      }
-    })
-  }
+  //         //TODO use the service to remove this from the list          
+  //         let index = this.taskItemList.indexOf(taskItem);
+  //         if (index > -1) {
+  //           this.taskItemList.splice(index, 1);
+  //           this.createCompletedChart(this.taskItemList);
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
 
-  public editTaskItem(taskItem: TaskItem) {
+  // public editTaskItem(taskItem: TaskItem) {
+  //   const dialogRef = this.dialog.open(TaskItemModalComponent, {
+  //     data: taskItem,
+  //     disableClose: true
+  //   });
 
-    const dialogRef = this.dialog.open(TaskItemModalComponent, {
-      data: taskItem,
-      disableClose: true
-    });
+  //   this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
+  //     if (taskItem) {
+  //       this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
+  //         Object.assign(taskItem, updatedTask);
+  //         taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
+  //         this.createCompletedChart(this.taskItemList);
+  //       });
+  //     }
+  //   })
+  // }
 
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-      console.log(taskItem);
-      if (taskItem) {
-        this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
-          Object.assign(taskItem, updatedTask);
-          taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-          this.createCompletedChart(this.taskItemList);
-        });
-      }
-    })
-
-  }
-  public updateTaskItemStatus(taskItem: TaskItem) {
-
-    taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;
-    this.taskItemService.updateTaskItem(taskItem).subscribe((response) => {
-      Object.assign(taskItem, response);
-      this.createCompletedChart(this.taskItemList);
-    })
-  }
+  // public updateTaskItemStatus(taskItem: TaskItem) {
+  //   taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;
+  //   this.taskItemService.updateTaskItem(taskItem).subscribe((response) => {
+  //     Object.assign(taskItem, response);
+  //     this.createCompletedChart(this.taskItemList);
+  //   })
+  // }
 }

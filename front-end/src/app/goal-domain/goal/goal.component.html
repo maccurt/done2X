@@ -1,153 +1,102 @@
+<br>
 <div class="container-fluid">
 
     <div class="row">
 
-        <div class="col-3">
+        <div class="col-4 col-lg-4 col-xl-4 col-xxl-4 col-xxxl-3">
+            <div class="row">
+                <div class="col-12">
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"  #matExpansionPanel >
+                            <mat-expansion-panel-header collapsedHeight="175px">
+                                <mat-panel-title>
 
-            <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
+                                    <h4 *ngIf="!panelOpenState">{{goal.name}}</h4>
+                                </mat-panel-title>
+                                <!-- <mat-panel-description>
+                                   
+                                </mat-panel-description> -->
+                            </mat-expansion-panel-header>
+                            <form class="form-group" [formGroup]="formGroup">
 
-                            <h2 *ngIf="!panelOpenState">{{goal.name}}</h2>
-                        </mat-panel-title>
-                        <!-- <mat-panel-description>
-                           
-                        </mat-panel-description> -->
-                    </mat-expansion-panel-header>
-                    <form class="form-group" [formGroup]="formGroup">
-
-                        <div class="mb-3"
-                            [ngClass]="{'has-error':(formControlService.isInvalid(nameControl,showErrors))}">
-                            <label for="name" class="form-label">What Is The Goal?</label>
-                            <span class="input-help">short and precise is best</span>
-                            <span class="validation-hint float-end">required</span>
-                            <textarea id="name" [name]="descriptionControl" maxlength="150" style="resize:none;"
-                                rows="2" cols="150" autocomplete="off" [formControl]="nameControl" class="form-control">
-                            </textarea>
-                        </div>
-
-                        <div class="mb-3"
-                            [ngClass]="{'has-error':(formControlService.isInvalid(descriptionControl,showErrors))}">
-                            <label for="description" class="form-label">Description</label><span
-                                class="validation-hint float-end">required</span>
-                            <textarea id="description" [name]="descriptionControl" maxlength="500" style="resize:none;"
-                                rows="3" cols="150" autocomplete="off" [formControl]="descriptionControl"
-                                class="form-control"></textarea>
-                        </div>
-
-                        <div class="mb-3"
-                            [ngClass]="{'has-error':(formControlService.isInvalid(whatIsDoneControl,showErrors))}">
-                            <label for="what-is-done" class="form-label">What Makes It Done?</label><span
-                                class="validation-hint float-end">required</span>
-                            <textarea id="what-is-done" [name]="whatIsDoneControl" maxlength="150" style="resize:none;"
-                                rows="2" cols="150" autocomplete="off" [formControl]="whatIsDoneControl"
-                                class="form-control"></textarea>
-                        </div>
-
-                        <div class="row g-3">
-
-                            <div class="mb-3 col-6">
-                                <div style="display: inline-block;"
-                                    [ngClass]="{'has-error': (formControlService.isInvalid(targetCompletionDateControl,showErrors))}">
-                                    <label class="form-label">Target Completion Date</label>
-                                    <input id="target-completion-date" type="text" [min]="minimumTargetCompletionDate"
-                                        class="form-control date-control" name="targetCompletionDateControl"
-                                        [formControl]="targetCompletionDateControl"
-                                        formControlName="targetCompletionDate" matInput
-                                        [matDatepicker]="targetCompletionDate" [min]="minimumTargetCompletionDate">
+                                <div class="mb-3"
+                                    [ngClass]="{'has-error':(formControlService.isInvalid(nameControl,showErrors))}">
+                                    <label for="name" class="form-label">What Is The Goal?</label>
+                                    <span class="input-help">short and precise is best</span>
+                                    <span class="validation-hint float-end">required</span>
+                                    <textarea id="name" [name]="descriptionControl" maxlength="150" style="resize:none;"
+                                        rows="2" cols="150" autocomplete="off" [formControl]="nameControl"
+                                        class="form-control">
+                                    </textarea>
                                 </div>
 
-                                <div style="display: inline-block;">
-                                    <mat-datepicker-toggle [for]="targetCompletionDate"></mat-datepicker-toggle>
-                                    <mat-datepicker #targetCompletionDate></mat-datepicker>
-                                </div>
-                            </div>
-                        </div>
-
-                        <mat-dialog-actions align="end">
-                            <button id="save" mat-button type="button" class="btn btn-primary"
-                                (click)="save()">Save</button>
-                            <button id="cancel" mat-button type="button" class="btn btn-secondary"
-                                (click)="cancel()">Cancel</button>
-                        </mat-dialog-actions>
-
-                    </form>
-                </mat-expansion-panel>
-            </mat-accordion>
-
-
-        </div>
-
-
-        <div class="col-5">
-            <div id="goal-task-list">
-
-
-
-                <table id='task-list' class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-
-                            <th id="completed-col">
-                                <a (click)="sort('completed')">Completed</a>
-                            </th>
-
-                            <th id="task-col">
-                                <a (click)="sort('name')">Task</a>
-                                <button style="float:right" (click)="addTaskItem()" class="btn btn-primary btn-sm">Add
-                                    Task</button>
-                            </th>
-
-                            <th id="priority-col">
-                                <a (click)="sort('priority')">Priority</a>
-                            </th>
-                            <th id="action-col">
-                                Action
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let t of taskItemList">
-
-                            <td>
-                                <mat-checkbox id="task-item-{{t.id}}" class="task-item" [(ngModel)]="t.completed"
-                                    (ngModelChange)="updateTaskItemStatus(t)">
-                                </mat-checkbox>
-                            </td>
-
-                            <td>
-                                <a class="action-link" (click)="editTaskItem(t)">{{t.name}}</a>
-                            </td>
-
-                            <td>
-                                <a class="action-link" (click)="editTaskItem(t)">{{getPriorityText(t)}}</a>
-                            </td>
-
-                            <td>
-                                <div class="action-icon-container">
-                                    <a title="edit task..." class="action-link" (click)="editTaskItem(t)">
-                                        <fa-icon [icon]="editIcon"></fa-icon>
-                                    </a>
-                                    <a title="delete task..." class="action-link" (click)="deleteTaskItem(t)">
-                                        <fa-icon [icon]="deleteIcon"></fa-icon>
-                                    </a>
+                                <div class="mb-3"
+                                    [ngClass]="{'has-error':(formControlService.isInvalid(descriptionControl,showErrors))}">
+                                    <label for="description" class="form-label">Description</label><span
+                                        class="validation-hint float-end">required</span>
+                                    <textarea id="description" [name]="descriptionControl" maxlength="500"
+                                        style="resize:none;" rows="3" cols="150" autocomplete="off"
+                                        [formControl]="descriptionControl" class="form-control"></textarea>
                                 </div>
 
-                            </td>
+                                <div class="mb-3"
+                                    [ngClass]="{'has-error':(formControlService.isInvalid(whatIsDoneControl,showErrors))}">
+                                    <label for="what-is-done" class="form-label">What Makes It Done?</label><span
+                                        class="validation-hint float-end">required</span>
+                                    <textarea id="what-is-done" [name]="whatIsDoneControl" maxlength="150"
+                                        style="resize:none;" rows="2" cols="150" autocomplete="off"
+                                        [formControl]="whatIsDoneControl" class="form-control"></textarea>
+                                </div>
 
-                        </tr>
-                    </tbody>
+                                <div class="row g-3">
 
-                </table>
+                                    <div class="mb-3 col-6">
+                                        <div style="display: inline-block;"
+                                            [ngClass]="{'has-error': (formControlService.isInvalid(targetCompletionDateControl,showErrors))}">
+                                            <label class="form-label">Target Completion Date</label>
+                                            <input id="target-completion-date" type="text"
+                                                [min]="minimumTargetCompletionDate" class="form-control date-control"
+                                                name="targetCompletionDateControl"
+                                                [formControl]="targetCompletionDateControl"
+                                                formControlName="targetCompletionDate" matInput
+                                                [matDatepicker]="targetCompletionDate"
+                                                [min]="minimumTargetCompletionDate">
+                                        </div>
 
+                                        <div style="display: inline-block;">
+                                            <mat-datepicker-toggle [for]="targetCompletionDate"></mat-datepicker-toggle>
+                                            <mat-datepicker #targetCompletionDate></mat-datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <mat-dialog-actions align="end">
+                                    <button id="save" mat-button type="button" class="btn btn-primary"
+                                        (click)="save()">Save</button>
+                                    <button id="cancel" mat-button type="button" class="btn btn-secondary"
+                                        (click)="cancel()">Cancel</button>
+                                </mat-dialog-actions>
+
+                            </form>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+
+                <div class="col-12">
+                    <br>
+                    <d2x-completed-chart [completed]="completedTaskItemList.length" [notCompleted]="notCompletedTaskItemList.length" ></d2x-completed-chart>
+                </div>
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-8 col-lg-8 col-xl-8 col-xxl-7 col-xxxl-6">
+            <div id="goal-task-list">
+                <d2x-task-item-list-v2 id="task-item-list-not-completed" (actionEvent)="actionEvent($event)"
+                    [goal]="goal" [taskItemList]="notCompletedTaskItemList"></d2x-task-item-list-v2>
 
-            <div  class="completed-chart" [chart]="completedChart"></div>
+                <d2x-task-item-list-v2 id="task-item-list-completed" (actionEvent)="actionEvent($event)"
+                    [completedMode]=true [goal]="goal" [taskItemList]="completedTaskItemList"></d2x-task-item-list-v2>
+            </div>
         </div>
 
     </div>

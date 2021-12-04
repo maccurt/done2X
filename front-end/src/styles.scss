@@ -40,6 +40,12 @@ mat-dialog-actions {
   font-weight: bold;
 }
 
+.action-icon-container {
+  .action-link {
+      margin-left: 15px;
+  }
+}
+
 .action-link-container {
   text-align: right;
   border-top: 1px solid #cccccc;

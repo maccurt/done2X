@@ -2,19 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TaskItemStatus } from '../task-item.service';
 import { TaskItem } from './task-item.type';
 import { faTrashAlt, faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
-
-export enum TypeAction {
-  add = 1,
-  edit,
-  delete,
-  moveStatus
-}
-
-export class TypeClickEvent<Type> {
-  constructor(public action: TypeAction, public item: Type, public status: TaskItemStatus = TaskItemStatus.unknown) {
-
-  }
-}
+import { TypeAction } from './TypeAction';
+import { TypeClickEvent } from './TypeClickEvent';
 
 @Component({
   selector: 'app-task-item',
@@ -35,8 +24,6 @@ export class TaskItemComponent {
   actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
   @Output()
   deleteClicked = new EventEmitter<TaskItem>();
-
-
 
   constructor() { }
 

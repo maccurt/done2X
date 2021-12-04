@@ -5,8 +5,6 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class PriorityPipe implements PipeTransform {
     transform(value: number): string {
-        console.log('trasnsform', value);
-
         switch (value) {
             case 1:
                 return 'High';

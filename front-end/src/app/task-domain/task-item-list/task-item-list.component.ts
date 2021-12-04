@@ -9,7 +9,8 @@ import { Goal } from '../../goal-domain/goal.type';
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
 
-import { TypeAction, TypeClickEvent } from '../task-item/task-item.component';
+import { TypeClickEvent } from "../task-item/TypeClickEvent";
+import { TypeAction } from "../task-item/TypeAction";
 import { TaskItem } from '../task-item/task-item.type';
 
 @Component({
@@ -66,7 +67,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   }
 
   getTaskItemList(): void {
-    console.log('getTask', this.goal)
+    
     this.getTaskItemListSub$ = this.taskItemService.getTaskItemList(this.goal.id).subscribe((taskItemList) => {
       this.taskItemList = taskItemList;
       this.splitTaskItemsIntoLanes();

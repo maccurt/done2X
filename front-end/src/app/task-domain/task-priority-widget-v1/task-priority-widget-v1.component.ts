@@ -39,16 +39,13 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
     this.codeService.GetPriority().subscribe((codes) => {
       this.priorityList = codes;
     })
-
   }
 
   ngAfterViewInit(): void {
     this.setChart();
   }
 
-
-  public updateTaskItemStatus(taskItem: TaskItem) {
-    console.log(taskItem);
+  public updateTaskItemStatus(taskItem: TaskItem) {    
     taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;   
   }
 
