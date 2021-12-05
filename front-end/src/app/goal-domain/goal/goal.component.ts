@@ -124,9 +124,11 @@ export class GoalComponent implements OnInit {
       case TypeAction.moveStatus:
         //TODO in the future perhaps put in order of priority
         if (event.item.taskItemStatusId === TaskItemStatus.completed) {
+          console.log('add to completed',event.item)
           this.completedTaskItemList.unshift(event.item);
         }
         else {
+          console.log('add to not completed',event.item)
           this.notCompletedTaskItemList.unshift(event.item);
         }
     }
@@ -134,7 +136,7 @@ export class GoalComponent implements OnInit {
   }
 
   public createCompletedChart() {
-    this.completedChart = this.chartService.getGoalPieChart('Completed', this.completedTaskItemList.length,
+    this.completedChart = this.chartService.completedPieChart(this.completedTaskItemList.length,
       this.notCompletedTaskItemList.length)
   }
 

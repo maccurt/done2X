@@ -1,51 +1,65 @@
-<table class="task-item-list-v2 table table-striped table-bordered table-sm">
-    <thead>
-        <tr>
-            <th id="completed-col">
-                Move To
-            </th>
+<div [ngClass]="{'completed-mode':completedMode,'not-completed-mode':!completedMode}">
+    
+    <div *ngIf="taskItemList.length === 0">
+        <div class="no-data" *ngIf="completedMode">
+            Completed Task Will Go Here
+        </div>
 
-            <th id="task-col">
-                <a (click)="sort('name')">Task</a>
-                <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
-                    class="add-task-item btn btn-primary btn-sm">Add Task</button>
-            </th>
+        <div class="no-data" *ngIf="!completedMode">
+            <br>
+            <button class="button btn-primary" (click)="addTaskItem()">Add A Task</button>
+        </div>
 
-            <th id="priority-col">
-                <a (click)="sort('priority')">Priority</a>
-            </th>
-            <th id="action-col">
-                Action
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr id="task-item-{{t.id}}" *ngFor="let t of taskItemList">
-            <td>
-                <a class="action-link move-task" (click)="moveTaskStatus(t)" title="move to completed">
-                    <span title="Move to in-progress..." *ngIf="completedMode">in progress</span>
-                    <span title="Move to completed..." *ngIf="!completedMode">complete</span>
-                </a>
-            </td>
+    </div>
+    <table *ngIf="taskItemList.length > 0" class="task-item-list-v2 table table-striped table-bordered table-sm">
+        <thead>
+            <tr>
+                <th style="width:15%" id="completed-col">
+                    Move To
+                </th>
 
-            <td>
-                <a class="action-link name" (click)="editTaskItem(t)">{{t.name}}</a>
-            </td>
+                <th style="width:60%"  id="task-col">
+                    <a (click)="sort('name')">Task</a>
+                    <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
+                        class="add-task-item btn btn-primary btn-sm">Add Task</button>
+                </th>
 
-            <td>
-                <a class="action-link priority" (click)="editTaskItem(t)">{{ t.priority | priority }}</a>
-            </td>
-
-            <td>
-                <div class="action-icon-container">
-                    <a title="edit task..." class="action-link edit-task-item" (click)="editTaskItem(t)">
-                        <fa-icon [icon]="iconService.edit"></fa-icon>
+                <th style="width:15%"  id="priority-col">
+                    <a (click)="sort('priority')">Priority</a>
+                </th>
+                <th style="width:10%" id="action-col">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="task-item-{{t.id}}" *ngFor="let t of taskItemList">
+                <td>
+                    <a class="action-link move-task" (click)="moveTaskStatus(t)" title="move to completed">
+                        <span title="Move to not completed..." *ngIf="completedMode">not completed</span>
+                        <span title="Move to completed..." *ngIf="!completedMode">completed</span>
                     </a>
-                    <a title="delete task..." class="action-link delete-task-item" (click)="deleteTaskItem(t)">
-                        <fa-icon [icon]="iconService.delete"></fa-icon>
-                    </a>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                </td>
+
+                <td>
+                    <a class="action-link name" (click)="editTaskItem(t)">{{t.name}}</a>
+                </td>
+
+                <td>
+                    <a class="action-link priority" (click)="editTaskItem(t)">{{ t.priority | priority }}</a>
+                </td>
+
+                <td>
+                    <div class="action-icon-container">
+                        <a title="edit task..." class="action-link edit-task-item" (click)="editTaskItem(t)">
+                            <fa-icon [icon]="iconService.edit"></fa-icon>
+                        </a>
+                        <a title="delete task..." class="action-link delete-task-item" (click)="deleteTaskItem(t)">
+                            <fa-icon [icon]="iconService.delete"></fa-icon>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

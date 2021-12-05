@@ -6,6 +6,7 @@ import * as Highcharts from 'highcharts';
 import { PieChartData } from './pie-chart-date-type';
 import { filter } from 'lodash';
 import { ChartOptions } from './ChartOptions';
+import { IconService } from '../icon.service';
 
 export const appColor = {
   priority: [
@@ -21,7 +22,20 @@ export const appColor = {
 })
 export class ChartServiceDone2x {
 
-  constructor() { }
+  constructor(private iconService: IconService) { }
+
+  completedPieChart(completed: number, notCompleted: number): Chart {
+    const pieChartDataList: PieChartData[] = [];
+    if (notCompleted > 0) {
+      pieChartDataList.push({ name: 'Not Completed', color: this.iconService.colors.not_completed_color_2, y: notCompleted });
+    }
+
+    if (completed > 0) {
+      pieChartDataList.push({ name: 'Completed', color: this.iconService.colors.completed_color_2, y: completed, sliced: true });
+    }
+
+    return new Chart(this.pieChartOptions('', pieChartDataList));
+  }
 
   taskPriorityChart1(title: string, priorityList: { priority: number }[], version: number = 1): Chart {
 
@@ -80,25 +94,7 @@ export class ChartServiceDone2x {
     return new Chart(options);
   }
 
-  completedPieChart(title: string, completed: number, notCompleted: number) {
-    const pieChartDataList: PieChartData[] = [];
-    pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
-    pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
-    return new Chart(this.pieChartOptions(title, pieChartDataList));
-  }
 
-  getGoalPieChart(title: string, completed: number, notCompleted: number): Chart {
-    const pieChartDataList: PieChartData[] = [];
-    if (notCompleted > 0) {
-      pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
-    }
-
-    if (completed > 0) {
-      pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
-    }
-
-    return new Chart(this.pieChartOptions(title, pieChartDataList));
-  }
 
   getDonutChart = (title: string): Chart => {
     const pieChartDataList: PieChartData[] = [];
@@ -113,7 +109,7 @@ export class ChartServiceDone2x {
   }
 
   getRandomGoalChart = (title: string): Chart => {
-    return this.getGoalPieChart(title, this.getRandomInteger(100), this.getRandomInteger(100));
+    return this.completedPieChart(this.getRandomInteger(100), this.getRandomInteger(100));
   }
 
   pieChartOptions(title: string, pieChartDataList: any, chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
@@ -148,7 +144,6 @@ export class ChartServiceDone2x {
           name: '',
           data: pieChartDataList,
           slicedOffset: chartOptions.slicedOffset
-
         }
       ]
     }

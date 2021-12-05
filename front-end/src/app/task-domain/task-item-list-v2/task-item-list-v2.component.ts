@@ -70,7 +70,7 @@ export class TaskItemListV2Component implements OnDestroy {
     });
 
     this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-      this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
+      this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {        
         //TODO remove this if we are not going to use the completed property
         response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
         this.actionEvent.emit(new TypeClickEvent(TypeAction.moveStatus, response));

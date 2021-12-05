@@ -1,4 +1,4 @@
 
 export class ChartOptions {
-  slicedOffset = 10;
+  slicedOffset = 20;
 }

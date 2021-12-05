@@ -1,0 +1,29 @@
+.completed-mode {
+    thead {
+        background-color: var(--completed-color-2);
+    }
+
+    .no-data {
+        line-height: 100px;
+        background-color: var(--completed-color-2);
+    }
+}
+
+.not-completed-mode {
+    thead {
+        background-color: var(--not-completed-color-2);
+    }
+
+    .no-data {
+        background-color: var(--not-completed-color-2);
+    }
+}
+
+.no-data {
+    border: 1px solid #cccccc;
+    height: 100px;
+    text-align: center;
+    height: 100px;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
