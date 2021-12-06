@@ -1,8 +1,6 @@
-
 import { Injectable } from '@angular/core';
 import { Chart } from 'angular-highcharts';
-//TODO is this blowing up the package check
-import * as Highcharts from 'highcharts';
+import * as Highcharts from 'highcharts'; //TODO is this blowing up the package check
 import { PieChartData } from './pie-chart-date-type';
 import { filter } from 'lodash';
 import { ChartOptions } from './ChartOptions';
@@ -15,7 +13,6 @@ export const appColor = {
     { low: '#ffff4d', medium: '#9fff80', high: '#ffccd5' }
   ]
 };
-
 
 @Injectable({
   providedIn: 'root'
@@ -134,7 +131,7 @@ export class ChartServiceDone2x {
           borderColor: 'black',
           dataLabels: {
             enabled: true,
-            distance: 5
+            distance: 10
           }
         }
       },
