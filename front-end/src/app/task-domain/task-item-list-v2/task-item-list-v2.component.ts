@@ -34,17 +34,19 @@ export class TaskItemListV2Component implements OnDestroy {
     private dialog: MatDialog,
     private taskItemService: TaskItemService,
     public iconService: IconService
-  ) { }  
+  ) { }
 
   public sort(property: string) {
+    let sorted: TaskItem[] = [];
     if (this.proprtyToSort !== property) {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['asc'])
+      sorted = orderBy(this.taskItemList, [property], ['asc']);
       this.proprtyToSort = property;
     }
     else {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['desc'])
+      sorted = orderBy(this.taskItemList, [property], ['desc']);
       this.proprtyToSort = '';
     }
+    Object.assign(this.taskItemList, sorted);
   }
 
   public moveTaskStatus(taskItem: TaskItem) {
@@ -70,7 +72,7 @@ export class TaskItemListV2Component implements OnDestroy {
     });
 
     this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-      this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {        
+      this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
         //TODO remove this if we are not going to use the completed property
         response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
         this.actionEvent.emit(new TypeClickEvent(TypeAction.moveStatus, response));
