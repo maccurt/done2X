@@ -23,7 +23,7 @@ export class TaskItemListV2Component implements OnDestroy {
   @Input() goal!: Goal;
   @Output() actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
 
-  proprtyToSort: string = 'completed';
+  proprtyToSort: string = 'priority';
   //subscription
   afterClosedSub$!: Subscription;
   addTaskItemSub$!: Subscription;
@@ -37,16 +37,15 @@ export class TaskItemListV2Component implements OnDestroy {
   ) { }
 
   public sort(property: string) {
-    let sorted: TaskItem[] = [];
+
     if (this.proprtyToSort !== property) {
-      sorted = orderBy(this.taskItemList, [property], ['asc']);
+      this.taskItemService.sortTaskItemList(this.taskItemList, property, true);
       this.proprtyToSort = property;
     }
     else {
-      sorted = orderBy(this.taskItemList, [property], ['desc']);
+      this.taskItemService.sortTaskItemList(this.taskItemList, property, false);
       this.proprtyToSort = '';
     }
-    Object.assign(this.taskItemList, sorted);
   }
 
   public moveTaskStatus(taskItem: TaskItem) {

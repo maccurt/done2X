@@ -123,12 +123,10 @@ export class GoalComponent implements OnInit {
     switch (event.action) {
       case TypeAction.moveStatus:
         //TODO in the future perhaps put in order of priority
-        if (event.item.taskItemStatusId === TaskItemStatus.completed) {
-          console.log('add to completed',event.item)
+        if (event.item.taskItemStatusId === TaskItemStatus.completed) {          
           this.completedTaskItemList.unshift(event.item);
         }
-        else {
-          console.log('add to not completed',event.item)
+        else {          
           this.notCompletedTaskItemList.unshift(event.item);
         }
     }

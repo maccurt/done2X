@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { orderBy } from 'lodash';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PriorityPipe } from '../pipes/priority.pipe';
@@ -19,6 +20,18 @@ export enum TaskItemStatus {
 export class TaskItemService {
 
   constructor(private httpClient: HttpClient) { }
+
+  sortTaskItemList(taskItemList: TaskItem[], property: string, ascending = true) {
+
+    let sorted: TaskItem[] = [];
+    if (ascending) {
+      sorted = orderBy(taskItemList, [property], ['asc']);      
+    }
+    else {
+      sorted = orderBy(taskItemList, [property], ['desc']);      
+    }
+    Object.assign(taskItemList, sorted);
+  }
 
   removeTaskFromList = (taskItem: TaskItem, taskItemList: TaskItem[]) => {
 

@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public ngOnInit(): void {
     // this.isAuthenticated$ = this.authService.isAuthenticated$.subscribe(() => {
-    //   console.log('authenticated in home');
+    
     // })    
 
     this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");

@@ -43,8 +43,7 @@ export class ExperimentComponent implements AfterViewInit {
     })
 
     if (x) {
-      this.experiment = x;
-      //console.log(this.experiment)
+      this.experiment = x;      
     }
   }
 
