@@ -1,5 +1,5 @@
 ﻿using System;
-using Dapper.Contrib.Extensions;
+
 
 namespace Done2X.Domain
 {
@@ -13,12 +13,14 @@ namespace Done2X.Domain
         public DateTimeOffset TargetCompletionDate { get; set; }
         public bool IsCompleted { get; set; }
         public DateTimeOffset? CompletionDate { get; set; }
-        [Write(false)]
-        public int TaskCompleted { get; set; }
-        [Write(false)]
-        public int TaskNotCompleted { get; set; }
 
-        [Computed]
+    }
+
+    public class GoalExtended : Goal
+    {
+        public int TaskCompleted { get; set; }
+        public int TaskNotCompleted { get; set; }
         public int TaskCount => this.TaskCompleted + this.TaskNotCompleted;
+
     }
 }

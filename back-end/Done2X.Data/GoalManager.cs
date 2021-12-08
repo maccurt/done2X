@@ -28,34 +28,41 @@ namespace Done2X.Data
             return goal;
         }
 
-        public async Task<IEnumerable<Goal>> GetGoalList(int projectId)
-        {
-            await using var connection = new SqlConnection(_connectionString);
-            connection.Open();
-            var list = await connection.SelectAsync<Goal>(g => g.ProjectId == projectId);
+        //public async Task<IEnumerable<Goal>> GetGoalList(int projectId)
+        //{
+        //    await using var connection = new SqlConnection(_connectionString);
+        //    connection.Open();
+        //    var list = await connection.SelectAsync<Goal>(g => g.ProjectId == projectId);
+        //    return list;
+        //}
 
-            return list;
-        }
-
-        public async Task<IEnumerable<Goal>> GetGoalList(ClaimsPrincipal user)
+        public async Task<IEnumerable<GoalExtended>> GetGoalList(ClaimsPrincipal user)
         {
             var authId = user.Identity.Name;
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
-            var goalList = await connection.QueryAsync<Goal>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
+            var goalList = await connection.QueryAsync<GoalExtended>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
             return goalList;
         }
 
         public async Task<Goal> Update(Goal goal)
         {
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
             goal.UpdatedDate = DateTime.Now;
             if (goal.IsCompleted)
             {
+                var taskNotCompleted = connection.QueryFirst<int>(
+                     $"select count(*) from TaskItem where GoalId = @goalId and TaskItemStatusId !=3", new {goalId =goal.Id});
+                if (taskNotCompleted > 0)
+                {
+                    var error =  new DomainException("Goal can not be completed it has task that are not completed");
+                    throw error;
+                }
+
                 goal.CompletionDate = goal.UpdatedDate;
             }
 
-            await using var connection = new SqlConnection(_connectionString);
-            connection.Open();
             await connection.UpdateAsync(goal);
             return goal;
         }
