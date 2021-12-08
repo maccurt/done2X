@@ -47,21 +47,21 @@ mat-dialog-actions {
   }
 }
 
-.action-link-container {
-  text-align: right;
-  border-top: 1px solid #cccccc;
-  margin-top: 15px;
-  padding-top: 5px;
-  a {
-    text-decoration: none !important;
-    cursor: default !important;
-    margin-left: 10px;
-    color: black;
-  }
-  a:hover {
-    text-decoration: underline !important;
-  }
-}
+// .action-link-container {
+//   text-align: right;
+//   border-top: 1px solid #cccccc;
+//   margin-top: 15px;
+//   padding-top: 5px;
+//   a {
+//     text-decoration: none !important;
+//     cursor: default !important;
+//     margin-left: 10px;
+//     color: black;
+//   }
+//   a:hover {
+//     text-decoration: underline !important;
+//   }
+// }
 
 
 .action-link {
@@ -103,4 +103,18 @@ mat-dialog-actions {
 
 .date-control {
   width: 175px;
+}
+
+.action-link-container {    
+  border-top: 1px solid #cccccc;
+  margin-top: 15px;
+  padding-top: 5px;
+  a {
+      text-decoration: none !important;
+      cursor: default !important;
+      color: black;
+  }
+  a:hover {
+      text-decoration: underline !important;
+  }
 }
