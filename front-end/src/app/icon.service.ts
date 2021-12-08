@@ -1,28 +1,16 @@
 import { Injectable } from '@angular/core';
-import { faSmile } from '@fortawesome/free-regular-svg-icons';
+import { faArrowAltCircleLeft, faArrowAltCircleRight, faSmile } from '@fortawesome/free-regular-svg-icons';
 import {
   faGraduationCap, faFrog, faChalkboardTeacher, faCheckSquare,
   faGlassCheers, faBrain, faCircle, faTrash, faWrench
 } from '@fortawesome/free-solid-svg-icons';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class IconService {
-  //Font Awesome Icons
-  //TODO Remove this and use icons class below
-  learnIcon = faGraduationCap;
-  wartsAndAllIcon = faFrog;
-  experimentLearnIcon = faChalkboardTeacher;
-  goalsTaskIcon = faCheckSquare;
-  celebrateIcon = faGlassCheers;
-  priority = [faBrain, faCircle];
-  edit = faWrench;
-  delete = faTrash;
-
   icons = {
+    priority: faCircle,
     learnIcon: faGraduationCap,
     wartsAndAllIcon: faFrog,
     experimentLearnIcon: faChalkboardTeacher,
@@ -30,7 +18,9 @@ export class IconService {
     celebrateIcon: faGlassCheers,
     edit: faWrench,
     delete: faTrash,
-    completed: faSmile
+    completed: faSmile,
+    arrowLeft: faArrowAltCircleLeft,
+    arrowRight: faArrowAltCircleRight
   }
 
   colors = {

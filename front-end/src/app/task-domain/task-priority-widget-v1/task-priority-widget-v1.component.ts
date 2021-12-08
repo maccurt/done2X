@@ -72,8 +72,6 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
     this.change.next(true);
   }
 
-
-
   changeStatus(item: IPriority) {
     const max = 3
     item.priority = item.priority + 1;

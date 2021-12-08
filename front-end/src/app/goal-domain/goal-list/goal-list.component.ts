@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { IconService } from 'src/app/icon.service';
 import { GoalModalComponent } from '../goal-modal/goal-modal.component';
 import { GoalService } from '../goal.service';
 import { Goal } from '../goal.type';
@@ -12,7 +13,6 @@ import { Goal } from '../goal.type';
   styleUrls: ['./goal-list.component.scss']
 })
 export class GoalListComponent implements OnInit, OnDestroy {
-
   goalList: Goal[] = [];
   goalListCompleted: Goal[] = [];
   goalListNotCompleted: Goal[] = [];
@@ -22,7 +22,8 @@ export class GoalListComponent implements OnInit, OnDestroy {
 
   constructor(private goalService: GoalService,
     private route: ActivatedRoute,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public iconService: IconService) {
   }
 
   public ngOnInit(): void {
@@ -42,10 +43,20 @@ export class GoalListComponent implements OnInit, OnDestroy {
     });
   }
 
+  public moveToInProgress(goal: Goal) {
+    goal.isCompleted = false;
+    this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
+      const index = this.goalListCompleted.indexOf(goal);      
+      if (index > -1) {
+        this.goalListCompleted.splice(index, 1);
+      }
+      this.goalListNotCompleted.push(goal);
+    })
+  }
+
   public completeGoal(goal: Goal) {
     goal.isCompleted = true;
     this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
-
       const index = this.goalListNotCompleted.indexOf(goal);
       if (index > -1) {
         this.goalListNotCompleted.splice(index, 1);
@@ -59,14 +70,12 @@ export class GoalListComponent implements OnInit, OnDestroy {
       if (modalGoal) {
         this.addGoalSub$ = this.goalService.addGoal(modalGoal).subscribe((response) => {
           this.goalListNotCompleted.push(response);
-          //this.goalList.push(response);
         })
       }
     });
   }
 
   public editGoal(goal: Goal) {
-
     this.showGoalModal(goal).afterClosed().subscribe((modalGoal) => {
       if (modalGoal) {
         this.updateGoalSub$ = this.goalService.updateGoal(modalGoal).subscribe((response) => {
