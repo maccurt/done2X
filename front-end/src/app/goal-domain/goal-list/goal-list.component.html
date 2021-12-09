@@ -25,7 +25,7 @@
 
                             <div style="text-align: right;" class="action-link-container">
                                 <a class="complete" title="move to complete" (click)="completeGoal(g)">
-                                    <fa-icon [icon]="iconService.icons.arrowRight"></fa-icon>
+                                    <fa-icon [icon]="iconColorService.icons.arrowRight"></fa-icon>
                                 </a>
                             </div>
 
@@ -50,7 +50,7 @@
                             <h6 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h6>
                             <div style="text-align: left;" class="action-link-container">
                                 <a class="in-progress" title="move to in-progress" (click)="moveToInProgress(g)">
-                                    <fa-icon [icon]="iconService.icons.arrowLeft"></fa-icon>
+                                    <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
                                 </a>
                             </div>
                             <div title="{{g.taskCompleted}} of {{g.taskCount}} task completed"

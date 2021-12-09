@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
-import { IconService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/icon.service';
 import { TaskItem } from '../task-item/task-item.type';
 import { orderBy } from 'lodash';
 import { Code, CodeService } from 'src/app/code.service';
@@ -30,7 +30,7 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   proprtyToSort = 'priority';
   priorityList: Code[] = [];
 
-  constructor(public iconService: IconService,
+  constructor(public iconColorService: IconColorService,
     private codeService: CodeService,
     private chartService: ChartServiceDone2x) { }
 

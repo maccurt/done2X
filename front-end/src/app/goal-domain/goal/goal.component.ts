@@ -66,12 +66,8 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   //Subscriptions
   updateGoalSub$!: Subscription;
-  deleteAfterClosedSub$!: Subscription;
-  afterClosedSub$!: Subscription;
-  addTaskItemSub$!: Subscription;
-  updateTaskItemSub$!: Subscription;
-  routeDataSub$!:Subscription;
-
+  routeDataSub$!: Subscription;
+  getPrioritySub$!: Subscription;
   chartChangeEvent: Subject<TaskItem[]> = new Subject();
 
   constructor(private route: ActivatedRoute,
@@ -96,7 +92,7 @@ export class GoalComponent implements OnInit, OnDestroy {
 
       this.createCompletedChart();
 
-      this.codeService.GetPriority().subscribe((priorityList) => {
+      this.getPrioritySub$ = this.codeService.GetPriority().subscribe((priorityList) => {
         this.priorityList = priorityList
       })
 
@@ -178,11 +174,8 @@ export class GoalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.afterClosedSub$?.unsubscribe();
-    this.addTaskItemSub$?.unsubscribe();
-    this.updateTaskItemSub$?.unsubscribe();
     this.updateGoalSub$?.unsubscribe();
-    this.deleteAfterClosedSub$?.unsubscribe();
     this.routeDataSub$?.unsubscribe();
+    this.getPrioritySub$?.unsubscribe();
   }
 }

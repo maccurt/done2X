@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IconService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/icon.service';
 import { GoalModalComponent } from '../goal-modal/goal-modal.component';
 import { GoalService } from '../goal.service';
 import { Goal } from '../goal.type';
@@ -23,7 +23,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
   constructor(private goalService: GoalService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    public iconService: IconService) {
+    public iconColorService: IconColorService) {
   }
 
   public ngOnInit(): void {

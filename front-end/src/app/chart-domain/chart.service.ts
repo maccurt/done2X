@@ -4,23 +4,23 @@ import * as Highcharts from 'highcharts'; //TODO is this blowing up the package 
 import { PieChartData } from './pie-chart-date-type';
 import { filter } from 'lodash';
 import { ChartOptions } from './ChartOptions';
-import { IconService } from '../icon.service';
+import { IconColorService } from '../icon.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartServiceDone2x {
 
-  constructor(private iconService: IconService) { }
+  constructor(private iconColorService: IconColorService) { }
 
   completedPieChart(completed: number, notCompleted: number): Chart {
     const pieChartDataList: PieChartData[] = [];
     if (notCompleted > 0) {
-      pieChartDataList.push({ name: 'Not Completed', color: this.iconService.colors.not_completed_color_2, y: notCompleted });
+      pieChartDataList.push({ name: 'Not Completed', color: this.iconColorService.colors.not_completed_color_2, y: notCompleted });
     }
 
     if (completed > 0) {
-      pieChartDataList.push({ name: 'Completed', color: this.iconService.colors.completed_color_2, y: completed, sliced: true });
+      pieChartDataList.push({ name: 'Completed', color: this.iconColorService.colors.completed_color_2, y: completed, sliced: true });
     }
 
     return new Chart(this.pieChartOptions('', pieChartDataList));
@@ -34,9 +34,9 @@ export class ChartServiceDone2x {
     const low = filter(priorityList, { priority: 3 }).length;
 
     const data: PieChartData[] = [
-      { y: high, color: this.iconService.colors.priority.high, name: 'High', sliced: true },
-      { y: medium, color: this.iconService.colors.priority.medium, name: 'Medium' },
-      { y: low, color: this.iconService.colors.priority.low, name: 'Low' }];
+      { y: high, color: this.iconColorService.colors.priority.high, name: 'High', sliced: true },
+      { y: medium, color: this.iconColorService.colors.priority.medium, name: 'Medium' },
+      { y: low, color: this.iconColorService.colors.priority.low, name: 'Low' }];
 
     let chartOptions = new ChartOptions();
     let options = this.pieChartOptions(title, data, chartOptions);

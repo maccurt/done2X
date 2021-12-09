@@ -8,7 +8,7 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class IconService {
+export class IconColorService {
   icons = {
     priority: faCircle,
     learnIcon: faGraduationCap,

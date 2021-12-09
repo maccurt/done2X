@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { Goal } from 'src/app/goal-domain/goal.type';
-import { IconService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/icon.service';
 
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
@@ -33,9 +33,8 @@ export class TaskItemListV2Component implements OnDestroy {
   constructor(
     private dialog: MatDialog,
     private taskItemService: TaskItemService,
-    public iconService: IconService
+    public iconColorService: IconColorService
   ) { }
-
 
   priorityToggle(change: MatButtonToggleChange, taskItem: TaskItem) {
     //TODO is there a way to bind to the value and not need this method    
