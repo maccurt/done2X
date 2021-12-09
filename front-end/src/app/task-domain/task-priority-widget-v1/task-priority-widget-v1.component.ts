@@ -24,7 +24,7 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   @Input() title: string = '';
   @Input() taskItemList: TaskItem[] = [];
 
-  change: Subject<Boolean> = new Subject();
+  change: Subject<TaskItem[]> = new Subject();
 
   chart!: Chart;
   proprtyToSort = 'priority';
@@ -69,7 +69,7 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
 
   setChart() {
     //this.chart = this.chartService.taskPriorityChart1("Task Priority", this.taskItemList);
-    this.change.next(true);
+    this.change.next(this.taskItemList);
   }
 
   changeStatus(item: IPriority) {

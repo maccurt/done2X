@@ -27,3 +27,26 @@
     font-size: 1.2rem;
     margin-bottom: 15px;
 }
+
+.mat-button-toggle-group {
+    height: 30px;
+    align-items: center;
+}
+
+.priority-1 {
+    .mat-button-toggle-checked {
+        background-color:var(--high-priority-color);
+    }
+}
+
+.priority-2 {
+    .mat-button-toggle-checked {
+        background-color:var(--medium-priority-color);
+    }
+}
+
+.priority-3 {
+    .mat-button-toggle-checked {
+        background-color:var(--low-priority-color);
+    }
+}

@@ -6,14 +6,6 @@ import { filter } from 'lodash';
 import { ChartOptions } from './ChartOptions';
 import { IconService } from '../icon.service';
 
-export const appColor = {
-  priority: [
-    { low: '#ffff33', medium: '#00b300', high: '#ff3333' },
-    { low: '#ffffb3', medium: '#b3ffb3', high: '#ffb3b3' },
-    { low: '#ffff4d', medium: '#9fff80', high: '#ffccd5' }
-  ]
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -34,24 +26,19 @@ export class ChartServiceDone2x {
     return new Chart(this.pieChartOptions('', pieChartDataList));
   }
 
-  taskPriorityChart1(title: string, priorityList: { priority: number }[], version: number = 1): Chart {
+  taskPriorityChart1(title: string, priorityList: { priority: number }[]): Chart {
 
+    //TODO can we create this somewhere else
     const high = filter(priorityList, { priority: 1 }).length;
     const medium = filter(priorityList, { priority: 2 }).length;
     const low = filter(priorityList, { priority: 3 }).length;
 
-    let color = appColor.priority[version - 1];
     const data: PieChartData[] = [
-      { y: high, color: color.high, name: 'High', sliced: true },
-      { y: medium, color: color.medium, name: 'Medium' },
-      { y: low, color: color.low, name: 'Low' }];
-
+      { y: high, color: this.iconService.colors.priority.high, name: 'High', sliced: true },
+      { y: medium, color: this.iconService.colors.priority.medium, name: 'Medium' },
+      { y: low, color: this.iconService.colors.priority.low, name: 'Low' }];
 
     let chartOptions = new ChartOptions();
-    if (version === 3) {
-      chartOptions.slicedOffset = 25;
-    }
-
     let options = this.pieChartOptions(title, data, chartOptions);
 
     return new Chart(options);
@@ -109,7 +96,11 @@ export class ChartServiceDone2x {
     return this.completedPieChart(this.getRandomInteger(100), this.getRandomInteger(100));
   }
 
-  pieChartOptions(title: string, pieChartDataList: any, chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
+  pieChartOptions(title: string, pieChartDataList: PieChartData[], chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
+  
+    pieChartDataList = pieChartDataList.filter((d) => {
+      return d.y > 0;
+    })
 
     let options: Highcharts.Options = {
       chart: {

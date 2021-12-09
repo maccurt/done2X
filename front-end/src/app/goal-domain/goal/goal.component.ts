@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Code, CodeService } from 'src/app/code.service';
 
 import { TaskItem } from 'src/app/task-domain/task-item/task-item.type';
 import { Goal } from '../goal.type';
-import { orderBy } from 'lodash';
 import { FormControlService } from 'src/app/form-control.service';
 import { GoalService } from '../goal.service';
 //Icons
@@ -29,23 +28,18 @@ export class Column {
   templateUrl: './goal.component.html',
   styleUrls: ['./goal.component.scss']
 })
-export class GoalComponent implements OnInit {
-  @ViewChild(MatExpansionPanel, {static: true}) matExpansionPanelElement!: MatExpansionPanel;
+export class GoalComponent implements OnInit, OnDestroy {
+  @ViewChild(MatExpansionPanel, { static: true }) matExpansionPanelElement!: MatExpansionPanel;
   //icons
   faCoffee = faCoffee;
   editIcon = faWrench;
   deleteIcon = faTrash;
-  //
-  routeDataSub$!: Subscription;
   goal!: Goal;
-  taskItemList: TaskItem[] = [];
+
   completedTaskItemList: TaskItem[] = [];
   notCompletedTaskItemList: TaskItem[] = [];
-  afterClosedSub$!: Subscription;
-  addTaskItemSub$!: Subscription;
-  updateTaskItemSub$!: Subscription;
   taskItemStatusList: Code[] = [];
-  // taskItemListIdSorted: Code[] = [];
+  taskItemList: TaskItem[] = [];
   columns: Column[] = [
     { text: 'Completed', property: 'completed' },
     { text: 'Task', property: 'name' },
@@ -73,6 +67,12 @@ export class GoalComponent implements OnInit {
   //Subscriptions
   updateGoalSub$!: Subscription;
   deleteAfterClosedSub$!: Subscription;
+  afterClosedSub$!: Subscription;
+  addTaskItemSub$!: Subscription;
+  updateTaskItemSub$!: Subscription;
+  routeDataSub$!:Subscription;
+
+  chartChangeEvent: Subject<TaskItem[]> = new Subject();
 
   constructor(private route: ActivatedRoute,
     private taskItemService: TaskItemService,
@@ -82,21 +82,17 @@ export class GoalComponent implements OnInit {
     private chartService: ChartServiceDone2x,
     public formControlService: FormControlService) { }
 
+
   ngOnInit(): void {
 
-    //Set up the datw
+    //Set up the data
     this.routeDataSub$ = this.route.data.subscribe((data) => {
       this.goal = data.goal;
       this.taskItemList = data.taskItemList;
       this.taskItemStatusList = data.taskItemStatusList;
 
-      //TODO re-think this, should this be in the service OR in the back end.
-      this.taskItemList.forEach((taskItem) => {
-        taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-      })
-
-      this.completedTaskItemList = this.taskItemService.getCompletedTaskItems(this.taskItemList);
-      this.notCompletedTaskItemList = this.taskItemService.getNotCompletedTaskItems(this.taskItemList);
+      this.completedTaskItemList = this.taskItemService.getCompletedTaskItems(data.taskItemList);
+      this.notCompletedTaskItemList = this.taskItemService.getNotCompletedTaskItems(data.taskItemList);
 
       this.createCompletedChart();
 
@@ -119,18 +115,34 @@ export class GoalComponent implements OnInit {
     });
   }
 
+  public addTaskToCorrectLane(taskItem: TaskItem) {
+    if (taskItem.taskItemStatusId === TaskItemStatus.completed) {
+      this.completedTaskItemList.unshift(taskItem);
+    }
+    else {
+      this.notCompletedTaskItemList.unshift(taskItem);
+    }
+  }
+
   public actionEvent(event: TypeClickEvent<TaskItem>) {
     switch (event.action) {
+      case TypeAction.add:
+        this.addTaskToCorrectLane(event.item)
+        this.chartChangeEvent.next([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
+        this.createCompletedChart();
+        break;
       case TypeAction.moveStatus:
-        //TODO in the future perhaps put in order of priority
-        if (event.item.taskItemStatusId === TaskItemStatus.completed) {          
-          this.completedTaskItemList.unshift(event.item);
-        }
-        else {          
-          this.notCompletedTaskItemList.unshift(event.item);
-        }
+        this.addTaskToCorrectLane(event.item)
+        this.createCompletedChart();
+        break;
+      case TypeAction.delete:
+        this.chartChangeEvent.next([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
+        this.createCompletedChart();
+        break;
+      case TypeAction.priorityChange:
+        this.chartChangeEvent.next([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
+        break;
     }
-    this.createCompletedChart();
   }
 
   public createCompletedChart() {
@@ -142,42 +154,13 @@ export class GoalComponent implements OnInit {
     return this.priorityList[taskItem.priority - 1].name;
   }
 
-  createTaskItemStatusListIdSorted(taskItemStatusList: Code[]): Code[] {
-    //TODO this is used to get the priority text, re-think this performance wise
-    //TODO move this somewhere
-    //Use lodash instead sortby
-    const list = taskItemStatusList.sort((a, b) => {
-      if (a.id < b.id) {
-        return -1;
-      }
-      if (a.id > b.id) {
-        return 1;
-      }
-      return 0;
-    })
-
-    return list;
-  }
-
-  public sort(property: string) {
-
-    if (this.proprtyToSort !== property) {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['asc'])
-      this.proprtyToSort = property;
-    }
-    else {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['desc'])
-      this.proprtyToSort = '';
-    }
-  }
-
   public save() {
 
     if (this.formGroup.valid) {
       Object.assign(this.goal, this.formGroup.value);
       this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
       })
-      this.showErrors = false;      
+      this.showErrors = false;
       this.createCompletedChart();
       this.matExpansionPanelElement.close();
     }
@@ -187,86 +170,19 @@ export class GoalComponent implements OnInit {
   }
 
   hideCompletedClick() {
-
     this.hideCompleted = !this.hideCompleted;
-
   }
 
   public cancel() {
-
+    this.hideCompleted = !this.hideCompleted;
   }
-  // public addTaskItem() {
 
-  //   const taskItem = new TaskItem();
-  //   taskItem.goalId = this.goal.id;
-  //   const dialogRef = this.dialog.open(TaskItemModalComponent, {
-  //     data: taskItem,
-  //     disableClose: true
-  //   });
-
-  //   this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-  //     this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
-  //       //TODO remove this if we are not going to use the completed property
-  //       response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-  //       if (response.taskItemStatusId === TaskItemStatus.completed) {
-  //         this.completedTaskItemList.unshift(response);
-  //       }
-  //       else {
-  //         this.notCompletedTaskItemList.unshift(response);
-  //       }
-  //       this.taskItemList.unshift(response);
-  //       this.createCompletedChart(this.taskItemList);
-  //     });
-  //   })
-  // }
-
-  // deleteTaskItem(taskItem: TaskItem) {
-  //   let confirm: Confirm = {
-  //     question: `Delete Task?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: taskItem.name
-  //   }
-
-  //   const dialogRef = this.dialog.open(ConfirmModalComponent, {
-  //     disableClose: true,
-  //     data: confirm
-  //   });
-
-  //   this.deleteAfterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
-  //     if (confirm) {
-  //       this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
-
-  //         //TODO use the service to remove this from the list          
-  //         let index = this.taskItemList.indexOf(taskItem);
-  //         if (index > -1) {
-  //           this.taskItemList.splice(index, 1);
-  //           this.createCompletedChart(this.taskItemList);
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-
-  // public editTaskItem(taskItem: TaskItem) {
-  //   const dialogRef = this.dialog.open(TaskItemModalComponent, {
-  //     data: taskItem,
-  //     disableClose: true
-  //   });
-
-  //   this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-  //     if (taskItem) {
-  //       this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
-  //         Object.assign(taskItem, updatedTask);
-  //         taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-  //         this.createCompletedChart(this.taskItemList);
-  //       });
-  //     }
-  //   })
-  // }
-
-  // public updateTaskItemStatus(taskItem: TaskItem) {
-  //   taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;
-  //   this.taskItemService.updateTaskItem(taskItem).subscribe((response) => {
-  //     Object.assign(taskItem, response);
-  //     this.createCompletedChart(this.taskItemList);
-  //   })
-  // }
+  ngOnDestroy(): void {
+    this.afterClosedSub$?.unsubscribe();
+    this.addTaskItemSub$?.unsubscribe();
+    this.updateTaskItemSub$?.unsubscribe();
+    this.updateGoalSub$?.unsubscribe();
+    this.deleteAfterClosedSub$?.unsubscribe();
+    this.routeDataSub$?.unsubscribe();
+  }
 }

@@ -1,5 +1,5 @@
 <div [ngClass]="{'completed-mode':completedMode,'not-completed-mode':!completedMode}">
-    
+
     <div *ngIf="taskItemList.length === 0">
         <div class="no-data" *ngIf="completedMode">
             Completed Task Will Go Here
@@ -18,13 +18,13 @@
                     Move To
                 </th>
 
-                <th style="width:60%"  id="task-col">
+                <th style="width:63%" id="task-col">
                     <a (click)="sort('name')">Task</a>
                     <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
                         class="add-task-item btn btn-primary btn-sm">Add Task</button>
                 </th>
 
-                <th style="width:15%"  id="priority-col">
+                <th style="width:12%" id="priority-col">
                     <a (click)="sort('priority')">Priority</a>
                 </th>
                 <th style="width:10%" id="action-col">
@@ -46,7 +46,16 @@
                 </td>
 
                 <td>
-                    <a class="action-link priority" (click)="editTaskItem(t)">{{ t.priority | priority }}</a>
+                    <mat-button-toggle-group class="priority-toggle priority-{{t.priority}}"
+                        (change)="priorityToggle($event,t)" name="priority" [value]="t.priority.toString()"
+                        aria-label="Font Style">
+                        <mat-button-toggle name="priority" class="priority-low" title="Low" value="3">L
+                        </mat-button-toggle>
+                        <mat-button-toggle name="priority" class="priority-medium" title="Medium" value="2">M
+                        </mat-button-toggle>
+                        <mat-button-toggle name="priority" class="priority-high" title="High" value="1">H
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
                 </td>
 
                 <td>

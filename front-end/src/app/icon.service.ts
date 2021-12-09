@@ -27,7 +27,12 @@ export class IconService {
     completed_color_1: '#ccffcc',
     completed_color_2: '#e6ffe6',
     not_completed_color_1: '#b3b3ff',
-    not_completed_color_2: '#e6e6ff'
+    not_completed_color_2: '#e6e6ff',
+    priority: {
+      low: '#ffff4d',
+      medium: '#4dff4d',
+      high: '#ff4d4d',
+    }
   }
 
   constructor() { }

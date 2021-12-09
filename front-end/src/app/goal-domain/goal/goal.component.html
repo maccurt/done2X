@@ -86,6 +86,11 @@
                     <br>
                     <d2x-completed-chart [completed]="completedTaskItemList.length" [notCompleted]="notCompletedTaskItemList.length" ></d2x-completed-chart>
                 </div>
+
+                <div class="col-12">
+                    <br>
+                    <d2x-task-priority-chart-v1 [change]="chartChangeEvent" [taskItemList]="taskItemList" ></d2x-task-priority-chart-v1>
+                </div>
             </div>
         </div>
 
