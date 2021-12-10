@@ -19,7 +19,10 @@
                 </th>
 
                 <th style="width:63%" id="task-col">
-                    <a (click)="sort('name')">Task</a>
+                    <a (click)="sort('name')">Task 
+                        <span *ngIf="completedMode">Completed</span> 
+                        <span *ngIf="!completedMode"> Not Completed</span> 
+                    </a>
                     <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
                         class="add-task-item btn btn-primary btn-sm">Add Task</button>
                 </th>
