@@ -1,0 +1,5 @@
+<div *ngIf="taskItemList.length > 0" class="task-priority-chart"  [chart]="chart"></div>
+
+<div *ngIf="taskItemList.length === 0" class="no-data-chart">
+    <span>No Data</span>
+</div>

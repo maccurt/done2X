@@ -11,4 +11,13 @@ namespace Done2X.Data.EntityMap
             Map(x => x.Id).ToColumn("GoalId").IsKey();
         }
     }
+
+    public class GoalExtendedMap : DommelEntityMap<GoalExtended>
+    {
+        public GoalExtendedMap()
+        {
+            ToTable("Goal");
+            Map(x => x.Id).ToColumn("GoalId").IsKey();
+        }
+    }
 }

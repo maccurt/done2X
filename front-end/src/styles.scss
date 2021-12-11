@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./customize-bootstrap.scss";
 @import "./variables";
+@import "./colors";
 @import "./chart.styles.scss";
 
 html,
@@ -12,22 +13,20 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
-.priority-1{
-  color:red;
+.priority-1 {
+  color: red;
 }
 
-.priority-2{
-  color:green;
+.priority-2 {
+  color: green;
 }
 
-.priority-3{
-  color:yellow;
+.priority-3 {
+  color: yellow;
 }
 
 .app-modal {
   max-width: 450px;
-  
 }
 mat-dialog-actions {
   button {
@@ -42,30 +41,34 @@ mat-dialog-actions {
 
 .action-icon-container {
   .action-link {
-      margin-left: 15px;
+    margin-left: 15px;
   }
 }
 
-.action-link-container {
-  text-align: right;
-  border-top: 1px solid #cccccc;
-  margin-top: 15px;
-  padding-top: 5px;
-  a {
-    text-decoration: none !important;
-    cursor: default !important;
-    margin-left: 10px;
-    color: black;
-  }
-  a:hover {
-    text-decoration: underline !important;
-  }
-}
+// .action-link-container {
+//   text-align: right;
+//   border-top: 1px solid #cccccc;
+//   margin-top: 15px;
+//   padding-top: 5px;
+//   a {
+//     text-decoration: none !important;
+//     cursor: default !important;
+//     margin-left: 10px;
+//     color: black;
+//   }
+//   a:hover {
+//     text-decoration: underline !important;
+//   }
+// }
 
+.snack-bar-error {
+  background-color: #ff8080;
+  color: black;
+}
 
 .action-link {
   text-decoration: none !important;
-  cursor: default !important;  
+  cursor: default !important;
   color: black;
 }
 .action-link:hover {
@@ -102,4 +105,18 @@ mat-dialog-actions {
 
 .date-control {
   width: 175px;
+}
+
+.action-link-container {
+  border-top: 1px solid #cccccc;
+  margin-top: 15px;
+  padding-top: 5px;
+  a {
+    text-decoration: none !important;
+    cursor: default !important;
+    color: black;
+  }
+  a:hover {
+    text-decoration: underline !important;
+  }
 }

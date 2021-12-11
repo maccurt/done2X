@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
-import { orderBy } from 'lodash';
 import { Subscription } from 'rxjs';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { Goal } from 'src/app/goal-domain/goal.type';
-import { IconService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/icon.service';
 
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
@@ -23,7 +23,9 @@ export class TaskItemListV2Component implements OnDestroy {
   @Input() goal!: Goal;
   @Output() actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
 
-  proprtyToSort: string = 'completed';
+
+  allTaskSelected: boolean = false;
+  proprtyToSort: string = 'priority';
   //subscription
   afterClosedSub$!: Subscription;
   addTaskItemSub$!: Subscription;
@@ -33,16 +35,42 @@ export class TaskItemListV2Component implements OnDestroy {
   constructor(
     private dialog: MatDialog,
     private taskItemService: TaskItemService,
-    public iconService: IconService
-  ) { }  
+    public iconColorService: IconColorService
+  ) { }
+
+  selectTask(taskItem: TaskItem, checked: boolean) {
+    taskItem.selected = checked;
+    if (!checked){
+      this.allTaskSelected = false;
+    }
+  }
+
+  selectAllClick(checked: boolean) {
+    this.taskItemList.forEach((t) => {
+      t.selected = checked;
+    })
+  }
+
+  moveTaskToGoal(){
+    console.log('move task to goal');
+  }
+
+  priorityToggle(change: MatButtonToggleChange, taskItem: TaskItem) {
+    //TODO is there a way to bind to the value and not need this method    
+    taskItem.priority = parseInt(change.value);
+    this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
+      this.actionEvent.emit(new TypeClickEvent(TypeAction.priorityChange, updatedTask));
+    });
+  }
 
   public sort(property: string) {
+
     if (this.proprtyToSort !== property) {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['asc'])
+      this.taskItemService.sortTaskItemList(this.taskItemList, property, true);
       this.proprtyToSort = property;
     }
     else {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['desc'])
+      this.taskItemService.sortTaskItemList(this.taskItemList, property, false);
       this.proprtyToSort = '';
     }
   }
@@ -73,7 +101,7 @@ export class TaskItemListV2Component implements OnDestroy {
       this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
         //TODO remove this if we are not going to use the completed property
         response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-        this.actionEvent.emit(new TypeClickEvent(TypeAction.moveStatus, response));
+        this.actionEvent.emit(new TypeClickEvent(TypeAction.add, response));
       });
     })
   }
@@ -97,6 +125,7 @@ export class TaskItemListV2Component implements OnDestroy {
       }
     })
   }
+
 
   public editTaskItem(taskItem: TaskItem) {
     const dialogRef = this.dialog.open(TaskItemModalComponent, {

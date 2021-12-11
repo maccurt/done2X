@@ -3,13 +3,18 @@
 }
 
 .what-is-done {
-    min-height: 60px;    
+    min-height: 60px;
 }
 
 .goal-not-completed {
-    background-color: #b3b3ff;
+    background-color: var(--not-completed-color-2);
 }
 
 .goal-completed {
-    background-color: #e6ffe6;
+    background-color: var(--completed-color-2);
 }
+
+.task-count-container {
+    font-size: small;
+}
+

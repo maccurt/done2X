@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Done2X.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace Done2X.API.Controllers
                 return Unauthorized();
             };
             var list = await _domainManager.TaskItem.GetList(goalId);
-            return Ok(list.OrderBy(t=>t.Priority));
+            return Ok(list.OrderBy(t => t.Priority));
         }
 
         [HttpPost]
@@ -64,6 +65,15 @@ namespace Done2X.API.Controllers
 
             var result = await _domainManager.TaskItem.Update(taskItem);
             return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("move/{goalId}")]
+        public async Task<IActionResult> MoveTaskListToGoal([FromBody] List<int> taskItemIdList, [FromRoute] int goalId)
+        {
+            //TODO check to make sure the user can do this
+            await _domainManager.TaskItem.MoveTaskListToGoal(taskItemIdList, goalId);
+            return Ok();
         }
 
         [HttpDelete]

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TaskItemListComponent } from './task-domain/task-item-list/task-item-list.component';
 import { TaskItemComponent } from './task-domain/task-item/task-item.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskItemModalComponent } from './task-domain/task-item-modal/task-item-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatMenuModule} from '@angular/material/menu';
 import { BreakPointTesterComponent } from './break-point-tester/break-point-tester.component';
 import { GoalComponent } from './goal-domain/goal/goal.component';
 import { GoalResolver } from './resolvers/goal-resolver';
@@ -34,9 +35,12 @@ import { DashBoardComponent } from './dash-board/dash-board.component';
 import { ExperimentComponent } from './experiment/experiment.component';
 import { PriorityPipe } from './pipes/priority.pipe';
 import { TaskPriorityWidgetV1Component } from './task-domain/task-priority-widget-v1/task-priority-widget-v1.component';
-import { TaskPriorityChartV1Component } from './task-domain/task-priority-chart-v1/task-priority-chart-v1.component';
+import { TaskPriorityChartV1Component } from './chart-domain/task-priority-chart-v1/task-priority-chart-v1.component';
 import { TaskItemListV2Component } from './task-domain/task-item-list-v2/task-item-list-v2.component';
 import { CompletedChartComponent } from './chart-domain/completed-chart/completed-chart.component';
+import { HttpErrorInterceptor } from './interceptor/httpErrorIntereceptor.type';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -74,6 +78,9 @@ import { CompletedChartComponent } from './chart-domain/completed-chart/complete
     MatCheckboxModule,
     MatExpansionModule,
     MatButtonToggleModule,
+    MatSnackBarModule,
+    MatMenuModule,
+    MatIconModule,
     SecurityModule,
     FontAwesomeModule,
     ChartModule
@@ -82,7 +89,12 @@ import { CompletedChartComponent } from './chart-domain/completed-chart/complete
     GoalResolver,
     GoalListResolver,
     TaskItemListResolver,
-    TaskItemStatusListResolver
+    TaskItemStatusListResolver,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [TaskItemModalComponent, ConfirmModalComponent, GoalModalComponent]

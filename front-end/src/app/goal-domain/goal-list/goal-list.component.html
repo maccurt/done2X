@@ -12,36 +12,31 @@
 
     <div class="row">
 
-        <div class="col-sm-7 col-md-7 col-lg-9 col-xl-9 col-xxl-9 col-xxxl-8">
+        <!-- <div class="col-sm-7 col-md-7 col-lg-9 col-xl-9 col-xxl-9 col-xxxl-8"> -->
+        <div class="col-3">
             <h5>Up Next</h5>
             <div id="goal-list-not-completed" class="row">
-                <div *ngFor="let g of goalListNotCompleted" class="col-sm-12 col-md-12 col-lg-6 col-xxl-4 col-xxxl-3">
+                <!-- <div *ngFor="let g of goalListNotCompleted" class="col-sm-12 col-md-12 col-lg-6 col-xxl-4 col-xxxl-3"> -->
+                <div *ngFor="let g of goalListNotCompleted" class="col-12">
 
                     <div id="goal-{{g.id}}" class="card goal-not-completed">
                         <div class="card-body">
                             <h6 class="card-title">
                                 <a class="action-link" routerLink="/goal/{{g.id}}">{{g.name}}</a>
                             </h6>
-                            <div class="action-link-container">
-                                <a class="complete" title="move to complete" (click)="completeGoal(g)">complete</a>
+
+                            <div style="text-align: right;" class="action-link-container">
+                                <a class="complete" title="move to complete" (click)="completeGoal(g)">
+                                    <fa-icon [icon]="iconColorService.icons.arrowRight"></fa-icon>
+                                </a>
+                            </div>
+
+                            <div  title="{{g.taskCompleted}} of {{g.taskCount}} task completed"
+                                class="task-count-container">
+                                <span>{{g.taskCompleted}} / {{g.taskCount}}</span>
                             </div>
                         </div>
                     </div>
-                    <!-- <div id="goal-{{g.id}}" class="card" >
-                        <div class="card-body">
-                            <h6 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h6>
-                            <p class="card-text description ">{{g.description}}</p>
-                            <h6>What Is Done?</h6>
-                            <p class="card-text what-is-done">{{g.whatIsDone}}</p>
-                            <h6>Target Completion Date</h6>
-                            <p>{{g.targetCompletionDate | date:'MM/dd/yyyy' }}</p>
-                            <div class="action-link-container">
-                                <a class="goal-advanced" routerLink="/goal/{{g.id}}">goal</a>
-                                <a class="see-task" routerLink="/task-list/{{g.id}}">See Task</a>
-                                <a class="complete" (click)="completeGoal(g)">Complete</a>
-                            </div>
-                        </div>
-                    </div> -->
                     <br>
                 </div>
             </div>
@@ -55,6 +50,16 @@
                     <div id="goal-{{g.id}}" class="card goal-completed">
                         <div class="card-body">
                             <h6 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h6>
+                            <div style="text-align: left;" class="action-link-container">
+                                <a class="in-progress" title="move to in-progress" (click)="moveToInProgress(g)">
+                                    <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
+                                </a>
+                            </div>
+                            <div *ngIf="g.taskCount > 0" title="{{g.taskCompleted}} of {{g.taskCount}} task completed"
+                                class="task-count-container">
+                                <span>{{g.taskCompleted}} / {{g.taskCount}}</span>
+                            </div>
+
                         </div>
                     </div>
                     <br>

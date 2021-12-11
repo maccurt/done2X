@@ -80,17 +80,17 @@ namespace Done2X.API.Controllers
             return Ok(list.OrderByDescending(g => g.TargetCompletionDate));
         }
 
-        [HttpGet]
-        [Route("project/{projectId}")]
-        public async Task<IActionResult> GetGoalListByProject(int projectId)
-        {
-            var canAccessProject = _domainManager.Security.CanAccessProject(projectId, User).Result;
-            if (!canAccessProject)
-            {
-                return Unauthorized("Not Authorized For Project");
-            }
-            var list = await _domainManager.Goal.GetGoalList(projectId);
-            return Ok(list.OrderByDescending(g => g.TargetCompletionDate));
-        }
+        //[HttpGet]
+        //[Route("project/{projectId}")]
+        //public async Task<IActionResult> GetGoalListByProject(int projectId)
+        //{
+        //    var canAccessProject = _domainManager.Security.CanAccessProject(projectId, User).Result;
+        //    if (!canAccessProject)
+        //    {
+        //        return Unauthorized("Not Authorized For Project");
+        //    }
+        //    var list = await _domainManager.Goal.GetGoalList(projectId);
+        //    return Ok(list.OrderByDescending(g => g.TargetCompletionDate));
+        //}
     }
 }

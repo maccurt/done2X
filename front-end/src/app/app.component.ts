@@ -34,8 +34,7 @@ export class AppComponent {
     //   if (this.isAuthenticated) {
     //     if (!localStorage.getItem('project-id')) {
 
-    //       this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {
-    //         console.log('set project to', project);
+    //       this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {    
     //         localStorage.setItem('project-id', project.id.toString());
     //       });
     //     }

@@ -1,46 +1,46 @@
-
 import { Injectable } from '@angular/core';
 import { Chart } from 'angular-highcharts';
-//TODO is this blowing up the package check
-import * as Highcharts from 'highcharts';
+import * as Highcharts from 'highcharts'; //TODO is this blowing up the package check
 import { PieChartData } from './pie-chart-date-type';
 import { filter } from 'lodash';
 import { ChartOptions } from './ChartOptions';
-
-export const appColor = {
-  priority: [
-    { low: '#ffff33', medium: '#00b300', high: '#ff3333' },
-    { low: '#ffffb3', medium: '#b3ffb3', high: '#ffb3b3' },
-    { low: '#ffff4d', medium: '#9fff80', high: '#ffccd5' }
-  ]
-};
-
+import { IconColorService } from '../icon.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartServiceDone2x {
 
-  constructor() { }
+  constructor(private iconColorService: IconColorService) { }
 
-  taskPriorityChart1(title: string, priorityList: { priority: number }[], version: number = 1): Chart {
+  completedPieChart(completed: number, notCompleted: number): Chart {
+    const pieChartDataList: PieChartData[] = [];
 
+    pieChartDataList.push({
+      name: 'Not Completed',
+      color: this.iconColorService.colors.not_completed_color_2, y: notCompleted
+    });
+    pieChartDataList.push({
+      name: 'Completed',
+      color: this.iconColorService.colors.completed_color_2, y: completed, sliced: true
+    });
+
+    return new Chart(this.pieChartOptions('', pieChartDataList));
+  }
+
+  taskPriorityChart1(title: string, priorityList: { priority: number }[]): Chart {
+
+    //TODO can we create this somewhere else
     const high = filter(priorityList, { priority: 1 }).length;
     const medium = filter(priorityList, { priority: 2 }).length;
     const low = filter(priorityList, { priority: 3 }).length;
 
-    let color = appColor.priority[version - 1];
     const data: PieChartData[] = [
-      { y: high, color: color.high, name: 'High', sliced: true },
-      { y: medium, color: color.medium, name: 'Medium' },
-      { y: low, color: color.low, name: 'Low' }];
-
+      { y: high, color: this.iconColorService.colors.priority.high, name: 'High', sliced: true },
+      { y: medium, color: this.iconColorService.colors.priority.medium, name: 'Medium' },
+      { y: low, color: this.iconColorService.colors.priority.low, name: 'Low' }];
 
     let chartOptions = new ChartOptions();
-    if (version === 3) {
-      chartOptions.slicedOffset = 25;
-    }
-
     let options = this.pieChartOptions(title, data, chartOptions);
 
     return new Chart(options);
@@ -61,7 +61,6 @@ export class ChartServiceDone2x {
       { y: this.getRandomInteger(10) + 1, color: '#ffff33', name: 'Low' },
       { y: this.getRandomInteger(10) + 1, color: '#00b300', name: 'Medium' },
       { y: this.getRandomInteger(10) + 1, color: '#ff3333', name: 'High' }
-
     ];
 
     let options = this.pieChartOptions(title, data);
@@ -79,27 +78,7 @@ export class ChartServiceDone2x {
     }
     return new Chart(options);
   }
-
-  completedPieChart(title: string, completed: number, notCompleted: number) {
-    const pieChartDataList: PieChartData[] = [];
-    pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
-    pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
-    return new Chart(this.pieChartOptions(title, pieChartDataList));
-  }
-
-  getGoalPieChart(title: string, completed: number, notCompleted: number): Chart {
-    const pieChartDataList: PieChartData[] = [];
-    if (notCompleted > 0) {
-      pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: notCompleted });
-    }
-
-    if (completed > 0) {
-      pieChartDataList.push({ name: 'Completed', color: '#006666', y: completed, sliced: true });
-    }
-
-    return new Chart(this.pieChartOptions(title, pieChartDataList));
-  }
-
+  
   getDonutChart = (title: string): Chart => {
     const pieChartDataList: PieChartData[] = [];
     pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: this.getRandomInteger(100) });
@@ -113,10 +92,14 @@ export class ChartServiceDone2x {
   }
 
   getRandomGoalChart = (title: string): Chart => {
-    return this.getGoalPieChart(title, this.getRandomInteger(100), this.getRandomInteger(100));
+    return this.completedPieChart(this.getRandomInteger(100), this.getRandomInteger(100));
   }
 
-  pieChartOptions(title: string, pieChartDataList: any, chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
+  pieChartOptions(title: string, pieChartDataList: PieChartData[], chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
+
+    pieChartDataList = pieChartDataList.filter((d) => {
+      return d.y > 0;
+    })
 
     let options: Highcharts.Options = {
       chart: {
@@ -138,7 +121,7 @@ export class ChartServiceDone2x {
           borderColor: 'black',
           dataLabels: {
             enabled: true,
-            distance: 5
+            distance: 10
           }
         }
       },
@@ -148,7 +131,6 @@ export class ChartServiceDone2x {
           name: '',
           data: pieChartDataList,
           slicedOffset: chartOptions.slicedOffset
-
         }
       ]
     }

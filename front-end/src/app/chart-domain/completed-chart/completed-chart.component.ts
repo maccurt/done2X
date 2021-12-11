@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { Chart } from 'angular-highcharts';
+import { IconColorService } from 'src/app/icon.service';
 import { ChartServiceDone2x } from '../chart.service';
 
 @Component({
@@ -14,16 +15,16 @@ export class CompletedChartComponent implements OnInit,OnChanges {
   change = false;
 
   chart!: Chart;
-  constructor(private chartService: ChartServiceDone2x) { }
+  constructor(private chartService: ChartServiceDone2x,public iconColorService:IconColorService) { }
   
   ngOnChanges(changes: SimpleChanges): void {
     if (this.change){
-      this.chart = this.chartService.getGoalPieChart('Completed', this.completed, this.notCompleted);    
+      this.chart = this.chartService.completedPieChart(this.completed, this.notCompleted);    
     }
     this.change = true;    
   }
 
   ngOnInit(): void {
-    this.chart = this.chartService.getGoalPieChart('Completed', this.completed, this.notCompleted);
+    this.chart = this.chartService.completedPieChart(this.completed, this.notCompleted);
   }
 }

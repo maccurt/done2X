@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { ChartServiceDone2x } from '../chart-domain/chart.service';
-import { IconService } from '../icon.service';
+import { IconColorService } from '../icon.service';
 import { TaskItemStatus } from '../task-domain/task-item.service';
 import { TaskItem } from '../task-domain/task-item/task-item.type';
 import { Experiment } from './experiment.type';
@@ -25,7 +25,7 @@ export class ExperimentComponent implements AfterViewInit {
   experiment!: Experiment; 
 
   constructor(public chartService: ChartServiceDone2x,
-    public fontService: IconService,
+    public fontService: IconColorService,
 
   ) {
     this.experiment = this.experimentList[0];
@@ -43,8 +43,7 @@ export class ExperimentComponent implements AfterViewInit {
     })
 
     if (x) {
-      this.experiment = x;
-      //console.log(this.experiment)
+      this.experiment = x;      
     }
   }
 
@@ -67,6 +66,7 @@ export class ExperimentComponent implements AfterViewInit {
   getTaskItem_mock(id: number, name: string, priority: number, completed = false): TaskItem {
 
     let taskItem: TaskItem = {
+      selected:false,
       id,
       goalId: 1,
       name,

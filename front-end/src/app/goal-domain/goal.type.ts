@@ -8,4 +8,7 @@ export class Goal {
     isCompleted:boolean = false;
     completionDate?:Date;
     createdDate!: Date;
+    taskCompleted!:number;
+    taskNotCompleted!:number;
+    taskCount!:number;
   }

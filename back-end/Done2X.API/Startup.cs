@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,13 +6,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
+using System.Text;
 using Dapper.FluentMap;
 using Dapper.FluentMap.Dommel;
 using Done2X.Data;
 using Done2X.Data.EntityMap;
 using Done2X.Data.IMangerInterfaces;
+using Done2X.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Done2X.API
@@ -62,6 +67,7 @@ namespace Done2X.API
                 config.AddMap(new TaskItemMap());
                 config.AddMap(new TaskItemStatusMap());
                 config.AddMap(new GoalMap());
+                config.AddMap(new GoalExtendedMap());
                 config.AddMap(new ProjectMap());
                 config.ForDommel();
             });
@@ -94,6 +100,40 @@ namespace Done2X.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Done2X.API v1"));
             }
+
+            app.UseExceptionHandler(errorApp =>
+            {
+                errorApp.Run(async context =>
+                {
+                    context.Response.StatusCode = 500; // or another Status accordingly to Exception Type
+                    context.Response.ContentType = "application/json";
+
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+                    if (error != null)
+                    {
+                        var ex = error.Error;
+
+                        if (ex is DomainException)
+                        {
+                            await context.Response.WriteAsync(new ErrorDto()
+                            {
+                                Code = 0,
+                                Message = ex.Message
+                            }.ToString(), Encoding.UTF8);
+                        }
+                        else
+                        {
+                            await context.Response.WriteAsync(new ErrorDto()
+                            {
+                                ShowMessage = false,
+                                Code = 0,
+                                Message = ex.Message
+                            }.ToString(), Encoding.UTF8);
+                        }
+
+                    }
+                });
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();

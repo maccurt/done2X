@@ -1,0 +1,56 @@
+
+thead{
+    vertical-align: top;
+}
+.completed-mode {
+    thead {
+        background-color: var(--completed-color-2);
+    }
+
+    .no-data {
+        line-height: 100px;
+        background-color: var(--completed-color-2);
+    }
+}
+
+.not-completed-mode {
+    thead {
+        background-color: var(--not-completed-color-2);
+    }
+
+    .no-data {
+        background-color: var(--not-completed-color-2);
+    }
+}
+
+.no-data {
+    border: 1px solid #cccccc;
+    height: 100px;
+    text-align: center;
+    height: 100px;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.mat-button-toggle-group {
+    height: 30px;
+    align-items: center;
+}
+
+.priority-1 {
+    .mat-button-toggle-checked {
+        background-color:var(--high-priority-color);
+    }
+}
+
+.priority-2 {
+    .mat-button-toggle-checked {
+        background-color:var(--medium-priority-color);
+    }
+}
+
+.priority-3 {
+    .mat-button-toggle-checked {
+        background-color:var(--low-priority-color);
+    }
+}
