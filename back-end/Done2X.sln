@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Done2X.API", "Done2X.API\Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Done2X.Data", "Done2X.Data\Done2X.Data.csproj", "{0FB882C8-D4C1-45BE-94FB-F239DF17A620}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Done2X.UnitTest", "Done2X.UnitTest\Done2X.UnitTest.csproj", "{7EF1E4FF-D6A1-4120-8B33-5DBE5069A0E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Done2X.UnitTest", "Done2X.UnitTest\Done2X.UnitTest.csproj", "{7EF1E4FF-D6A1-4120-8B33-5DBE5069A0E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31B3C620-F583-489E-8A21-F3608F868AB9}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

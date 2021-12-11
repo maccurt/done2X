@@ -9,19 +9,29 @@
             <br>
             <button class="button btn-primary" (click)="addTaskItem()">Add A Task</button>
         </div>
-
     </div>
+
+    <!-- <a [matMenuTriggerFor]="menu"><fa-icon title="move task to completed"  [icon]="iconColorService.icons.ellipisHorz"></fa-icon></a>
+    <mat-menu #menu="matMenu">
+        <button (click)="moveTaskToGoal()" mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Move Selected Task To Goal...</span>
+        </button>
+    </mat-menu> -->
+
     <table *ngIf="taskItemList.length > 0" class="task-item-list-v2 table table-striped table-bordered table-sm">
         <thead>
             <tr>
-                <th style="width:15%" id="completed-col">
-                    Move To
-                </th>
+                <th style="width:3%">
+                    <mat-checkbox class="example-margin" [(ngModel)]="allTaskSelected"
+                        (change)="selectAllClick($event.checked)">
+                    </mat-checkbox>
+                </th>                
 
                 <th style="width:63%" id="task-col">
-                    <a (click)="sort('name')">Task 
-                        <span *ngIf="completedMode">Completed</span> 
-                        <span *ngIf="!completedMode"> Not Completed</span> 
+                    <a (click)="sort('name')">Task
+                        <span *ngIf="completedMode">Completed</span>
+                        <span *ngIf="!completedMode"> Not Completed</span>
                     </a>
                     <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
                         class="add-task-item btn btn-primary btn-sm">Add Task</button>
@@ -38,10 +48,7 @@
         <tbody>
             <tr id="task-item-{{t.id}}" *ngFor="let t of taskItemList">
                 <td>
-                    <a class="action-link move-task" (click)="moveTaskStatus(t)" title="move to completed">
-                        <span title="Move to not completed..." *ngIf="completedMode">not completed</span>
-                        <span title="Move to completed..." *ngIf="!completedMode">completed</span>
-                    </a>
+                    <mat-checkbox [checked]="t.selected" (change)="selectTask(t,$event.checked)"></mat-checkbox>
                 </td>
 
                 <td>
@@ -63,6 +70,14 @@
 
                 <td>
                     <div class="action-icon-container">
+
+                        <a class="action-link edit-task-item" (click)="moveTaskStatus(t)">
+                            <fa-icon title="move task to completed" *ngIf="!completedMode"
+                                [icon]="iconColorService.icons.arrowDown"></fa-icon>
+                            <fa-icon title="move task to not completed" *ngIf="completedMode"
+                                [icon]="iconColorService.icons.arrowUp"></fa-icon>
+                        </a>
+
                         <a title="edit task..." class="action-link edit-task-item" (click)="editTaskItem(t)">
                             <fa-icon [icon]="iconColorService.icons.edit"></fa-icon>
                         </a>

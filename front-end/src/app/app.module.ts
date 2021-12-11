@@ -24,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatMenuModule} from '@angular/material/menu';
 import { BreakPointTesterComponent } from './break-point-tester/break-point-tester.component';
 import { GoalComponent } from './goal-domain/goal/goal.component';
 import { GoalResolver } from './resolvers/goal-resolver';
@@ -39,6 +40,7 @@ import { TaskItemListV2Component } from './task-domain/task-item-list-v2/task-it
 import { CompletedChartComponent } from './chart-domain/completed-chart/completed-chart.component';
 import { HttpErrorInterceptor } from './interceptor/httpErrorIntereceptor.type';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatExpansionModule,
     MatButtonToggleModule,
     MatSnackBarModule,
+    MatMenuModule,
+    MatIconModule,
     SecurityModule,
     FontAwesomeModule,
     ChartModule

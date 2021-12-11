@@ -23,6 +23,8 @@ export class TaskItemListV2Component implements OnDestroy {
   @Input() goal!: Goal;
   @Output() actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
 
+
+  allTaskSelected: boolean = false;
   proprtyToSort: string = 'priority';
   //subscription
   afterClosedSub$!: Subscription;
@@ -35,6 +37,23 @@ export class TaskItemListV2Component implements OnDestroy {
     private taskItemService: TaskItemService,
     public iconColorService: IconColorService
   ) { }
+
+  selectTask(taskItem: TaskItem, checked: boolean) {
+    taskItem.selected = checked;
+    if (!checked){
+      this.allTaskSelected = false;
+    }
+  }
+
+  selectAllClick(checked: boolean) {
+    this.taskItemList.forEach((t) => {
+      t.selected = checked;
+    })
+  }
+
+  moveTaskToGoal(){
+    console.log('move task to goal');
+  }
 
   priorityToggle(change: MatButtonToggleChange, taskItem: TaskItem) {
     //TODO is there a way to bind to the value and not need this method    

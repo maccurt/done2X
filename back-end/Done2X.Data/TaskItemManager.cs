@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using Dapper;
 using Dommel;
 using Done2X.Data.IMangerInterfaces;
 using Done2X.Domain;
@@ -74,6 +75,17 @@ namespace Done2X.Data
             connection.Open();
             var result = await connection.GetAsync<TaskItem>(taskItemId);
             return result;
+        }
+
+        public async Task MoveTaskListToGoal(List<int> taskItemIdList, int goalId)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            foreach (var taskItemId in taskItemIdList)
+            {
+                var query = $"update taskItem set goalId = {goalId} where taskItemId = {taskItemId}";
+                await connection.QueryAsync(query, new { goalId, taskItemId });
+            }
         }
     }
 }

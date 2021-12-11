@@ -66,6 +66,7 @@ export class ExperimentComponent implements AfterViewInit {
   getTaskItem_mock(id: number, name: string, priority: number, completed = false): TaskItem {
 
     let taskItem: TaskItem = {
+      selected:false,
       id,
       goalId: 1,
       name,

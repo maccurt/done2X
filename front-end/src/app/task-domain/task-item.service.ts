@@ -25,10 +25,10 @@ export class TaskItemService {
 
     let sorted: TaskItem[] = [];
     if (ascending) {
-      sorted = orderBy(taskItemList, [property], ['asc']);      
+      sorted = orderBy(taskItemList, [property], ['asc']);
     }
     else {
-      sorted = orderBy(taskItemList, [property], ['desc']);      
+      sorted = orderBy(taskItemList, [property], ['desc']);
     }
     Object.assign(taskItemList, sorted);
   }
@@ -73,6 +73,12 @@ export class TaskItemService {
 
     return this.httpClient
       .get<TaskItem[]>(`${environment.API_URL}taskItem/goal/${goalId}`);
+  }
+
+  moveTaskItemListToGoal = (taskItemIdList: number[], goalId: number):Observable<any> => {
+
+    return this.httpClient
+      .post<TaskItem[]>(`${environment.API_URL}taskItem/move/${goalId}`,taskItemIdList);
   }
 
   filterTaskItemListByStatus = (taskItemList: TaskItem[], status: TaskItemStatus): TaskItem[] => {

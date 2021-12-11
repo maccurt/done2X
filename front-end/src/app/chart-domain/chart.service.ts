@@ -15,13 +15,15 @@ export class ChartServiceDone2x {
 
   completedPieChart(completed: number, notCompleted: number): Chart {
     const pieChartDataList: PieChartData[] = [];
-    if (notCompleted > 0) {
-      pieChartDataList.push({ name: 'Not Completed', color: this.iconColorService.colors.not_completed_color_2, y: notCompleted });
-    }
 
-    if (completed > 0) {
-      pieChartDataList.push({ name: 'Completed', color: this.iconColorService.colors.completed_color_2, y: completed, sliced: true });
-    }
+    pieChartDataList.push({
+      name: 'Not Completed',
+      color: this.iconColorService.colors.not_completed_color_2, y: notCompleted
+    });
+    pieChartDataList.push({
+      name: 'Completed',
+      color: this.iconColorService.colors.completed_color_2, y: completed, sliced: true
+    });
 
     return new Chart(this.pieChartOptions('', pieChartDataList));
   }
@@ -59,7 +61,6 @@ export class ChartServiceDone2x {
       { y: this.getRandomInteger(10) + 1, color: '#ffff33', name: 'Low' },
       { y: this.getRandomInteger(10) + 1, color: '#00b300', name: 'Medium' },
       { y: this.getRandomInteger(10) + 1, color: '#ff3333', name: 'High' }
-
     ];
 
     let options = this.pieChartOptions(title, data);
@@ -77,9 +78,7 @@ export class ChartServiceDone2x {
     }
     return new Chart(options);
   }
-
-
-
+  
   getDonutChart = (title: string): Chart => {
     const pieChartDataList: PieChartData[] = [];
     pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: this.getRandomInteger(100) });
@@ -97,7 +96,7 @@ export class ChartServiceDone2x {
   }
 
   pieChartOptions(title: string, pieChartDataList: PieChartData[], chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
-  
+
     pieChartDataList = pieChartDataList.filter((d) => {
       return d.y > 0;
     })
