@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { orderBy } from 'lodash';
 import { Subscription } from 'rxjs';
 import { IconColorService } from 'src/app/icon.service';
+import { GoalEvent, GoalEventType } from '../goal-item/goal-item.component';
 import { GoalModalComponent } from '../goal-modal/goal-modal.component';
 import { GoalService } from '../goal.service';
 import { Goal } from '../goal.type';
@@ -31,6 +33,19 @@ export class GoalListComponent implements OnInit, OnDestroy {
       this.goalList = data.goalList;
       this.filterGoalList(this.goalList);
     })
+    ///sort the goals my completion date
+    this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
+  }
+
+  goalEvent(goalEvent: GoalEvent) {
+    switch (goalEvent.type) {
+      case GoalEventType.moveToCompleted:
+        this.moveToCompleted(goalEvent.goal)
+        break;
+      case GoalEventType.moveToNotCompleted:
+        this.moveToNotCompleted(goalEvent.goal)
+        break;
+    }
   }
 
   public filterGoalList(goalList: Goal[]) {
@@ -43,18 +58,20 @@ export class GoalListComponent implements OnInit, OnDestroy {
     });
   }
 
-  public moveToInProgress(goal: Goal) {
+  public moveToNotCompleted(goal: Goal) {
     goal.isCompleted = false;
     this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
-      const index = this.goalListCompleted.indexOf(goal);      
+      const index = this.goalListCompleted.indexOf(goal);
       if (index > -1) {
         this.goalListCompleted.splice(index, 1);
       }
       this.goalListNotCompleted.push(goal);
+    },()=>{
+      goal.isCompleted = true;
     })
   }
 
-  public completeGoal(goal: Goal) {
+  public moveToCompleted(goal: Goal) {
     goal.isCompleted = true;
     this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
       const index = this.goalListNotCompleted.indexOf(goal);
@@ -62,6 +79,8 @@ export class GoalListComponent implements OnInit, OnDestroy {
         this.goalListNotCompleted.splice(index, 1);
       }
       this.goalListCompleted.push(goal);
+    },()=>{
+      goal.isCompleted = false;
     })
   }
 

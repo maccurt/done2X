@@ -1,0 +1,28 @@
+<div id="goal-{{goal.id}}" class="card" [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}">
+    <div class="card-body">
+        <h6 class="card-title">
+            <a class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
+        </h6>
+
+        <div class="detail-container">
+            <!-- todo can you combine these *ngIf -->
+            <div *ngIf="!goal.isCompleted" style="text-align: right;" class="action-link-container">
+                <a class="move-goal" title="move to complete" (click)="moveToCompleted(goal)">
+                    <fa-icon [icon]="iconColorService.icons.arrowRight"></fa-icon>
+                </a>
+            </div>
+
+            <div *ngIf="goal.isCompleted"  style="text-align: left;" class="action-link-container">
+                <a class="move-goal" title="move to in-progress" (click)="moveToNotCompleted(goal)">
+                    <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
+                </a>
+            </div>
+
+            <div>
+                <span title="{{goal.taskCompleted}} of {{goal.taskCount}} task completed">{{goal.taskCompleted}}
+                    / {{goal.taskCount}}</span>
+                <span style="float: right;">{{goal.targetCompletionDate | date}}</span>
+            </div>
+        </div>
+    </div>
+</div>

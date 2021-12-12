@@ -41,6 +41,7 @@ import { CompletedChartComponent } from './chart-domain/completed-chart/complete
 import { HttpErrorInterceptor } from './interceptor/httpErrorIntereceptor.type';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
+import { GoalItemComponent } from './goal-domain/goal-item/goal-item.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {MatIconModule} from '@angular/material/icon';
     TaskPriorityWidgetV1Component,
     TaskPriorityChartV1Component,
     TaskItemListV2Component,
-    CompletedChartComponent
+    CompletedChartComponent,
+    GoalItemComponent
   ],
   imports: [
     BrowserModule,

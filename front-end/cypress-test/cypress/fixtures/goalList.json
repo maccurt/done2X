@@ -8,7 +8,10 @@
         "updatedDate": "2021-11-07T08:18:09.03",
         "completionDate": null,
         "targetCompletionDate": "2021-12-10T00:00:00-06:00",
-        "isCompleted": false
+        "isCompleted": false,
+        "taskCompleted": 1,
+        "taskNotCompleted": 1,
+        "taskCount": 2
     },
     {
         "id": 2,
@@ -19,7 +22,10 @@
         "updatedDate": null,
         "completionDate": null,
         "targetCompletionDate": "2021-12-10T00:00:00-06:00",
-        "isCompleted": false
+        "isCompleted": false,
+        "taskCompleted": 5,
+        "taskNotCompleted": 10,
+        "taskCount": 25
     },
     {
         "id": 3,
@@ -30,6 +36,9 @@
         "updatedDate": "2021-11-07T08:18:47.84",
         "completionDate": "2021-12-07T08:18:47.84",
         "targetCompletionDate": "2021-13-10T00:00:00-06:00",
-        "isCompleted": true
+        "isCompleted": true,
+        "taskCompleted": 0,
+        "taskNotCompleted": 0,
+        "taskCount": 0
     }
 ]
