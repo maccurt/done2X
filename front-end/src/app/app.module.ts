@@ -42,6 +42,8 @@ import { HttpErrorInterceptor } from './interceptor/httpErrorIntereceptor.type';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import { GoalItemComponent } from './goal-domain/goal-item/goal-item.component';
+import { TaskCountInfoComponent } from './task-domain/task-count-info/task-count-info.component';
+import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count-info.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { GoalItemComponent } from './goal-domain/goal-item/goal-item.component';
     TaskPriorityChartV1Component,
     TaskItemListV2Component,
     CompletedChartComponent,
-    GoalItemComponent
+    GoalItemComponent,
+    TaskCountInfoComponent,
+    GoalCountInfoComponent
   ],
   imports: [
     BrowserModule,

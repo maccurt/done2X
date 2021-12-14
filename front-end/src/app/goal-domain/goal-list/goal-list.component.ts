@@ -22,6 +22,10 @@ export class GoalListComponent implements OnInit, OnDestroy {
   addGoalSub$!: Subscription;
   updateGoalSub$!: Subscription;
 
+  taskCompletedCount = 0;
+  taskNotCompletedCount = 0;
+  taskCount = 0;
+
   constructor(private goalService: GoalService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -32,9 +36,16 @@ export class GoalListComponent implements OnInit, OnDestroy {
     this.routeData$ = this.route.data.subscribe((data) => {
       this.goalList = data.goalList;
       this.filterGoalList(this.goalList);
+
+      ///sort the goals my completion date
+      this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
+
+      this.goalList.forEach((g) => {
+        this.taskCompletedCount += g.taskCompleted;
+        this.taskNotCompletedCount += g.taskNotCompleted;
+      })
+      this.taskCount = this.taskCompletedCount + this.taskNotCompletedCount
     })
-    ///sort the goals my completion date
-    this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
   }
 
   goalEvent(goalEvent: GoalEvent) {
@@ -66,7 +77,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
         this.goalListCompleted.splice(index, 1);
       }
       this.goalListNotCompleted.push(goal);
-    },()=>{
+    }, () => {
       goal.isCompleted = true;
     })
   }
@@ -79,7 +90,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
         this.goalListNotCompleted.splice(index, 1);
       }
       this.goalListCompleted.push(goal);
-    },()=>{
+    }, () => {
       goal.isCompleted = false;
     })
   }
@@ -88,6 +99,11 @@ export class GoalListComponent implements OnInit, OnDestroy {
     this.showGoalModal(new Goal()).afterClosed().subscribe((modalGoal) => {
       if (modalGoal) {
         this.addGoalSub$ = this.goalService.addGoal(modalGoal).subscribe((response) => {
+          //TODO can you move this into the  UX service perhaps
+          //OR FIX the backend to return it correctly
+          response.taskCount = 0;
+          response.taskNotCompleted = 0;
+          response.taskCompleted = 0
           this.goalListNotCompleted.push(response);
         })
       }

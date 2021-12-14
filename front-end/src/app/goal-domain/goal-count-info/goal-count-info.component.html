@@ -1,0 +1,13 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            <div *ngIf="completed > 0 && goalCount > 0"> You Have Completed {{completed}} Of
+                {{goalCount}} Goals</div>
+            <div *ngIf="completed === 0 && goalCount > 0"> There Is A Total Of {{goalCount}} Goals</div>
+            <div *ngIf="completed === 0 && goalCount === 0"> Add A Goal To Get Started</div>
+        </h5>
+        <p class="small-text">
+            {{percentage}}% of task have been completed
+        </p>
+    </div>
+</div>
