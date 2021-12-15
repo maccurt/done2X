@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-9 ">
+        <div class="col-9">
             <h1>Goals</h1>
         </div>
         <div class="col-3">
@@ -11,16 +11,18 @@
     <hr>
 
     <div class="row">
-        <div class="col-xxxl-3">
+        <div class="col-12 col-xl-4 col-xxl-4 col-xxxl-3">
             <div class="row">
 
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
                     <br>
                     <d2x-completed-chart [completed]="goalListCompleted.length"
                         [notCompleted]="goalListNotCompleted.length"></d2x-completed-chart>
-                </div>
+                </div>               
 
-                <div class="col-12">
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
                     <br>
                     <app-goal-count-info [completed]="goalListCompleted.length"
                     [goalCount]="goalListNotCompleted.length + goalListCompleted.length" >
@@ -28,16 +30,15 @@
                     </app-goal-count-info>
                 </div>
 
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
                     <br>
                     <app-task-count-info [taskCompletedCount]='taskCompletedCount' [taskCount]="taskCount">
                     </app-task-count-info>
                 </div>
-
             </div>
-        </div>
-
-        <div class="col-xxxl-3">
+        </div>        
+        
+        <div class="col-12 col-md-6 col-xl-4 col-xxxl-3">
             <h5>Up Next</h5>
             <div id="goal-list-not-completed" class="row">
                 <div *ngFor="let g of goalListNotCompleted" class="col-12">
@@ -47,7 +48,7 @@
             </div>
         </div>
 
-        <div class="col-xxxl-3">
+        <div class="col-12 col-md-6 col-xl-4 col-xxxl-3">
             <h5>Completed</h5>
             <div id="goal-list-completed" class="row">
                 <div *ngFor="let g of goalListCompleted" class="col-12">

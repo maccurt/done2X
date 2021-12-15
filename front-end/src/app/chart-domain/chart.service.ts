@@ -13,6 +13,10 @@ export class ChartServiceDone2x {
 
   constructor(private iconColorService: IconColorService) { }
 
+  completedPieChartRanddom = (): Chart => {
+    return this.completedPieChart(this.getRandomInteger(100), this.getRandomInteger(100));
+  }
+
   completedPieChart(completed: number, notCompleted: number): Chart {
     const pieChartDataList: PieChartData[] = [];
 
@@ -28,12 +32,8 @@ export class ChartServiceDone2x {
     return new Chart(this.pieChartOptions('', pieChartDataList));
   }
 
-  taskPriorityChart1(title: string, priorityList: { priority: number }[]): Chart {
 
-    //TODO can we create this somewhere else
-    const high = filter(priorityList, { priority: 1 }).length;
-    const medium = filter(priorityList, { priority: 2 }).length;
-    const low = filter(priorityList, { priority: 3 }).length;
+  taskPriorityChart(title: string,  low: number, medium: number, high: number): Chart {    
 
     const data: PieChartData[] = [
       { y: high, color: this.iconColorService.colors.priority.high, name: 'High', sliced: true },
@@ -42,10 +42,27 @@ export class ChartServiceDone2x {
 
     let chartOptions = new ChartOptions();
     let options = this.pieChartOptions(title, data, chartOptions);
-
     return new Chart(options);
   }
 
+  taskPriorityChart1(title: string, priorityList: { priority: number }[]): Chart {
+
+    //TODO can we create this somewhere else
+    const high = filter(priorityList, { priority: 1 }).length;
+    const medium = filter(priorityList, { priority: 2 }).length;
+    const low = filter(priorityList, { priority: 3 }).length;
+    return this.taskPriorityChart(title,low,medium,high);
+    // const data: PieChartData[] = [
+    //   { y: high, color: this.iconColorService.colors.priority.high, name: 'High', sliced: true },
+    //   { y: medium, color: this.iconColorService.colors.priority.medium, name: 'Medium' },
+    //   { y: low, color: this.iconColorService.colors.priority.low, name: 'Low' }];
+
+    // let chartOptions = new ChartOptions();
+    // let options = this.pieChartOptions(title, data, chartOptions);
+
+    // return new Chart(options);
+  }
+  //charts below this line need to be re-factored or removed
   getTaskPriorityPieChart(title: string): Chart {
     const data: PieChartData[] = [
       { y: this.getRandomInteger(10) + 1, color: '#ff3333', name: 'High', sliced: true },
@@ -78,7 +95,7 @@ export class ChartServiceDone2x {
     }
     return new Chart(options);
   }
-  
+
   getDonutChart = (title: string): Chart => {
     const pieChartDataList: PieChartData[] = [];
     pieChartDataList.push({ name: 'In Progress', color: '#bfbfbf', y: this.getRandomInteger(100) });
@@ -91,9 +108,6 @@ export class ChartServiceDone2x {
     return new Chart(options);
   }
 
-  getRandomGoalChart = (title: string): Chart => {
-    return this.completedPieChart(this.getRandomInteger(100), this.getRandomInteger(100));
-  }
 
   pieChartOptions(title: string, pieChartDataList: PieChartData[], chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
 
@@ -248,9 +262,9 @@ export class ChartServiceDone2x {
     return chart;
   }
 
-  getRandomInteger(multiplier: number): number {
+  //TODO move this to math service
+  public getRandomInteger(multiplier: number): number {
     let x = Math.random() * multiplier;
     return parseInt(x.toString());
   }
-
 }

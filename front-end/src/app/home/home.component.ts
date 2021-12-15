@@ -34,24 +34,25 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   public ngOnInit(): void {
-    // this.isAuthenticated$ = this.authService.isAuthenticated$.subscribe(() => {
-    
-    // })    
 
-    this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");
-    this.chart2 = this.chartService.getRandomBarChart();
+    this.chart1 = this.chartService.completedPieChartRanddom();
+    this.chart2 = this.chartService.taskPriorityChart('Task Priority',
+        this.chartService.getRandomInteger(100), this.chartService.getRandomInteger(100),
+        this.chartService.getRandomInteger(100));
   }
 
   ngAfterViewInit(): void {
 
     //random pie chart    
     setInterval(() => {
-      this.chart1 = this.chartService.getRandomGoalChart("Design Homepage");
-    }, 30000);
+      this.chart1 = this.chartService.completedPieChartRanddom();
+    }, 25000);
 
     //random bar chart    
     setInterval(() => {
-      this.chart2 = this.chartService.getRandomBarChart();
+        this.chart2 = this.chartService.taskPriorityChart('Task Priority',
+        this.chartService.getRandomInteger(100), this.chartService.getRandomInteger(100),
+        this.chartService.getRandomInteger(100));
     }, 15000);
   }
 
