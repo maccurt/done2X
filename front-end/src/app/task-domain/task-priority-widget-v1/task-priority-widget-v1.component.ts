@@ -2,12 +2,13 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
-import { IconColorService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/iconColor.service';
 import { TaskItem } from '../task-item/task-item.type';
 import { orderBy } from 'lodash';
 import { Code, CodeService } from 'src/app/code.service';
 import { Subject } from 'rxjs';
 import { TaskItemStatus } from '../task-item.service';
+import { PriorityData } from 'src/app/chart-domain/priority-data.type';
 
 interface IPriority {
   priority: number;
@@ -24,9 +25,10 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   @Input() title: string = '';
   @Input() taskItemList: TaskItem[] = [];
 
-  change: Subject<TaskItem[]> = new Subject();
+
 
   chart!: Chart;
+  priorityData!: PriorityData;
   proprtyToSort = 'priority';
   priorityList: Code[] = [];
 
@@ -45,8 +47,8 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
     this.setChart();
   }
 
-  public updateTaskItemStatus(taskItem: TaskItem) {    
-    taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;   
+  public updateTaskItemStatus(taskItem: TaskItem) {
+    taskItem.taskItemStatusId = taskItem.completed ? TaskItemStatus.completed : TaskItemStatus.backLog;
   }
 
   sort(property: string) {
@@ -68,8 +70,7 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   }
 
   setChart() {
-    //this.chart = this.chartService.taskPriorityChart1("Task Priority", this.taskItemList);
-    this.change.next(this.taskItemList);
+    this.priorityData = this.chartService.getPriorityData(this.taskItemList);    
   }
 
   changeStatus(item: IPriority) {
@@ -80,5 +81,4 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
     }
     this.setChart();
   }
-
 }

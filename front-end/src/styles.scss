@@ -14,15 +14,15 @@ body {
 }
 
 .priority-1 {
-  color: red;
+  color: var(--high-priority-color);
 }
 
 .priority-2 {
-  color: green;
+ color:var(--medium-priority-color);
 }
 
 .priority-3 {
-  color: yellow;
+  color:var(--low-priority-color);
 }
 
 .app-modal {
@@ -44,22 +44,6 @@ mat-dialog-actions {
     margin-left: 15px;
   }
 }
-
-// .action-link-container {
-//   text-align: right;
-//   border-top: 1px solid #cccccc;
-//   margin-top: 15px;
-//   padding-top: 5px;
-//   a {
-//     text-decoration: none !important;
-//     cursor: default !important;
-//     margin-left: 10px;
-//     color: black;
-//   }
-//   a:hover {
-//     text-decoration: underline !important;
-//   }
-// }
 
 .snack-bar-error {
   background-color: #ff8080;

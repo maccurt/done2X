@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { Goal } from 'src/app/goal-domain/goal.type';
-import { IconColorService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/iconColor.service';
 
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';

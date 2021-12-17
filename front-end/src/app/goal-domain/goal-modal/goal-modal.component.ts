@@ -32,8 +32,8 @@ export class GoalModalComponent implements OnInit {
 
     this.minimumTargetCompletionDate = new Date();
     this.nameControl = new FormControl(this.goal.name, Validators.required);
-    this.descriptionControl = new FormControl(this.goal.description, Validators.required);
-    this.whatIsDoneControl = new FormControl(this.goal.whatIsDone, Validators.required);
+    this.descriptionControl = new FormControl(this.goal.description);
+    this.whatIsDoneControl = new FormControl(this.goal.whatIsDone);
     this.targetCompletionDateControl = new FormControl(this.goal.targetCompletionDate, Validators.required);
 
     this.formGroup = new FormGroup({

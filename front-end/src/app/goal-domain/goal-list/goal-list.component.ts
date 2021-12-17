@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { orderBy } from 'lodash';
 import { Subscription } from 'rxjs';
-import { IconColorService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/iconColor.service';
 import { GoalEvent, GoalEventType } from '../goal-item/goal-item.component';
 import { GoalModalComponent } from '../goal-modal/goal-modal.component';
 import { GoalService } from '../goal.service';
@@ -37,8 +37,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
       this.goalList = data.goalList;
       this.filterGoalList(this.goalList);
 
-      ///sort the goals my completion date
-      this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
+      this.orderGoalList();
 
       this.goalList.forEach((g) => {
         this.taskCompletedCount += g.taskCompleted;
@@ -46,6 +45,11 @@ export class GoalListComponent implements OnInit, OnDestroy {
       })
       this.taskCount = this.taskCompletedCount + this.taskNotCompletedCount
     })
+  }
+
+  orderGoalList() {
+    ///sort the goals my completion date
+    this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
   }
 
   goalEvent(goalEvent: GoalEvent) {
@@ -95,8 +99,14 @@ export class GoalListComponent implements OnInit, OnDestroy {
     })
   }
 
-  public addGoal() {
-    this.showGoalModal(new Goal()).afterClosed().subscribe((modalGoal) => {
+  public addGoalHere(date: Date) {
+
+    let newGoal = new Goal();
+    const d = new Date(date);
+    d.setDate(d.getDate() + 1);
+    newGoal.targetCompletionDate = d;
+
+    this.showGoalModal(newGoal).afterClosed().subscribe((modalGoal) => {
       if (modalGoal) {
         this.addGoalSub$ = this.goalService.addGoal(modalGoal).subscribe((response) => {
           //TODO can you move this into the  UX service perhaps
@@ -105,9 +115,16 @@ export class GoalListComponent implements OnInit, OnDestroy {
           response.taskNotCompleted = 0;
           response.taskCompleted = 0
           this.goalListNotCompleted.push(response);
+          this.orderGoalList();
         })
       }
     });
+  }
+
+  public addGoal() {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    this.addGoalHere(date);    
   }
 
   public editGoal(goal: Goal) {
@@ -120,7 +137,6 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   public showGoalModal(goal: Goal): MatDialogRef<GoalModalComponent, any> {
-
     return this.dialog.open(GoalModalComponent, {
       data: goal,
       disableClose: true

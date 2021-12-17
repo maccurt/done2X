@@ -4,7 +4,9 @@ import * as Highcharts from 'highcharts'; //TODO is this blowing up the package 
 import { PieChartData } from './pie-chart-date-type';
 import { filter } from 'lodash';
 import { ChartOptions } from './ChartOptions';
-import { IconColorService } from '../icon.service';
+import { IconColorService } from '../iconColor.service';
+import { PriorityData } from './priority-data.type';
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,36 +34,33 @@ export class ChartServiceDone2x {
     return new Chart(this.pieChartOptions('', pieChartDataList));
   }
 
-
-  taskPriorityChart(title: string,  low: number, medium: number, high: number): Chart {    
+  taskPriorityChart(title: string, priorityData: PriorityData): Chart {
 
     const data: PieChartData[] = [
-      { y: high, color: this.iconColorService.colors.priority.high, name: 'High', sliced: true },
-      { y: medium, color: this.iconColorService.colors.priority.medium, name: 'Medium' },
-      { y: low, color: this.iconColorService.colors.priority.low, name: 'Low' }];
+      { y: priorityData.high, color: this.iconColorService.colors.priority.high, name: 'High', sliced: true },
+      { y: priorityData.medium, color: this.iconColorService.colors.priority.medium, name: 'Medium' },
+      { y: priorityData.low, color: this.iconColorService.colors.priority.low, name: 'Low' }];
 
     let chartOptions = new ChartOptions();
     let options = this.pieChartOptions(title, data, chartOptions);
     return new Chart(options);
   }
 
-  taskPriorityChart1(title: string, priorityList: { priority: number }[]): Chart {
+  getPriorityData(priorityList: { priority: number }[]): PriorityData {
 
-    //TODO can we create this somewhere else
-    const high = filter(priorityList, { priority: 1 }).length;
-    const medium = filter(priorityList, { priority: 2 }).length;
-    const low = filter(priorityList, { priority: 3 }).length;
-    return this.taskPriorityChart(title,low,medium,high);
-    // const data: PieChartData[] = [
-    //   { y: high, color: this.iconColorService.colors.priority.high, name: 'High', sliced: true },
-    //   { y: medium, color: this.iconColorService.colors.priority.medium, name: 'Medium' },
-    //   { y: low, color: this.iconColorService.colors.priority.low, name: 'Low' }];
+    const priorityData = new PriorityData(filter(priorityList, { priority: 3 }).length,
+      filter(priorityList, { priority: 2 }).length,
+      filter(priorityList, { priority: 1 }).length
+    );
 
-    // let chartOptions = new ChartOptions();
-    // let options = this.pieChartOptions(title, data, chartOptions);
-
-    // return new Chart(options);
+    return priorityData;
   }
+
+  taskPriorityChart1(title: string, priorityList: { priority: number }[]): Chart {
+    let data = this.getPriorityData(priorityList);
+    return this.taskPriorityChart(title, data);
+  }
+
   //charts below this line need to be re-factored or removed
   getTaskPriorityPieChart(title: string): Chart {
     const data: PieChartData[] = [

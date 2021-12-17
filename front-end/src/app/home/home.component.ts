@@ -4,7 +4,7 @@ import { interval, Subscription } from 'rxjs';
 import { faGraduationCap, faFrog, faChalkboardTeacher, faCheckSquare, faGlassCheers } from '@fortawesome/free-solid-svg-icons';
 import { ChartServiceDone2x } from '../chart-domain/chart.service';
 import { Chart } from 'angular-highcharts';
-import { PieChartData } from '../chart-domain/pie-chart-date-type';
+import { PriorityData } from '../chart-domain/priority-data.type';
 
 @Component({
   selector: 'app-home',
@@ -36,9 +36,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public ngOnInit(): void {
 
     this.chart1 = this.chartService.completedPieChartRanddom();
-    this.chart2 = this.chartService.taskPriorityChart('Task Priority',
-        this.chartService.getRandomInteger(100), this.chartService.getRandomInteger(100),
-        this.chartService.getRandomInteger(100));
+    this.createPriorityData();
+  }
+
+  createPriorityData() {
+
+    let priorityData = new PriorityData(this.chartService.getRandomInteger(100),
+      this.chartService.getRandomInteger(100),
+      this.chartService.getRandomInteger(100));
+    this.chart2 = this.chartService.taskPriorityChart('Task Priority', priorityData);
+
   }
 
   ngAfterViewInit(): void {
@@ -49,11 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 25000);
 
     //random bar chart    
-    setInterval(() => {
-        this.chart2 = this.chartService.taskPriorityChart('Task Priority',
-        this.chartService.getRandomInteger(100), this.chartService.getRandomInteger(100),
-        this.chartService.getRandomInteger(100));
-    }, 15000);
+    setInterval(() => { this.createPriorityData(); }, 15000);
   }
 
   public ngOnDestroy(): void {

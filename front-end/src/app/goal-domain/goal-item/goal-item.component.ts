@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IconColorService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/iconColor.service';
 import { Goal } from '../goal.type';
 
 export enum GoalEventType {
@@ -8,12 +8,7 @@ export enum GoalEventType {
 }
 
 export class GoalEvent {
-
-  constructor(public goal: Goal, public type: GoalEventType) {
-
-
-  }
-
+  constructor(public goal: Goal, public type: GoalEventType) {}
 }
 
 @Component({

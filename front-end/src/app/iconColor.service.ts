@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { faArrowAltCircleLeft, faArrowAltCircleRight, faSmile } from '@fortawesome/free-regular-svg-icons';
 import {
   faGraduationCap, faFrog, faChalkboardTeacher, faCheckSquare,
-  faGlassCheers, faBrain, faCircle, faTrash, faWrench, faArrowAltCircleDown, faArrowAltCircleUp, faArrowDown, faArrowUp, faEllipsisH
+  faGlassCheers, faBrain, faCircle, faTrash, faWrench, faArrowAltCircleDown, faArrowAltCircleUp, faArrowDown, faArrowUp, faEllipsisH, faTasks
 } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
@@ -23,7 +23,8 @@ export class IconColorService {
     arrowRight: faArrowAltCircleRight,
     arrowUp: faArrowUp,
     arrowDown: faArrowDown,
-    ellipisHorz:faEllipsisH
+    ellipisHorz:faEllipsisH,
+    tasks:faTasks
     //arrowDown: faArrowAltCircleDown,
   }
 

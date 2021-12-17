@@ -18,14 +18,14 @@
                     <br>
                     <d2x-completed-chart [completed]="goalListCompleted.length"
                         [notCompleted]="goalListNotCompleted.length"></d2x-completed-chart>
-                </div>               
+                </div>
 
             </div>
             <div class="row">
                 <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
                     <br>
                     <app-goal-count-info [completed]="goalListCompleted.length"
-                    [goalCount]="goalListNotCompleted.length + goalListCompleted.length" >
+                        [goalCount]="goalListNotCompleted.length + goalListCompleted.length">
 
                     </app-goal-count-info>
                 </div>
@@ -36,13 +36,16 @@
                     </app-task-count-info>
                 </div>
             </div>
-        </div>        
-        
+        </div>
+
         <div class="col-12 col-md-6 col-xl-4 col-xxxl-3">
             <h5>Up Next</h5>
             <div id="goal-list-not-completed" class="row">
                 <div *ngFor="let g of goalListNotCompleted" class="col-12">
                     <app-goal-item [goal]="g" (event)="goalEvent($event)"></app-goal-item>
+                    <div class="add-goal-after" >
+                        <a (click)="addGoalHere(g.targetCompletionDate)" title="add goal here">+</a>
+                    </div>
                     <br>
                 </div>
             </div>
@@ -53,6 +56,7 @@
             <div id="goal-list-completed" class="row">
                 <div *ngFor="let g of goalListCompleted" class="col-12">
                     <app-goal-item [goal]="g" (event)="goalEvent($event)"></app-goal-item>
+                    <div class="add-goal-after"></div>
                     <br>
                 </div>
             </div>
