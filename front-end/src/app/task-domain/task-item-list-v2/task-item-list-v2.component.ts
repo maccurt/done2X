@@ -89,6 +89,7 @@ export class TaskItemListV2Component implements OnDestroy {
     });
   }
 
+  //TODO this code is duplicatesd is there a way to make it a service,component, etc.
   public addTaskItem() {
     const taskItem = new TaskItem();
     taskItem.goalId = this.goal.id;

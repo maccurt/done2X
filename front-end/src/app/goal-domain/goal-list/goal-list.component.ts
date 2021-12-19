@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { orderBy } from 'lodash';
 import { Subscription } from 'rxjs';
 import { IconColorService } from 'src/app/iconColor.service';
+import { TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { GoalEvent, GoalEventType } from '../goal-item/goal-item.component';
 import { GoalModalComponent } from '../goal-modal/goal-modal.component';
 import { GoalService } from '../goal.service';
@@ -36,7 +37,6 @@ export class GoalListComponent implements OnInit, OnDestroy {
     this.routeData$ = this.route.data.subscribe((data) => {
       this.goalList = data.goalList;
       this.filterGoalList(this.goalList);
-
       this.orderGoalList();
 
       this.goalList.forEach((g) => {
@@ -48,7 +48,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   orderGoalList() {
-    ///sort the goals my completion date
+    ///sort the goals by completion date
     this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
   }
 
@@ -59,6 +59,13 @@ export class GoalListComponent implements OnInit, OnDestroy {
         break;
       case GoalEventType.moveToNotCompleted:
         this.moveToNotCompleted(goalEvent.goal)
+        break;
+      case GoalEventType.taskAdded:
+        this.taskCount++;
+        //TODO re-think this how we check completed
+        if (goalEvent.taskItem?.taskItemStatusId === TaskItemStatus.completed) {
+          this.taskCompletedCount++;
+        }
         break;
     }
   }
@@ -100,7 +107,6 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   public addGoalHere(date: Date) {
-
     let newGoal = new Goal();
     const d = new Date(date);
     d.setDate(d.getDate() + 1);
@@ -124,7 +130,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
   public addGoal() {
     const date = new Date();
     date.setDate(date.getDate() - 1);
-    this.addGoalHere(date);    
+    this.addGoalHere(date);
   }
 
   public editGoal(goal: Goal) {

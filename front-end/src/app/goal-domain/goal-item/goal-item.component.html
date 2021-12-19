@@ -1,8 +1,16 @@
-<div id="goal-{{goal.id}}" class="card" [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}">
+<div id="goal-{{goal.id}}" class="card"
+    [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}">
     <div class="card-body">
-        <h6 class="card-title">
-            <a class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
-        </h6>
+
+        <div>
+            <span class="card-title">
+                <a title="go to goal..." class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
+            </span>
+
+            <a class="action-link add-task-item" style="float:right;" title="add task..."  (click)="addTaskItem()">
+                <fa-icon [icon]="iconColorService.icons.addTask"></fa-icon>            
+            </a>
+        </div>
 
         <div class="detail-container">
             <!-- todo can you combine these *ngIf -->
@@ -12,16 +20,17 @@
                 </a>
             </div>
 
-            <div *ngIf="goal.isCompleted"  style="text-align: left;" class="action-link-container">
+            <div *ngIf="goal.isCompleted" style="text-align: left;" class="action-link-container">
                 <a class="move-goal" title="move to in-progress" (click)="moveToNotCompleted(goal)">
                     <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
                 </a>
             </div>
 
             <div>
-                <span title="{{goal.taskCompleted}} of {{goal.taskCount}} task completed">{{goal.taskCompleted}}
+                <span class="task-count"
+                    title="{{goal.taskCompleted}} of {{goal.taskCount}} task completed">{{goal.taskCompleted}}
                     / {{goal.taskCount}}</span>
-                <span style="float: right;">{{goal.targetCompletionDate | date}}</span>
+                <span title="target completion date" style="float: right;">{{goal.targetCompletionDate | date}}</span>
             </div>
         </div>
     </div>

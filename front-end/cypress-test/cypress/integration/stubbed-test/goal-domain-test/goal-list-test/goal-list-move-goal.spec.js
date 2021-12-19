@@ -1,7 +1,6 @@
 describe('move goal', () => {
     let goal_1;
     before(() => {
-
         cy.fixture('goalList').then((goalList) => {
             goal_1 = goalList[0];
         });

@@ -9,6 +9,32 @@ Cypress.Commands.add('checkInputWithError', (inputId) => {
   cy.get(inputId).should('have.css', 'border', '1px solid rgb(255, 0, 0)');
 });
 
+Cypress.Commands.add('addGoal', () => {
+  cy.get('#add-goal').click();
+  cy.fixture('goal').then((goal) => {
+    goal.id = 101;
+    cy.get('#name').type(goal.name);
+    cy.get('#description').type(goal.description);
+    cy.get('#what-is-done').type(goal.whatIsDone);
+    cy.interceptGoalAdd(goal);
+    cy.get('#save').click();
+    cy.wait('@interceptGoalAdd');
+  })
+})
+
+
+Cypress.Commands.add('addTask',()=>{
+
+  cy.fixture('taskItem').then((taskItem) => {
+    cy.interceptTaskItemAdd(taskItem)    
+    cy.get('#task-item-modal').find('#name').type(taskItem.name);
+    cy.get('#task-item-modal').find('#description').type(taskItem.description);
+    cy.get('#task-item-modal').find('#save').click();
+    cy.wait('@interceptTaskItemAdd')    
+  });
+})
+
+
 Cypress.Commands.add('interceptGoalList', () => {
   cy.fixture('goalList').then((goalList) => {
     cy.intercept({ method: 'GET', url: 'http://localhost/Done2X.API/api/goal', }, goalList)
@@ -73,5 +99,5 @@ Cypress.Commands.add('interceptTaskItemDelete', () => {
 Cypress.Commands.add('populateTaskItemModal', (taskItem) => {
 
   cy.get('#task-item-modal').find('#name').type(taskItem.name);
-  cy.get('#task-item-modal').find('#description').type(taskItem.description);  
+  cy.get('#task-item-modal').find('#description').type(taskItem.description);
 })
