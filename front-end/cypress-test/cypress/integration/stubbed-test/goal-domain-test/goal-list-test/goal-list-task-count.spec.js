@@ -24,9 +24,21 @@ describe('goal-list-task-count.spec.js', () => {
             })            
         }); 
 
-        it('tasl-count-text should be correct', () => {
+        it('goal-count-percentage should be correct', () => {
+            cy.get('#goal-count-percentage').invoke('text').then((text)=>{
+                expect(text.trim()).to.eq('33.33% of goals have been completed');
+            })            
+        }); 
+
+        it('task-count-text should be correct', () => {
             cy.get('#task-count-text').invoke('text').then((text)=>{
                 expect(text.trim()).to.eq('6 Of 17 Tasks Are Completed');
+            })            
+        }); 
+
+        it('task-count-percentage should be correct', () => {
+            cy.get('#task-count-percentage').invoke('text').then((text)=>{
+                expect(text.trim()).to.eq('35.29% of task have been completed');
             })            
         }); 
     });
@@ -46,10 +58,16 @@ describe('goal-list-task-count.spec.js', () => {
             cy.get('#goal-count-text').invoke('text').then((text)=>{
                 expect(text.trim()).to.eq('1 Of 4 Goals Are Completed');
             })            
-        });        
+        });       
+        
+        it('goal-count-percentage should be correct', () => {
+            cy.get('#goal-count-percentage').invoke('text').then((text)=>{
+                expect(text.trim()).to.eq('25% of goals have been completed');
+            })            
+        }); 
     });
 
-    describe('Add a task', () => {
+    describe('Add a task that is not completed', () => {
 
         before(() => {
             cy.get('#goal-1').find('.add-task-item').click();
@@ -67,6 +85,32 @@ describe('goal-list-task-count.spec.js', () => {
                 expect(text.trim()).to.eq('6 Of 18 Tasks Are Completed');
             })            
         }); 
-        
+
+        it('task-count-percentage should be correct', () => {
+            cy.get('#task-count-percentage').invoke('text').then((text)=>{
+                expect(text.trim()).to.eq('33.33% of task have been completed');
+            })            
+        });         
     });
+
+    describe('Add a task that is completed', () => {
+
+        before(() => {
+            cy.get('#goal-1').find('.add-task-item').click();
+            cy.addTask(3);
+        });
+        
+        it('task-count-text should be correct', () => {
+            cy.get('#task-count-text').invoke('text').then((text)=>{
+                expect(text.trim()).to.eq('7 Of 19 Tasks Are Completed');
+            })            
+        }); 
+
+        it('task-count-percentage should be correct', () => {
+            cy.get('#task-count-percentage').invoke('text').then((text)=>{
+                expect(text.trim()).to.eq('36.84% of task have been completed');
+            })            
+        });         
+    });
+
 });

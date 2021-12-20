@@ -23,9 +23,10 @@ Cypress.Commands.add('addGoal', () => {
 })
 
 
-Cypress.Commands.add('addTask',()=>{
+Cypress.Commands.add('addTask',(taskItemStatusId = 1)=>{
 
   cy.fixture('taskItem').then((taskItem) => {
+    taskItem.taskItemStatusId = taskItemStatusId;
     cy.interceptTaskItemAdd(taskItem)    
     cy.get('#task-item-modal').find('#name').type(taskItem.name);
     cy.get('#task-item-modal').find('#description').type(taskItem.description);

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MathService } from 'src/app/math.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { MathService } from 'src/app/math.service';
   templateUrl: './task-count-info.component.html',
   styleUrls: ['./task-count-info.component.scss']
 })
-export class TaskCountInfoComponent implements OnInit {
+export class TaskCountInfoComponent implements OnInit, OnChanges {
   @Input() taskCompletedCount!: number;
   @Input() taskCount!: number;
 
@@ -15,7 +15,15 @@ export class TaskCountInfoComponent implements OnInit {
   constructor(private mathService: MathService) { }
 
   ngOnInit(): void {
-    this.percentage = this.mathService.getPercent(this.taskCompletedCount,this.taskCount);
+    this.calculatePercent()
+    //this.percentage = this.mathService.getPercent(this.taskCompletedCount,this.taskCount);
   } 
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.calculatePercent()
+  }
+
+  calculatePercent(){
+    this.percentage = this.mathService.getPercent(this.taskCompletedCount,this.taskCount);
+  }
 }
