@@ -23,12 +23,13 @@ export class ChartServiceDone2x {
     const pieChartDataList: PieChartData[] = [];
 
     pieChartDataList.push({
-      name: 'Not Completed',
-      color: this.iconColorService.colors.not_completed_color_2, y: notCompleted
-    });
-    pieChartDataList.push({
       name: 'Completed',
       color: this.iconColorService.colors.completed_color_2, y: completed, sliced: true
+    });
+
+    pieChartDataList.push({
+      name: 'Not Completed',
+      color: this.iconColorService.colors.not_completed_color_2, y: notCompleted
     });
 
     return new Chart(this.pieChartOptions('', pieChartDataList));
