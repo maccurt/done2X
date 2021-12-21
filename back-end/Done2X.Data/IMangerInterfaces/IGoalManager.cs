@@ -12,5 +12,6 @@ namespace Done2X.Data.IMangerInterfaces
         public Task<IEnumerable<GoalExtended>> GetGoalList(ClaimsPrincipal user);
         public Task<Goal> Add(Goal goal);
         public Task<Goal> Update(Goal goal);
+        public Task<bool> Delete(int goalId);
     }
 }

@@ -19,12 +19,21 @@ namespace Done2X.API.Controllers
             _domainManager = domainManager;
         }
 
+        [HttpDelete]
+        [Route("{goalId}")]
+        public async Task<ActionResult> Delete([FromRoute] int goalId)
+        {
+            //TODO check if are authorized to do this
+            await _domainManager.Goal.Delete(goalId);
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddGoal([FromBody] Goal goal)
         {
             if (goal.Id >= 1)
             {
-                return BadRequest("Id is invalid. Task may already exist.");
+                return BadRequest("Id is invalid. Goal may already exist.");
             }
 
             var canAccessProject = _domainManager.Security.CanAccessProject(goal.ProjectId, User).Result;

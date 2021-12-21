@@ -60,6 +60,14 @@ export class GoalListComponent implements OnInit, OnDestroy {
       case GoalEventType.moveToNotCompleted:
         this.moveToNotCompleted(goalEvent.goal)
         break;
+      case GoalEventType.deleted:
+        if (goalEvent.goal.isCompleted) {
+          this.goalService.removeGoalFromList(goalEvent.goal, this.goalListCompleted);
+        }
+        else {
+          this.goalService.removeGoalFromList(goalEvent.goal, this.goalListNotCompleted);
+        }
+        break;
       case GoalEventType.taskAdded:
         this.taskCount++;
         //TODO re-think this how we check completed
@@ -69,6 +77,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
         break;
     }
   }
+
 
   public filterGoalList(goalList: Goal[]) {
     this.goalListCompleted = goalList.filter((g) => {

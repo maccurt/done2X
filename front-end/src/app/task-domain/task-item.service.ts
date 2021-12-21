@@ -33,9 +33,7 @@ export class TaskItemService {
     Object.assign(taskItemList, sorted);
   }
 
-  removeTaskFromList = (taskItem: TaskItem, taskItemList: TaskItem[]) => {
-
-    //remove task item form list
+  removeTaskFromList = (taskItem: TaskItem, taskItemList: TaskItem[]) => {    
     let index = taskItemList.indexOf(taskItem);
     if (index > -1) {
       taskItemList.splice(index, 1);

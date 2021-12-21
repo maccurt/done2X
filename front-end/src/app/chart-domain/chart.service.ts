@@ -30,7 +30,7 @@ export class ChartServiceDone2x {
     pieChartDataList.push({
       name: 'Not Completed',
       color: this.iconColorService.colors.not_completed_color_2, y: notCompleted
-    });
+    }); 
 
     return new Chart(this.pieChartOptions('', pieChartDataList));
   }
