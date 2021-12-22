@@ -10,7 +10,7 @@ import { Goal } from '../goal.type';
 import { FormControlService } from 'src/app/form-control.service';
 import { GoalService } from '../goal.service';
 //Icons
-import { faCoffee, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
+// import { faCoffee, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
@@ -32,9 +32,7 @@ export class Column {
 export class GoalComponent implements OnInit, OnDestroy {
   @ViewChild(MatExpansionPanel, { static: true }) matExpansionPanelElement!: MatExpansionPanel;
   //icons
-  faCoffee = faCoffee;
-  editIcon = faWrench;
-  deleteIcon = faTrash;
+  //  
   goal!: Goal;
 
   completedTaskItemList: TaskItem[] = [];
@@ -64,12 +62,12 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   //chart
   completedChart!: Chart;
-  priorityData:PriorityData = new PriorityData(0,0,0);
+  priorityData: PriorityData = new PriorityData(0, 0, 0);
 
   //Subscriptions
   updateGoalSub$!: Subscription;
   routeDataSub$!: Subscription;
-  getPrioritySub$!: Subscription;  
+  getPrioritySub$!: Subscription;
 
   constructor(private route: ActivatedRoute,
     private taskItemService: TaskItemService,
@@ -134,6 +132,7 @@ export class GoalComponent implements OnInit, OnDestroy {
         this.createCompletedChart();
         break;
       case TypeAction.delete:
+      case TypeAction.moveTaskItemListToGoal:
         this.createPriorityChart();
         this.createCompletedChart();
         break;
@@ -149,7 +148,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   }
 
   public createPriorityChart() {
-    this.priorityData = this.chartService.getPriorityData([...this.completedTaskItemList,...this.notCompletedTaskItemList]);
+    this.priorityData = this.chartService.getPriorityData([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
   }
 
   public getPriorityText(taskItem: TaskItem): string {

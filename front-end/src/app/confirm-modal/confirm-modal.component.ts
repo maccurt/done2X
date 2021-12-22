@@ -15,15 +15,12 @@ export class Confirm {
   styleUrls: ['./confirm-modal.component.scss']
 })
 export class ConfirmModalComponent {
-
   confirm: Confirm;
-
   constructor(private dialogRef: MatDialogRef<ConfirmModalComponent>,
     @Inject(MAT_DIALOG_DATA) private data: Confirm
   ) {
     this.confirm = data;
   }
-
 
   no = () => {
     this.dialogRef.close(false);
@@ -32,5 +29,4 @@ export class ConfirmModalComponent {
   yes = () => {
     this.dialogRef.close(true);
   }
-
 }

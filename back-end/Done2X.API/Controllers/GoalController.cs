@@ -86,7 +86,7 @@ namespace Done2X.API.Controllers
         public async Task<IActionResult> GetGoalList()
         {
             var list = await _domainManager.Goal.GetGoalList(User);
-            return Ok(list.OrderByDescending(g => g.TargetCompletionDate));
+            return Ok(list.OrderBy(g => g.TargetCompletionDate));
         }
 
         //[HttpGet]

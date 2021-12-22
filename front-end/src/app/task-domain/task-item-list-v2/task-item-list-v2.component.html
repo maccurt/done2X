@@ -11,13 +11,29 @@
         </div>
     </div>
 
-    <!-- <a [matMenuTriggerFor]="menu"><fa-icon title="move task to completed"  [icon]="iconColorService.icons.ellipisHorz"></fa-icon></a>
+    <a *ngIf="!isATaskSelected()" [matMenuTriggerFor]="menuNothingSelected">
+        <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
+    </a>
+
+    <mat-menu #menuNothingSelected="matMenu">
+        <span mat-menu-item>No Task Are Selected</span>
+    </mat-menu>
+
+    <a *ngIf="isATaskSelected()" [matMenuTriggerFor]="menu">
+        <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
+    </a>
+
     <mat-menu #menu="matMenu">
-        <button (click)="moveTaskToGoal()" mat-menu-item>
-            <mat-icon>dialpad</mat-icon>
-            <span>Move Selected Task To Goal...</span>
+        <button mat-menu-item [matMenuTriggerFor]="moveToGoals">
+            <span>Move Task(s) To Goal...</span>
         </button>
-    </mat-menu> -->
+    </mat-menu>
+
+    <mat-menu #moveToGoals>
+        <button *ngFor="let g of goalList" (click)="moveTaskToGoal(g)" mat-menu-item>
+            <span>{{g.name}}</span>
+        </button>
+    </mat-menu>
 
     <table *ngIf="taskItemList.length > 0" class="task-item-list-v2 table table-striped table-bordered table-sm">
         <thead>
@@ -26,7 +42,7 @@
                     <mat-checkbox class="example-margin" [(ngModel)]="allTaskSelected"
                         (change)="selectAllClick($event.checked)">
                     </mat-checkbox>
-                </th>                
+                </th>
 
                 <th style="width:63%" id="task-col">
                     <a (click)="sort('name')">Task

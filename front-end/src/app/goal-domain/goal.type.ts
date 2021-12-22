@@ -1,8 +1,11 @@
-export class Goal {
+export class Describer {
   id!: number;
-  projectId!: number;
   name!: string;
   description!: string;
+}
+
+export class Goal extends Describer {
+  projectId!: number;
   whatIsDone!: string;
   targetCompletionDate: Date = new Date();
   isCompleted: boolean = false;

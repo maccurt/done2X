@@ -78,7 +78,6 @@ export class GoalListComponent implements OnInit, OnDestroy {
     }
   }
 
-
   public filterGoalList(goalList: Goal[]) {
     this.goalListCompleted = goalList.filter((g) => {
       return g.isCompleted

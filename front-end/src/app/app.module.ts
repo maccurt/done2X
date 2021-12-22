@@ -24,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { BreakPointTesterComponent } from './break-point-tester/break-point-tester.component';
 import { GoalComponent } from './goal-domain/goal/goal.component';
 import { GoalResolver } from './resolvers/goal-resolver';
@@ -39,8 +39,8 @@ import { TaskPriorityChartV1Component } from './chart-domain/task-priority-chart
 import { TaskItemListV2Component } from './task-domain/task-item-list-v2/task-item-list-v2.component';
 import { CompletedChartComponent } from './chart-domain/completed-chart/completed-chart.component';
 import { HttpErrorInterceptor } from './interceptor/httpErrorIntereceptor.type';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatIconModule} from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 import { GoalItemComponent } from './goal-domain/goal-item/goal-item.component';
 import { TaskCountInfoComponent } from './task-domain/task-count-info/task-count-info.component';
 import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count-info.component';
@@ -67,7 +67,7 @@ import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count
     CompletedChartComponent,
     GoalItemComponent,
     TaskCountInfoComponent,
-    GoalCountInfoComponent
+    GoalCountInfoComponent    
   ],
   imports: [
     BrowserModule,
@@ -103,6 +103,7 @@ import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TaskItemModalComponent, ConfirmModalComponent, GoalModalComponent]
+  entryComponents: [TaskItemModalComponent, ConfirmModalComponent,
+    GoalModalComponent]
 })
 export class AppModule { }

@@ -2,17 +2,17 @@
     [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}">
     <div class="card-body">
 
-        <div class="action-icon-container" >
+        <div class="action-icon-container">
             <span class="card-title">
                 <a title="go to goal..." class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
             </span>
 
-            <div style="float:right;" >
-                <a class="action-link delete-goal"  title="delete goal..." (click)="deleteGoal()">
+            <div style="float:right;">                
+                <a *ngIf="goal.taskCount === 0" class="action-link delete-goal" title="delete goal..." (click)="deleteGoal()">
                     <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
                 </a>
-
-                <a class="action-link add-task-item"  title="add task..." (click)="addTaskItem()">
+                
+                <a class="action-link add-task-item" title="add task..." (click)="addTaskItem()">
                     <fa-icon [icon]="iconColorService.icons.addTask"></fa-icon>
                 </a>
             </div>

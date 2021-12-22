@@ -4,5 +4,6 @@ export enum TypeAction {
   edit,
   delete,
   moveStatus,
+  moveTaskItemListToGoal,
   priorityChange,
 }

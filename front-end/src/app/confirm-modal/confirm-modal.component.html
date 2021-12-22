@@ -1,19 +1,19 @@
 <div id='confirm-modal'>
   <h3 mat-dialog-title>{{confirm.title}}</h3>
   <mat-dialog-content>
-    <h3>
+    <h5>
       {{confirm.question}}
-    </h3>
+    </h5>
     <div class="nameOfEntity">
       {{confirm.nameOfEntity}}
     </div>
 
-
-
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button id ='yes-answer' type="button" class="btn btn-danger" (click)="yes()">{{confirm.yesAnswer}}</button>
-    <button mat-button id ='no-answer' type="button" class="btn btn-secondary" (click)='no()'>{{confirm.noAnswer}}</button>
+    <button mat-button id='yes-answer' type="button" class="btn btn-danger"
+      (click)="yes()">{{confirm.yesAnswer}}</button>
+    <button mat-button id='no-answer' type="button" class="btn btn-secondary"
+      (click)='no()'>{{confirm.noAnswer}}</button>
   </mat-dialog-actions>
 
 </div>
