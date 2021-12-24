@@ -9,8 +9,6 @@ import { TaskItem } from 'src/app/task-domain/task-item/task-item.type';
 import { Goal } from '../goal.type';
 import { FormControlService } from 'src/app/form-control.service';
 import { GoalService } from '../goal.service';
-//Icons
-// import { faCoffee, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
