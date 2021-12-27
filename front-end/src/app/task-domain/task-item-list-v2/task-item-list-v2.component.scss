@@ -1,6 +1,9 @@
-
-thead{
+thead {
     vertical-align: top;
+}
+
+.no-data {
+    margin-top: 25px;
 }
 .completed-mode {
     thead {
@@ -39,18 +42,18 @@ thead{
 
 .priority-1 {
     .mat-button-toggle-checked {
-        background-color:var(--high-priority-color);
+        background-color: var(--high-priority-color);
     }
 }
 
 .priority-2 {
     .mat-button-toggle-checked {
-        background-color:var(--medium-priority-color);
+        background-color: var(--medium-priority-color);
     }
 }
 
 .priority-3 {
     .mat-button-toggle-checked {
-        background-color:var(--low-priority-color);
+        background-color: var(--low-priority-color);
     }
 }
