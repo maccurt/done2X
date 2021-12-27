@@ -86,7 +86,7 @@
 
                 <div class="col-12">
                     <br>
-                    <d2x-task-priority-chart-v1  [data]="priorityData">
+                    <d2x-task-priority-chart-v1 [data]="priorityData">
                     </d2x-task-priority-chart-v1>
                 </div>
             </div>
@@ -94,11 +94,25 @@
 
         <div class="col-8 col-lg-8 col-xl-8 col-xxl-7 col-xxxl-6">
             <div id="goal-task-list">
-                <d2x-task-item-list-v2 id="task-item-list-not-completed" (actionEvent)="actionEvent($event)"
-                    [goal]="goal" [taskItemList]="notCompletedTaskItemList"></d2x-task-item-list-v2>
 
-                <d2x-task-item-list-v2 id="task-item-list-completed" (actionEvent)="actionEvent($event)"
-                    [completedMode]=true [goal]="goal" [taskItemList]="completedTaskItemList"></d2x-task-item-list-v2>
+                <mat-tab-group animationDuration="0ms">
+                    <mat-tab label="Not Completed ({{notCompletedTaskItemList.length}})">
+                        <d2x-task-item-list-v2 id="task-item-list-not-completed" (actionEvent)="actionEvent($event)"
+                            [goal]="goal" [taskItemList]="notCompletedTaskItemList"></d2x-task-item-list-v2>
+                    </mat-tab>
+                    <mat-tab label="Completed ({{completedTaskItemList.length}})">
+
+                        <d2x-task-item-list-v2 id="task-item-list-completed" (actionEvent)="actionEvent($event)"
+                            [completedMode]=true [goal]="goal" [taskItemList]="completedTaskItemList">
+                        </d2x-task-item-list-v2>
+
+                    </mat-tab>
+
+                </mat-tab-group>
+
+
+
+
             </div>
         </div>
 

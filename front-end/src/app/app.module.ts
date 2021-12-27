@@ -44,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { GoalItemComponent } from './goal-domain/goal-item/goal-item.component';
 import { TaskCountInfoComponent } from './task-domain/task-count-info/task-count-info.component';
 import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count-info.component';
+import {MatTabsModule} from '@angular/material/tabs'
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count
     MatSnackBarModule,
     MatMenuModule,
     MatIconModule,
+    MatTabsModule,
     SecurityModule,
     FontAwesomeModule,
     ChartModule
