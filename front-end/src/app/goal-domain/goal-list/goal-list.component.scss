@@ -6,15 +6,16 @@
     min-height: 60px;
 }
 
-.goal-not-completed {
-    background-color: var(--not-completed-color-2);
+.add-goal-after {
+    height: 20px;    
+    color:#cccccc;
+    
+    a {
+        text-decoration: none !important;
+        cursor: default !important;        
+    }
+    a:hover {
+        text-decoration: underline !important;
+        color:black;
+    }
 }
-
-.goal-completed {
-    background-color: var(--completed-color-2);
-}
-
-.task-count-container {
-    font-size: small;
-}
-

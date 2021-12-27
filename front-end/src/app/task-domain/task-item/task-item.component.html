@@ -6,31 +6,23 @@
             <div style="float:left;" class="move-left-container">
                 <a *ngIf="taskItem.taskItemStatusId === 3" class="move-to-progress action-link"
                     title="move to in progress" (click)="moveToInProgress()">
-                    <fa-icon [icon]="moveLeft"></fa-icon>
+                    <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
                 </a>
                 <a *ngIf="taskItem.taskItemStatusId === 2" class="move-to-progress action-link" title="move to backlog"
                     (click)="moveToBacklog()">
-                    <fa-icon [icon]="moveLeft"></fa-icon>
+                    <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
                 </a>
             </div>
-
-
             <div style="float:right;" class="move-right-container">
-
                 <a *ngIf="taskItem.taskItemStatusId === 1" class="move-to-progress action-link"
                     title="move to in progress" (click)="moveToInProgress()">
-                    <fa-icon [icon]="moveRight"></fa-icon>
+                    <fa-icon [icon]="iconColorService.icons.arrowRight"></fa-icon>
                 </a>
-
-
                 <a *ngIf="taskItem.taskItemStatusId === 2" class="move-to-completed action-link"
                     title="move task to completed" (click)="moveToCompleted()">
-                    <fa-icon class="far" [icon]="moveRight"></fa-icon>
+                    <fa-icon class="far" [icon]="iconColorService.icons.arrowRight"></fa-icon>
                 </a>
-
             </div>
-
         </div>
-
     </div>
 </div>

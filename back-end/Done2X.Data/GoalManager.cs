@@ -53,10 +53,10 @@ namespace Done2X.Data
             if (goal.IsCompleted)
             {
                 var taskNotCompleted = connection.QueryFirst<int>(
-                     $"select count(*) from TaskItem where GoalId = @goalId and TaskItemStatusId !=3", new {goalId =goal.Id});
+                     $"select count(*) from TaskItem where GoalId = @goalId and TaskItemStatusId !=3", new { goalId = goal.Id });
                 if (taskNotCompleted > 0)
                 {
-                    var error =  new DomainException("Goal can not be completed it has task that are not completed");
+                    var error = new DomainException("Goal can not be completed it has task that are not completed");
                     throw error;
                 }
 
@@ -65,6 +65,15 @@ namespace Done2X.Data
 
             await connection.UpdateAsync(goal);
             return goal;
+        }
+
+        public async Task<Boolean> Delete(int goalId)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var goal = await connection.GetAsync<Goal>(goalId);
+            var result = await connection.DeleteAsync(goal);
+            return result;
         }
 
         public async Task<Goal> Add(Goal goal)

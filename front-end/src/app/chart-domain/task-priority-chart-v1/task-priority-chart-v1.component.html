@@ -1,5 +1,10 @@
-<div *ngIf="taskItemList.length > 0" class="task-priority-chart"  [chart]="chart"></div>
+<div *ngIf="data.count() > 0 && !data.isOnePriority" class="task-priority-chart"  [chart]="chart"></div>
 
-<div *ngIf="taskItemList.length === 0" class="no-data-chart">
+<div *ngIf="data.count() === 0" class="no-data-chart">
     <span>No Data</span>
+</div>
+
+<div *ngIf="data.count() > 0 && data.isOnePriority" class="no-data-chart">
+    <fa-icon  class="fa-1x priority-{{data.onePriority}}" title="move task to completed"  [icon]="iconColorService.icons.tasks"></fa-icon>
+    {{data.onePriorityText}}
 </div>

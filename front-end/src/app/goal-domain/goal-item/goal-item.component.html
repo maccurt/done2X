@@ -1,0 +1,43 @@
+<div id="goal-{{goal.id}}" class="card"
+    [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}">
+    <div class="card-body">
+
+        <div class="action-icon-container">
+            <span class="card-title">
+                <a title="go to goal..." class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
+            </span>
+
+            <div style="float:right;">                
+                <a *ngIf="goal.taskCount === 0" class="action-link delete-goal" title="delete goal..." (click)="deleteGoal()">
+                    <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
+                </a>
+                
+                <a class="action-link add-task-item" title="add task..." (click)="addTaskItem()">
+                    <fa-icon [icon]="iconColorService.icons.addTask"></fa-icon>
+                </a>
+            </div>
+        </div>
+
+        <div class="detail-container">
+            <!-- todo can you combine these *ngIf -->
+            <div *ngIf="!goal.isCompleted" style="text-align: right;" class="action-link-container">
+                <a class="move-goal" title="move to complete" (click)="moveToCompleted(goal)">
+                    <fa-icon [icon]="iconColorService.icons.arrowRight"></fa-icon>
+                </a>
+            </div>
+
+            <div *ngIf="goal.isCompleted" style="text-align: left;" class="action-link-container">
+                <a class="move-goal" title="move to in-progress" (click)="moveToNotCompleted(goal)">
+                    <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
+                </a>
+            </div>
+
+            <div>
+                <span class="task-count"
+                    title="{{goal.taskCompleted}} of {{goal.taskCount}} task completed">{{goal.taskCompleted}}
+                    / {{goal.taskCount}}</span>
+                <span title="target completion date" style="float: right;">{{goal.targetCompletionDate | date}}</span>
+            </div>
+        </div>
+    </div>
+</div>

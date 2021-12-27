@@ -4,13 +4,23 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Goal } from './goal.type';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class GoalService {
 
   constructor(private httpClient: HttpClient) { }
+
+  public deleteGoal(goalId: number): Observable<boolean> {
+    return this.httpClient.delete<boolean>(environment.API_URL + `goal/${goalId}`);
+  }
+
+  removeGoalFromList = (goal: Goal, goalList: Goal[]) => {    
+    let index = goalList.indexOf(goal);
+    if (index > -1) {
+      goalList.splice(index, 1);
+    }
+  }
 
   public addGoal(goal: Goal): Observable<Goal> {
     const projectId = localStorage.getItem('project-id');

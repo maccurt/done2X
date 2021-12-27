@@ -1,20 +1,17 @@
 <div class="container">
 
     <div class="row">
-
-        <div class="col-3">
-            <h1><b>Done2X.com</b> </h1>
-            <h3>You Are Never Done!</h3>
+        <div class="col-12 col-xl-2 ">
+            <h1><b>Done2X.com</b> </h1>`
         </div>
 
-        <div class="col-3">
+        <div class="col-12 col-lg-6 col-xl-5 ">
             <div class="chart" [chart]="chart1"></div>
         </div>
 
-        <div class="col-3 ">
+        <div class="d-none d-md-block col-md-6 col-xl-5 ">
             <div class="chart" [chart]="chart2"></div>
-        </div>                 
-
+        </div>
     </div>
 </div>
 
@@ -39,7 +36,7 @@
                 <h3>Goals & Task</h3>
                 <hr>
                 <p class="p-wrapper">
-                    <fa-icon class="fa-4x" [icon]="goalsTaskIcon"></fa-icon>
+                    <fa-icon class="fa-4x" [icon]="iconColorService.icons.goalsTaskIcon"></fa-icon>
                     <br>
                     Get off your ass to perform the tasks to complete your goals.
                 </p>
@@ -49,7 +46,7 @@
                 <h3>Experiment & Learn</h3>
                 <hr>
                 <p class="p-wrapper">
-                    <fa-icon class="fa-4x" [icon]="experimentLearnIcon"></fa-icon>
+                    <fa-icon class="fa-4x" [icon]="iconColorService.icons.experimentLearnIcon"></fa-icon>
                     <br>
                     Try something, measure your progress and learn.
                 </p>
@@ -62,7 +59,7 @@
                 <h3>Warts & All</h3>
                 <hr>
                 <p class="p-wrapper">
-                    <fa-icon style="color:green"  class="fa-4x" [icon]="wartsAndAllIcon"></fa-icon>
+                    <fa-icon style="color:green" class="fa-4x" [icon]="iconColorService.icons.wartsAndAllIcon"></fa-icon>
                     <br>
                     Give it to the world and do not worry about negative feedback.
                 </p>
@@ -73,7 +70,7 @@
                 <h3>Reward & Celebrate</h3>
                 <hr>
                 <p class="p-wrapper">
-                    <fa-icon  style="color:purple"  class="fa-4x" [icon]="celebrateIcon"></fa-icon>
+                    <fa-icon style="color:purple" class="fa-4x" [icon]="iconColorService.icons.celebrateIcon"></fa-icon>
                     <br>
                     Reward small successes and get to back to work.
                 </p>

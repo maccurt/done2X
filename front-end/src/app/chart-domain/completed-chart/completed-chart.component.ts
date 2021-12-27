@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { Chart } from 'angular-highcharts';
-import { IconColorService } from 'src/app/icon.service';
+import { IconColorService } from 'src/app/iconColor.service';
 import { ChartServiceDone2x } from '../chart.service';
 
 @Component({

@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-9 ">
+        <div class="col-9">
             <h1>Goals</h1>
         </div>
         <div class="col-3">
@@ -11,60 +11,54 @@
     <hr>
 
     <div class="row">
+        <div class="col-12 col-xl-4 col-xxl-4 col-xxxl-3">
+            <div class="row">
 
-        <!-- <div class="col-sm-7 col-md-7 col-lg-9 col-xl-9 col-xxl-9 col-xxxl-8"> -->
-        <div class="col-3">
+                <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
+                    <br>
+                    <d2x-completed-chart [completed]="goalListCompleted.length"
+                        [notCompleted]="goalListNotCompleted.length"></d2x-completed-chart>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
+                    <br>
+                    <app-goal-count-info [completed]="goalListCompleted.length"
+                        [goalCount]="goalListNotCompleted.length + goalListCompleted.length">
+
+                    </app-goal-count-info>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
+                    <br>
+                    <app-task-count-info [taskCompletedCount]='taskCompletedCount' [taskCount]="taskCount">
+                    </app-task-count-info>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-4 col-xxxl-3">
             <h5>Up Next</h5>
             <div id="goal-list-not-completed" class="row">
-                <!-- <div *ngFor="let g of goalListNotCompleted" class="col-sm-12 col-md-12 col-lg-6 col-xxl-4 col-xxxl-3"> -->
                 <div *ngFor="let g of goalListNotCompleted" class="col-12">
-
-                    <div id="goal-{{g.id}}" class="card goal-not-completed">
-                        <div class="card-body">
-                            <h6 class="card-title">
-                                <a class="action-link" routerLink="/goal/{{g.id}}">{{g.name}}</a>
-                            </h6>
-
-                            <div style="text-align: right;" class="action-link-container">
-                                <a class="complete" title="move to complete" (click)="completeGoal(g)">
-                                    <fa-icon [icon]="iconColorService.icons.arrowRight"></fa-icon>
-                                </a>
-                            </div>
-
-                            <div  title="{{g.taskCompleted}} of {{g.taskCount}} task completed"
-                                class="task-count-container">
-                                <span>{{g.taskCompleted}} / {{g.taskCount}}</span>
-                            </div>
-                        </div>
+                    <app-goal-item [goal]="g" (event)="goalEvent($event)"></app-goal-item>
+                    <div class="add-goal-after" >
+                        <a (click)="addGoalHere(g.targetCompletionDate)" title="add goal here">+</a>
                     </div>
                     <br>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-5 col-md-5 col-lg-3 col-xl-3 col-xxl-3 col-xxxl-4">
+        <div class="col-12 col-md-6 col-xl-4 col-xxxl-3">
             <h5>Completed</h5>
             <div id="goal-list-completed" class="row">
-
-                <div *ngFor="let g of goalListCompleted" class="col-12 col-xxxl-6">
-                    <div id="goal-{{g.id}}" class="card goal-completed">
-                        <div class="card-body">
-                            <h6 class="card-title"><a (click)="editGoal(g)">{{g.name}}</a> </h6>
-                            <div style="text-align: left;" class="action-link-container">
-                                <a class="in-progress" title="move to in-progress" (click)="moveToInProgress(g)">
-                                    <fa-icon [icon]="iconColorService.icons.arrowLeft"></fa-icon>
-                                </a>
-                            </div>
-                            <div *ngIf="g.taskCount > 0" title="{{g.taskCompleted}} of {{g.taskCount}} task completed"
-                                class="task-count-container">
-                                <span>{{g.taskCompleted}} / {{g.taskCount}}</span>
-                            </div>
-
-                        </div>
-                    </div>
+                <div *ngFor="let g of goalListCompleted" class="col-12">
+                    <app-goal-item [goal]="g" (event)="goalEvent($event)"></app-goal-item>
+                    <div class="add-goal-after"></div>
                     <br>
                 </div>
-
             </div>
         </div>
     </div>

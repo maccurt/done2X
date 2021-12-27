@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IconColorService } from 'src/app/iconColor.service';
 import { TaskItemStatus } from '../task-item.service';
 import { TaskItem } from './task-item.type';
-import { faTrashAlt, faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { TypeAction } from './TypeAction';
 import { TypeClickEvent } from './TypeClickEvent';
 
@@ -11,12 +11,6 @@ import { TypeClickEvent } from './TypeClickEvent';
   styleUrls: ['./task-item.component.scss']
 })
 export class TaskItemComponent {
-
-  //icons
-  deleteIcon = faTrashAlt;
-  moveLeft = faArrowAltCircleLeft;
-  moveRight = faArrowAltCircleRight;
-
   //input & output
   @Input()
   taskItem!: TaskItem;
@@ -25,7 +19,7 @@ export class TaskItemComponent {
   @Output()
   deleteClicked = new EventEmitter<TaskItem>();
 
-  constructor() { }
+  constructor(public iconColorService:IconColorService) { }
 
   taskItemClick(): void {
     this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.edit, this.taskItem));

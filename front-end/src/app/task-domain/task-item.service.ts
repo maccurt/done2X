@@ -34,8 +34,6 @@ export class TaskItemService {
   }
 
   removeTaskFromList = (taskItem: TaskItem, taskItemList: TaskItem[]) => {
-
-    //remove task item form list
     let index = taskItemList.indexOf(taskItem);
     if (index > -1) {
       taskItemList.splice(index, 1);
@@ -70,22 +68,20 @@ export class TaskItemService {
   }
 
   getTaskItemList = (goalId: number): Observable<TaskItem[]> => {
-
     return this.httpClient
       .get<TaskItem[]>(`${environment.API_URL}taskItem/goal/${goalId}`);
   }
 
-  moveTaskItemListToGoal = (taskItemIdList: number[], goalId: number):Observable<any> => {
+  moveTaskItemListToGoal = (taskItemList: TaskItem[], goalId: number): Observable<any> => {
 
+    let taskItemIdList: number[] = taskItemList.map(t => t.id);
     return this.httpClient
-      .post<TaskItem[]>(`${environment.API_URL}taskItem/move/${goalId}`,taskItemIdList);
+      .put<TaskItem[]>(`${environment.API_URL}taskItem/move/${goalId}`, taskItemIdList);
   }
 
   filterTaskItemListByStatus = (taskItemList: TaskItem[], status: TaskItemStatus): TaskItem[] => {
-
     return taskItemList.filter((t) => {
       return t.taskItemStatusId == status;
     })
-
   }
 }

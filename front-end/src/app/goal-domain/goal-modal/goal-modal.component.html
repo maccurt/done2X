@@ -11,15 +11,13 @@
         </div>
 
         <div class="mb-3" [ngClass]="{'has-error':(formControlService.isInvalid(descriptionControl,showErrors))}">
-            <label for="description" class="form-label">Description</label><span
-                class="validation-hint float-end">required</span>
+            <label for="description" class="form-label">Description</label>
             <textarea id="description" [name]="descriptionControl" maxlength="500" style="resize:none;" rows="3"
                 cols="150" autocomplete="off" [formControl]="descriptionControl" class="form-control"></textarea>
         </div>
 
         <div class="mb-3" [ngClass]="{'has-error':(formControlService.isInvalid(whatIsDoneControl,showErrors))}">
-            <label for="what-is-done" class="form-label">What Makes It Done?</label><span
-                class="validation-hint float-end">required</span>
+            <label for="what-is-done" class="form-label">What Makes It Done?</label>
             <textarea id="what-is-done" [name]="whatIsDoneControl" maxlength="150" style="resize:none;" rows="2"
                 cols="150" autocomplete="off" [formControl]="whatIsDoneControl" class="form-control"></textarea>
         </div>

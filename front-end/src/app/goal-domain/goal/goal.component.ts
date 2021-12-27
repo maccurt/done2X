@@ -9,14 +9,13 @@ import { TaskItem } from 'src/app/task-domain/task-item/task-item.type';
 import { Goal } from '../goal.type';
 import { FormControlService } from 'src/app/form-control.service';
 import { GoalService } from '../goal.service';
-//Icons
-import { faCoffee, faWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
 import { TypeClickEvent } from 'src/app/task-domain/task-item/TypeClickEvent';
 import { TypeAction } from 'src/app/task-domain/task-item/TypeAction';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { PriorityData } from 'src/app/chart-domain/priority-data.type';
 
 export class Column {
   text!: string;
@@ -31,9 +30,7 @@ export class Column {
 export class GoalComponent implements OnInit, OnDestroy {
   @ViewChild(MatExpansionPanel, { static: true }) matExpansionPanelElement!: MatExpansionPanel;
   //icons
-  faCoffee = faCoffee;
-  editIcon = faWrench;
-  deleteIcon = faTrash;
+  //  
   goal!: Goal;
 
   completedTaskItemList: TaskItem[] = [];
@@ -63,12 +60,12 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   //chart
   completedChart!: Chart;
+  priorityData: PriorityData = new PriorityData(0, 0, 0);
 
   //Subscriptions
   updateGoalSub$!: Subscription;
   routeDataSub$!: Subscription;
   getPrioritySub$!: Subscription;
-  chartChangeEvent: Subject<TaskItem[]> = new Subject();
 
   constructor(private route: ActivatedRoute,
     private taskItemService: TaskItemService,
@@ -80,7 +77,7 @@ export class GoalComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-        
+
     //Set up the data
     this.routeDataSub$ = this.route.data.subscribe((data) => {
       this.goal = data.goal;
@@ -91,6 +88,7 @@ export class GoalComponent implements OnInit, OnDestroy {
       this.notCompletedTaskItemList = this.taskItemService.getNotCompletedTaskItems(data.taskItemList);
 
       this.createCompletedChart();
+      this.createPriorityChart();
 
       this.getPrioritySub$ = this.codeService.GetPriority().subscribe((priorityList) => {
         this.priorityList = priorityList
@@ -98,8 +96,8 @@ export class GoalComponent implements OnInit, OnDestroy {
 
       //set up the form
       this.nameControl = new FormControl(this.goal.name, Validators.required);
-      this.descriptionControl = new FormControl(this.goal.description, Validators.required);
-      this.whatIsDoneControl = new FormControl(this.goal.whatIsDone, Validators.required);
+      this.descriptionControl = new FormControl(this.goal.description);
+      this.whatIsDoneControl = new FormControl(this.goal.whatIsDone);
       this.targetCompletionDateControl = new FormControl(this.goal.targetCompletionDate, Validators.required);
 
       this.formGroup = new FormGroup({
@@ -124,7 +122,7 @@ export class GoalComponent implements OnInit, OnDestroy {
     switch (event.action) {
       case TypeAction.add:
         this.addTaskToCorrectLane(event.item)
-        this.chartChangeEvent.next([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
+        this.createPriorityChart();
         this.createCompletedChart();
         break;
       case TypeAction.moveStatus:
@@ -132,11 +130,12 @@ export class GoalComponent implements OnInit, OnDestroy {
         this.createCompletedChart();
         break;
       case TypeAction.delete:
-        this.chartChangeEvent.next([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
+      case TypeAction.moveTaskItemListToGoal:
+        this.createPriorityChart();
         this.createCompletedChart();
         break;
       case TypeAction.priorityChange:
-        this.chartChangeEvent.next([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
+        this.createPriorityChart();
         break;
     }
   }
@@ -144,6 +143,10 @@ export class GoalComponent implements OnInit, OnDestroy {
   public createCompletedChart() {
     this.completedChart = this.chartService.completedPieChart(this.completedTaskItemList.length,
       this.notCompletedTaskItemList.length)
+  }
+
+  public createPriorityChart() {
+    this.priorityData = this.chartService.getPriorityData([...this.completedTaskItemList, ...this.notCompletedTaskItemList]);
   }
 
   public getPriorityText(taskItem: TaskItem): string {

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { ChartServiceDone2x } from '../chart-domain/chart.service';
-import { IconColorService } from '../icon.service';
+import { IconColorService } from '../iconColor.service';
 import { TaskItemStatus } from '../task-domain/task-item.service';
 import { TaskItem } from '../task-domain/task-item/task-item.type';
 import { Experiment } from './experiment.type';
