@@ -11,17 +11,21 @@
         </div>
     </div>
 
-    <a *ngIf="!isATaskSelected()" [matMenuTriggerFor]="menuNothingSelected">
-        <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
-    </a>
+    <div *ngIf="taskItemList.length > 0">
 
-    <mat-menu #menuNothingSelected="matMenu">
-        <span mat-menu-item>No Task Are Selected</span>
-    </mat-menu>
+        <a *ngIf="!isATaskSelected()" [matMenuTriggerFor]="menuNothingSelected">
+            <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
+        </a>
 
-    <a *ngIf="isATaskSelected()" [matMenuTriggerFor]="menu">
-        <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
-    </a>
+        <mat-menu #menuNothingSelected="matMenu">
+            <span mat-menu-item>No Task Are Selected</span>
+        </mat-menu>
+
+        <a *ngIf="isATaskSelected()" [matMenuTriggerFor]="menu">
+            <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
+        </a>
+
+    </div>
 
     <mat-menu #menu="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="moveToGoals">
