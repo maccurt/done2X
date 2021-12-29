@@ -45,15 +45,32 @@ export class MotivationComponent implements OnInit {
     }, 60000);
   }
 
+  //TODO put the shuffle in a more common spot
+  public shuffle(array: any[]): any[] {
+    let currentIndex = array.length, randomIndex;
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  }
+
   public getMotivationList(): Observable<Motivation[]> {
-    const motivationList: Motivation[] = [];
+    let motivationList: Motivation[] = [];
     motivationList.push(new Motivation('Success is the progressive realization of a worthy goal or ideal.', 'Earl Nightingale'));
     motivationList.push(new Motivation('Do or do not! There is no try.', 'Master Yoda'));
     motivationList.push(new Motivation('Ask yourself: Is what you are doing adding value.', 'M McGee'));
     motivationList.push(new Motivation('Consistently working task everyday leads to great gain.', 'M McGee'));
     motivationList.push(new Motivation('Success is the ability to go from one failure to another with no loss of enthusiasm', 'Winston Churchill'));
     motivationList.push(new Motivation('Success is almost totally dependent upon drive and persistence. The extra energy required to make another effort or try another approach is the secret of winning.', 'Denis Waitley'));
+    motivationList = this.shuffle(motivationList);
     return of(motivationList);
   }
-
 }
