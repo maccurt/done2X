@@ -20,6 +20,22 @@ export class ModalService {
     });
   }
 
+  public MoveTaskModal(taskCount: number,goalName:string): MatDialogRef<ConfirmModalComponent, any> {
+
+    let confirm: Confirm = {
+      title: '',
+      question: `Move ${taskCount} Task To ${goalName}?`,
+      yesAnswer: 'Yes, Move Task',
+      noAnswer: 'No'
+    }
+    return this.dialog.open(ConfirmModalComponent, {
+      panelClass: 'd2x-dialog-panel',
+      disableClose: true,
+      data: confirm
+    });
+  }
+
+
   public DeleteTaskModal(taskItem: TaskItem): MatDialogRef<ConfirmModalComponent, any> {
 
     let confirm: Confirm = {
@@ -31,6 +47,5 @@ export class ModalService {
       disableClose: true,
       data: confirm
     });
-
   }
 }

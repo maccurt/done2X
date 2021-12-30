@@ -1,15 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Type } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { MatDialog } from '@angular/material/dialog';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { Subscription } from 'rxjs';
-import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
-// import { ConfirmService } from 'src/app/confirm-modal/confirm.service';
 import { GoalService } from 'src/app/goal-domain/goal.service';
 import { Goal } from 'src/app/goal-domain/goal.type';
 import { IconColorService } from 'src/app/iconColor.service';
 import { ModalService } from 'src/app/modal.service';
-import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
 import { TaskItem } from '../task-item/task-item.type';
 import { TypeAction } from '../task-item/TypeAction';
@@ -36,17 +31,14 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   goalList: Goal[] = [];
   isMobile!: boolean;
 
-  constructor(
-    private dialog: MatDialog,
+  constructor(    
     private taskItemService: TaskItemService,
     public iconColorService: IconColorService,
-    private goalService: GoalService,
-    private deviceDetector: DeviceDetectorService,
+    private goalService: GoalService,    
     private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
-
     //TODO make it so it only get the completed goals
     this.goalService.GetGoalList().subscribe((goalList) => {
       this.goalList = goalList.filter((g) => {
@@ -75,22 +67,12 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   }
 
   moveTaskToGoal(goal: Goal) {
+    
     const selectedTaskItemList = this.taskItemList.filter((t) => {
       return t.selected;
-    })
+    });    
 
-    let confirm: Confirm = {
-      title: '',
-      question: `Move ${selectedTaskItemList.length} Task To ${goal.name}?`,
-      yesAnswer: 'Yes, Move Task',
-      noAnswer: 'No'
-    }
-
-    const confirmDialog = this.dialog.open(ConfirmModalComponent, {
-      data: confirm
-    })
-
-    confirmDialog.afterClosed().subscribe((yesMove) => {
+     this.modalService.MoveTaskModal(selectedTaskItemList.length,goal.name).afterClosed().subscribe((yesMove) => {
 
       if (yesMove) {
         this.taskItemService.moveTaskItemListToGoal(selectedTaskItemList, goal.id).subscribe(() => {
@@ -174,7 +156,6 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           Object.assign(taskItem, updatedTask);
           taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-
           if (taskItemStatusId !== taskItem.taskItemStatusId) {
             this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
             this.actionEvent.emit(new TypeClickEvent(TypeAction.moveStatus, taskItem));
