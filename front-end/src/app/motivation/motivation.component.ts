@@ -65,11 +65,13 @@ export class MotivationComponent implements OnInit {
   public getMotivationList(): Observable<Motivation[]> {
     let motivationList: Motivation[] = [];
     motivationList.push(new Motivation('Success is the progressive realization of a worthy goal or ideal.', 'Earl Nightingale'));
-    motivationList.push(new Motivation('Do or do not! There is no try.', 'Master Yoda'));
-    motivationList.push(new Motivation('Ask yourself: Is what you are doing adding value.', 'M McGee'));
-    motivationList.push(new Motivation('Consistently working task everyday leads to great gain.', 'M McGee'));
+    motivationList.push(new Motivation('Do or do not! There is no try.', 'Master Yoda'));    
     motivationList.push(new Motivation('Success is the ability to go from one failure to another with no loss of enthusiasm', 'Winston Churchill'));
     motivationList.push(new Motivation('Success is almost totally dependent upon drive and persistence. The extra energy required to make another effort or try another approach is the secret of winning.', 'Denis Waitley'));
+    motivationList.push(new Motivation('It always seems impossible until it\'s done.', 'Nelson Mandela'));
+    //Done 2x Quotes
+    motivationList.push(new Motivation('Ask yourself: Is what you are doing adding value.', 'Done2X.com'));
+    motivationList.push(new Motivation('Consistently working task everyday leads to great gain.', 'Done2X.com'));
     motivationList = this.shuffle(motivationList);
     return of(motivationList);
   }

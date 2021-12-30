@@ -38,44 +38,33 @@
             <span>{{g.name}}</span>
         </button>
     </mat-menu>
+    
+    <div class="mobile d-block d-md-none">
 
-    <table *ngIf="taskItemList.length > 0" class="task-item-list-v2 table table-striped table-bordered table-sm">
-        <thead>
-            <tr>
-                <th style="width:3%">
-                    <mat-checkbox class="example-margin" [(ngModel)]="allTaskSelected"
-                        (change)="selectAllClick($event.checked)">
-                    </mat-checkbox>
-                </th>
+        <br>
+        <div class="row">
+            <div class="col-8">
+                <b>{{goal.name}}</b>
+            </div>
+            <div class="col-4">
+                <button (click)="addTaskItem()" style="float: right;" class="btn btn-primary btn-sm">
+                    Add Task
+                </button>
+            </div>
+        </div>
+        <br>
 
-                <th style="width:63%" id="task-col">
-                    <a (click)="sort('name')">Task
-                        <span *ngIf="completedMode">Completed</span>
-                        <span *ngIf="!completedMode"> Not Completed</span>
-                    </a>
-                    <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
-                        class="add-task-item btn btn-primary btn-sm">Add Task</button>
-                </th>
+        <div class="task-item" *ngFor="let t of taskItemList">
 
-                <th style="width:12%" id="priority-col">
-                    <a (click)="sort('priority')">Priority</a>
-                </th>
-                <th style="width:10%" id="action-col">
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr id="task-item-{{t.id}}" *ngFor="let t of taskItemList">
-                <td>
-                    <mat-checkbox [checked]="t.selected" (change)="selectTask(t,$event.checked)"></mat-checkbox>
-                </td>
+            <div class="row">
 
-                <td>
-                    <a class="action-link name" (click)="editTaskItem(t)">{{t.name}}</a>
-                </td>
+                <div class="col-12">
+                    <a class="name-link" (click)="editTaskItem(t)">{{t.name}}</a>
+                </div>
 
-                <td>
+                <br><br>
+                <hr>
+                <div class="col-6">
                     <mat-button-toggle-group class="priority-toggle priority-{{t.priority}}"
                         (change)="priorityToggle($event,t)" name="priority" [value]="t.priority.toString()"
                         aria-label="Font Style">
@@ -86,10 +75,10 @@
                         <mat-button-toggle name="priority" class="priority-high" title="High" value="1">H
                         </mat-button-toggle>
                     </mat-button-toggle-group>
-                </td>
+                </div>
 
-                <td>
-                    <div class="action-icon-container">
+                <div class="col-6">
+                    <div style="float: right ;" class="action-icon-container">
                         <a class="action-link move-task" (click)="moveTaskStatus(t)">
                             <fa-icon title="move task to completed" *ngIf="!completedMode"
                                 [icon]="iconColorService.icons.arrowDown"></fa-icon>
@@ -104,8 +93,83 @@
                             <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
                         </a>
                     </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="desktop d-none d-md-block">
+        <table *ngIf="taskItemList.length > 0" class="task-item-list-v2 table table-striped table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th style="width:5%">
+                        <mat-checkbox class="example-margin" [(ngModel)]="allTaskSelected"
+                            (change)="selectAllClick($event.checked)">
+                        </mat-checkbox>
+                    </th>
+
+                    <th style="width:65%" id="task-col">
+                        <a (click)="sort('name')">Task
+                            <span *ngIf="completedMode">Completed</span>
+                            <span *ngIf="!completedMode"> Not Completed</span>
+                        </a>
+                        <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
+                            class="add-task-item btn btn-primary btn-sm">Add Task</button>
+                    </th>
+
+                    <th style="width:15%" id="priority-col">
+                        <a (click)="sort('priority')">Priority</a>
+                    </th>
+                    <th style="width:15%" id="action-col">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="task-item-{{t.id}}" *ngFor="let t of taskItemList">
+                    <td>
+                        <mat-checkbox [checked]="t.selected" (change)="selectTask(t,$event.checked)"></mat-checkbox>
+                    </td>
+
+                    <td>
+                        <a class="action-link name" (click)="editTaskItem(t)">{{t.name}}</a>
+                    </td>
+
+                    <td>
+                        <mat-button-toggle-group class="priority-toggle priority-{{t.priority}}"
+                            (change)="priorityToggle($event,t)" name="priority" [value]="t.priority.toString()"
+                            aria-label="Font Style">
+                            <mat-button-toggle name="priority" class="priority-low" title="Low" value="3">L
+                            </mat-button-toggle>
+                            <mat-button-toggle name="priority" class="priority-medium" title="Medium" value="2">M
+                            </mat-button-toggle>
+                            <mat-button-toggle name="priority" class="priority-high" title="High" value="1">H
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </td>
+
+                    <td>
+                        <div class="action-icon-container">
+                            <a class="action-link move-task" (click)="moveTaskStatus(t)">
+                                <fa-icon title="move task to completed" *ngIf="!completedMode"
+                                    [icon]="iconColorService.icons.arrowDown"></fa-icon>
+                                <fa-icon title="move task to not completed" *ngIf="completedMode"
+                                    [icon]="iconColorService.icons.arrowUp"></fa-icon>
+                            </a>
+
+                            <a title="edit task..." class="action-link edit-task-item" (click)="editTaskItem(t)">
+                                <fa-icon [icon]="iconColorService.icons.edit"></fa-icon>
+                            </a>
+                            <a title="delete task..." class="action-link delete-task-item" (click)="deleteTaskItem(t)">
+                                <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

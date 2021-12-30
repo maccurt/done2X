@@ -77,7 +77,6 @@ export class GoalComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-
     //Set up the data
     this.routeDataSub$ = this.route.data.subscribe((data) => {
       this.goal = data.goal;

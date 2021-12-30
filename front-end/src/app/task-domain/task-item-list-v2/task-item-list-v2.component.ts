@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Type } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Subscription } from 'rxjs';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 // import { ConfirmService } from 'src/app/confirm-modal/confirm.service';
 import { GoalService } from 'src/app/goal-domain/goal.service';
 import { Goal } from 'src/app/goal-domain/goal.type';
 import { IconColorService } from 'src/app/iconColor.service';
+import { ModalService } from 'src/app/modal.service';
 import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
 import { TaskItem } from '../task-item/task-item.type';
@@ -32,12 +34,15 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   deleteAfterClosedSub$!: Subscription;
   updateTaskItemSub$!: Subscription;
   goalList: Goal[] = [];
+  isMobile!: boolean;
 
   constructor(
     private dialog: MatDialog,
     private taskItemService: TaskItemService,
     public iconColorService: IconColorService,
-    private goalService: GoalService
+    private goalService: GoalService,
+    private deviceDetector: DeviceDetectorService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -78,16 +83,16 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
       title: '',
       question: `Move ${selectedTaskItemList.length} Task To ${goal.name}?`,
       yesAnswer: 'Yes, Move Task',
-      noAnswer: 'No'      
+      noAnswer: 'No'
     }
 
     const confirmDialog = this.dialog.open(ConfirmModalComponent, {
       data: confirm
     })
 
-    confirmDialog.afterClosed().subscribe((yesMove)=>{
+    confirmDialog.afterClosed().subscribe((yesMove) => {
 
-      if (yesMove){
+      if (yesMove) {
         this.taskItemService.moveTaskItemListToGoal(selectedTaskItemList, goal.id).subscribe(() => {
           selectedTaskItemList.forEach((t) => {
             this.taskItemService.removeTaskFromList(t, this.taskItemList);
@@ -98,7 +103,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
           this.actionEvent.emit(event);
         })
       }
-    })    
+    })
   }
 
   priorityToggle(change: MatButtonToggleChange, taskItem: TaskItem) {
@@ -137,19 +142,16 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   //TODO this code is duplicatesd is there a way to make it a service,component, etc.
   public addTaskItem() {
     const taskItem = new TaskItem();
-    taskItem.goalId = this.goal.id;
-    const dialogRef = this.dialog.open(TaskItemModalComponent, {
-      data: taskItem,
-      disableClose: true
-    });
+    taskItem.goalId = this.goal.id;    
 
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-      this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
-        //TODO remove this if we are not going to use the completed property
-        response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-        this.actionEvent.emit(new TypeClickEvent(TypeAction.add, response));
-      });
-    })
+    this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).
+      afterClosed().subscribe((taskItem: TaskItem) => {
+        this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
+          //TODO remove this if we are not going to use the completed property
+          response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
+          this.actionEvent.emit(new TypeClickEvent(TypeAction.add, response));
+        });
+      })
   }
 
   deleteTaskItem(taskItem: TaskItem) {
@@ -173,13 +175,9 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   }
 
   public editTaskItem(taskItem: TaskItem) {
-    const dialogRef = this.dialog.open(TaskItemModalComponent, {
-      data: taskItem,
-      disableClose: true
-    });
 
     let taskItemStatusId = taskItem.taskItemStatusId;
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
+    this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).afterClosed().subscribe((taskItem: TaskItem) => {
       if (taskItem) {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           Object.assign(taskItem, updatedTask);
