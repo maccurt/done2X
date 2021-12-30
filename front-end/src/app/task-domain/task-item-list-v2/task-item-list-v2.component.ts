@@ -31,10 +31,10 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   goalList: Goal[] = [];
   isMobile!: boolean;
 
-  constructor(    
+  constructor(
     private taskItemService: TaskItemService,
     public iconColorService: IconColorService,
-    private goalService: GoalService,    
+    private goalService: GoalService,
     private modalService: ModalService
   ) { }
 
@@ -67,12 +67,12 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   }
 
   moveTaskToGoal(goal: Goal) {
-    
+
     const selectedTaskItemList = this.taskItemList.filter((t) => {
       return t.selected;
-    });    
+    });
 
-     this.modalService.MoveTaskModal(selectedTaskItemList.length,goal.name).afterClosed().subscribe((yesMove) => {
+    this.modalService.MoveTaskModal(selectedTaskItemList.length, goal.name).afterClosed().subscribe((yesMove) => {
 
       if (yesMove) {
         this.taskItemService.moveTaskItemListToGoal(selectedTaskItemList, goal.id).subscribe(() => {
@@ -128,11 +128,13 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
 
     this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).
       afterClosed().subscribe((taskItem: TaskItem) => {
-        this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
-          //TODO remove this if we are not going to use the completed property
-          response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-          this.actionEvent.emit(new TypeClickEvent(TypeAction.add, response));
-        });
+        if (taskItem) {
+          this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
+            //TODO remove this if we are not going to use the completed property
+            response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
+            this.actionEvent.emit(new TypeClickEvent(TypeAction.add, response));
+          });
+        }
       })
   }
 

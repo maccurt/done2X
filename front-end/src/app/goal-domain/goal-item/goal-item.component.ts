@@ -1,26 +1,15 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { IconColorService } from 'src/app/iconColor.service';
-import { TaskItemModalComponent } from 'src/app/task-domain/task-item-modal/task-item-modal.component';
+import { ModalService } from 'src/app/modal.service';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { TaskItem } from 'src/app/task-domain/task-item/task-item.type';
 import { GoalService } from '../goal.service';
 import { Goal } from '../goal.type';
-
-export enum GoalEventType {
-  moveToCompleted,
-  moveToNotCompleted,
-  taskAdded,
-  deleted
-}
-
-export class GoalEvent {
-
-  constructor(public goal: Goal, public type: GoalEventType, public taskItem?: TaskItem) { }
-}
+import { GoalEvent } from './goal-event.type';
+import { GoalEventType } from './goal-event.enum';
 
 @Component({
   selector: 'app-goal-item',
@@ -34,7 +23,8 @@ export class GoalItemComponent implements OnInit, OnDestroy {
   addTaskItemSub$!: Subscription;
   constructor(public iconColorService: IconColorService,
     private dialog: MatDialog, private taskItemService: TaskItemService,
-    private goalService: GoalService
+    private goalService: GoalService,
+    private modalService: ModalService
   ) { }
 
 
@@ -54,7 +44,7 @@ export class GoalItemComponent implements OnInit, OnDestroy {
     this.afterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.goalService.deleteGoal(this.goal.id).subscribe(() => {
-          this.event.emit(new GoalEvent(this.goal, GoalEventType.deleted));  
+          this.event.emit(new GoalEvent(this.goal, GoalEventType.deleted));
         });
       }
     })
@@ -62,20 +52,17 @@ export class GoalItemComponent implements OnInit, OnDestroy {
   public addTaskItem() {
     const taskItem = new TaskItem();
     taskItem.goalId = this.goal.id;
-    const dialogRef = this.dialog.open(TaskItemModalComponent, {
-      data: taskItem,
-      disableClose: true
-    });
 
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
-      this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((taskResponse) => {
-
-        this.goal.taskCount++;
-        if (taskResponse.taskItemStatusId === TaskItemStatus.completed) {
-          this.goal.taskCompleted++;
-        }
-        this.event.emit(new GoalEvent(this.goal, GoalEventType.taskAdded, taskResponse));
-      });
+    this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).afterClosed().subscribe((taskItem: TaskItem) => {
+      if (taskItem) {
+        this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((taskResponse) => {
+          this.goal.taskCount++;
+          if (taskResponse.taskItemStatusId === TaskItemStatus.completed) {
+            this.goal.taskCompleted++;
+          }
+          this.event.emit(new GoalEvent(this.goal, GoalEventType.taskAdded, taskResponse));
+        });
+      }
     })
   }
 
