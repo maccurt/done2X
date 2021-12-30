@@ -142,7 +142,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   //TODO this code is duplicatesd is there a way to make it a service,component, etc.
   public addTaskItem() {
     const taskItem = new TaskItem();
-    taskItem.goalId = this.goal.id;    
+    taskItem.goalId = this.goal.id;
 
     this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).
       afterClosed().subscribe((taskItem: TaskItem) => {
@@ -155,16 +155,8 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   }
 
   deleteTaskItem(taskItem: TaskItem) {
-    let confirm: Confirm = {
-      question: `Delete Task?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: taskItem.name
-    }
 
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-      disableClose: true,
-      data: confirm
-    });
-
-    this.deleteAfterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
+    this.deleteAfterClosedSub$ = this.modalService.DeleteTaskModal(taskItem).afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
           this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
