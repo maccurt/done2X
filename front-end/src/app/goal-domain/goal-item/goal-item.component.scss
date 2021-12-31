@@ -1,3 +1,11 @@
+@import "../../../variables";
+
+.goal-item {
+    @include for-small() {
+        min-height: 155px;
+    }
+}
+
 .goal-not-completed {
     background-color: var(--not-completed-color-2);
 }
@@ -6,11 +14,11 @@
     background-color: var(--completed-color-2);
 }
 
-.detail-container {    
+.detail-container {
     margin-top: 10px;
     font-size: small;
 }
 
-.action-link-container{
+.action-link-container {
     margin-bottom: 10px;
 }
