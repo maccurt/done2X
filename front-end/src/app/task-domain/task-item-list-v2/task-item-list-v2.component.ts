@@ -72,7 +72,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
       return t.selected;
     });
 
-    this.modalService.MoveTaskModal(selectedTaskItemList.length, goal.name).afterClosed().subscribe((yesMove) => {
+    this.modalService.moveTaskModal(selectedTaskItemList.length, goal.name).afterClosed().subscribe((yesMove) => {
 
       if (yesMove) {
         this.taskItemService.moveTaskItemListToGoal(selectedTaskItemList, goal.id).subscribe(() => {
@@ -126,7 +126,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     const taskItem = new TaskItem();
     taskItem.goalId = this.goal.id;
 
-    this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).
+    this.afterClosedSub$ = this.modalService.taskItemModal(taskItem).
       afterClosed().subscribe((taskItem: TaskItem) => {
         if (taskItem) {
           this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
@@ -140,7 +140,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
 
   deleteTaskItem(taskItem: TaskItem) {
 
-    this.deleteAfterClosedSub$ = this.modalService.DeleteTaskModal(taskItem).afterClosed().subscribe((confirm: boolean) => {
+    this.deleteAfterClosedSub$ = this.modalService.deleteTaskModal(taskItem).afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
           this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
@@ -153,7 +153,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   public editTaskItem(taskItem: TaskItem) {
 
     let taskItemStatusId = taskItem.taskItemStatusId;
-    this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).afterClosed().subscribe((taskItem: TaskItem) => {
+    this.afterClosedSub$ = this.modalService.taskItemModal(taskItem).afterClosed().subscribe((taskItem: TaskItem) => {
       if (taskItem) {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           Object.assign(taskItem, updatedTask);

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { IconColorService } from 'src/app/iconColor.service';
@@ -22,26 +21,16 @@ export class GoalItemComponent implements OnInit, OnDestroy {
   afterClosedSub$!: Subscription;
   addTaskItemSub$!: Subscription;
   constructor(public iconColorService: IconColorService,
-    private dialog: MatDialog, private taskItemService: TaskItemService,
+    private taskItemService: TaskItemService,
     private goalService: GoalService,
     private modalService: ModalService
   ) { }
 
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   deleteGoal() {
-    let confirm: Confirm = {
-      question: `Delete Goal?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: this.goal.name
-    }
 
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-      disableClose: true,
-      data: confirm
-    });
-
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
+    this.afterClosedSub$ = this.modalService.deleteGoalModal(this.goal).afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.goalService.deleteGoal(this.goal.id).subscribe(() => {
           this.event.emit(new GoalEvent(this.goal, GoalEventType.deleted));
@@ -53,7 +42,7 @@ export class GoalItemComponent implements OnInit, OnDestroy {
     const taskItem = new TaskItem();
     taskItem.goalId = this.goal.id;
 
-    this.afterClosedSub$ = this.modalService.TaskItemModal(taskItem).afterClosed().subscribe((taskItem: TaskItem) => {
+    this.afterClosedSub$ = this.modalService.taskItemModal(taskItem).afterClosed().subscribe((taskItem: TaskItem) => {
       if (taskItem) {
         this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((taskResponse) => {
           this.goal.taskCount++;
@@ -77,6 +66,5 @@ export class GoalItemComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.afterClosedSub$?.unsubscribe();
     this.addTaskItemSub$?.unsubscribe();
-
   }
 }

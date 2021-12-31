@@ -11,34 +11,8 @@
         </div>
     </div>
 
-    <div *ngIf="taskItemList.length > 0">
 
-        <a *ngIf="!isATaskSelected()" [matMenuTriggerFor]="menuNothingSelected">
-            <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
-        </a>
 
-        <mat-menu #menuNothingSelected="matMenu">
-            <span mat-menu-item>No Task Are Selected</span>
-        </mat-menu>
-
-        <a *ngIf="isATaskSelected()" [matMenuTriggerFor]="menu">
-            <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
-        </a>
-
-    </div>
-
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="moveToGoals">
-            <span>Move Task(s) To Goal...</span>
-        </button>
-    </mat-menu>
-
-    <mat-menu #moveToGoals>
-        <button *ngFor="let g of goalList" (click)="moveTaskToGoal(g)" mat-menu-item>
-            <span>{{g.name}}</span>
-        </button>
-    </mat-menu>
-    
     <div class="mobile d-block d-md-none">
 
         <br>
@@ -102,6 +76,34 @@
     </div>
 
     <div class="desktop d-none d-md-block">
+
+        <div *ngIf="taskItemList.length > 0">
+
+            <a *ngIf="!isATaskSelected()" [matMenuTriggerFor]="menuNothingSelected">
+                <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
+            </a>
+
+            <mat-menu #menuNothingSelected="matMenu">
+                <span mat-menu-item>No Task Are Selected</span>
+            </mat-menu>
+
+            <a *ngIf="isATaskSelected()" [matMenuTriggerFor]="menu">
+                <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
+            </a>
+        </div>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="moveToGoals">
+                <span>Move Task(s) To Goal...</span>
+            </button>
+        </mat-menu>
+
+        <mat-menu #moveToGoals>
+            <button *ngFor="let g of goalList" (click)="moveTaskToGoal(g)" mat-menu-item>
+                <span>{{g.name}}</span>
+            </button>
+        </mat-menu>
+
         <table *ngIf="taskItemList.length > 0" class="task-item-list-v2 table table-striped table-bordered table-sm">
             <thead>
                 <tr>

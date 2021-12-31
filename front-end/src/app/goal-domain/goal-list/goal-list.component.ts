@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { orderBy } from 'lodash';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { GoalEventType } from "../goal-item/goal-event.enum";
 import { GoalModalComponent } from '../goal-modal/goal-modal.component';
 import { GoalService } from '../goal.service';
 import { Goal } from '../goal.type';
+import { ModalService } from 'src/app/modal.service';
 
 @Component({
   selector: 'app-goal-list',
@@ -30,7 +31,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
 
   constructor(private goalService: GoalService,
     private route: ActivatedRoute,
-    private dialog: MatDialog,
+    private modalService: ModalService,
     public iconColorService: IconColorService) {
   }
 
@@ -152,10 +153,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   public showGoalModal(goal: Goal): MatDialogRef<GoalModalComponent, any> {
-    return this.dialog.open(GoalModalComponent, {
-      data: goal,
-      disableClose: true
-    })
+    return this.modalService.goalModal(goal);
   }
 
   public ngOnDestroy(): void {

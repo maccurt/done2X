@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControlService } from 'src/app/form-control.service';
 import { Goal } from '../goal.type';
-
 
 @Component({
   selector: 'app-goal-modal',
@@ -11,7 +10,6 @@ import { Goal } from '../goal.type';
   styleUrls: ['./goal-modal.component.scss']
 })
 export class GoalModalComponent implements OnInit {
-
   goal!: Goal;
   formGroup!: FormGroup
   nameControl!: FormControl;
@@ -19,7 +17,7 @@ export class GoalModalComponent implements OnInit {
   whatIsDoneControl!: FormControl;
   showErrors: boolean = false;
   targetCompletionDateControl!: FormControl;
-  minimumTargetCompletionDate!:Date;
+  minimumTargetCompletionDate!: Date;
   maxTargetCompletionDate!: Date;
 
   constructor(private dialogRef: MatDialogRef<GoalModalComponent>,
@@ -27,7 +25,7 @@ export class GoalModalComponent implements OnInit {
     public formControlService: FormControlService) {
     this.goal = goal;
   }
-  
+
   ngOnInit(): void {
 
     this.minimumTargetCompletionDate = new Date();
@@ -56,7 +54,7 @@ export class GoalModalComponent implements OnInit {
     }
   }
 
-  cancel(): void {    
+  cancel(): void {
     this.dialogRef.close()
   }
 }
