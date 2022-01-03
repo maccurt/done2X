@@ -43,7 +43,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     //TODO make it so it only get the completed goals
     this.goalService.GetGoalList().subscribe((goalList) => {
       this.goalList = goalList.filter((g) => {
-        return !g.isCompleted && g.id !== this.goal.id && g.targetCompletionDate >= this.goal.targetCompletionDate
+        return !g.isCompleted && g.id !== this.goal.id;
       })
 
       this.goalList = this.goalList.splice(0, 10);
@@ -97,9 +97,9 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     });
   }
 
-  public sort(sort: Sort) {        
-    this.taskItemService.sortTaskItemList(this.taskItemList, sort.active, sort.direction !== 'desc' );
-  }  
+  public sort(sort: Sort) {
+    this.taskItemService.sortTaskItemList(this.taskItemList, sort.active, sort.direction !== 'desc');
+  }
 
   public moveTaskStatus(taskItem: TaskItem) {
     if (this.completedMode) {
