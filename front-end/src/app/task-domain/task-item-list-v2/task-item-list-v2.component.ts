@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Type } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { Sort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { GoalService } from 'src/app/goal-domain/goal.service';
 import { Goal } from 'src/app/goal-domain/goal.type';
@@ -96,16 +97,9 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     });
   }
 
-  public sort(property: string) {
-    if (this.proprtyToSort !== property) {
-      this.taskItemService.sortTaskItemList(this.taskItemList, property, true);
-      this.proprtyToSort = property;
-    }
-    else {
-      this.taskItemService.sortTaskItemList(this.taskItemList, property, false);
-      this.proprtyToSort = '';
-    }
-  }
+  public sort(sort: Sort) {        
+    this.taskItemService.sortTaskItemList(this.taskItemList, sort.active, sort.direction !== 'desc' );
+  }  
 
   public moveTaskStatus(taskItem: TaskItem) {
     if (this.completedMode) {

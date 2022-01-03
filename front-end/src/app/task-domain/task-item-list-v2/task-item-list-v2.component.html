@@ -11,12 +11,8 @@
         </div>
     </div>
 
-
-
     <div class="mobile d-block d-md-none">
-
-        <br>
-        <div class="row">
+        <div style="margin-bottom:10px;" class="row">
             <div class="col-8">
                 <b>{{goal.name}}</b>
             </div>
@@ -26,7 +22,6 @@
                 </button>
             </div>
         </div>
-        <br>
 
         <div class="task-item" *ngFor="let t of taskItemList">
 
@@ -104,7 +99,8 @@
             </button>
         </mat-menu>
 
-        <table *ngIf="taskItemList.length > 0" class="task-item-list-v2 table table-striped table-bordered table-sm">
+        <table matSort (matSortChange)="sort($event)" *ngIf="taskItemList.length > 0"
+            class="task-item-list-v2 table table-striped table-bordered table-sm">
             <thead>
                 <tr>
                     <th style="width:5%">
@@ -113,17 +109,19 @@
                         </mat-checkbox>
                     </th>
 
-                    <th style="width:65%" id="task-col">
-                        <a (click)="sort('name')">Task
-                            <span *ngIf="completedMode">Completed</span>
-                            <span *ngIf="!completedMode"> Not Completed</span>
-                        </a>
-                        <button *ngIf="!completedMode" style="float:right" (click)="addTaskItem()"
+                    <th mat-sort-header="name" style="width:55%" id="task-col">
+
+                        <span *ngIf="completedMode">Completed</span>
+                        <span *ngIf="!completedMode"> Not Completed</span>
+                    </th>
+
+                    <th style="width:10%;border:0px !important;" >
+                        <button *ngIf="!completedMode" style="margin-left:3px;" (click)="addTaskItem()"
                             class="add-task-item btn btn-primary btn-sm">Add Task</button>
                     </th>
 
-                    <th style="width:15%" id="priority-col">
-                        <a (click)="sort('priority')">Priority</a>
+                    <th mat-sort-header="priority" style="width:15%" id="priority-col">
+                        Priority
                     </th>
                     <th style="width:15%" id="action-col">
                         Action
@@ -136,7 +134,7 @@
                         <mat-checkbox [checked]="t.selected" (change)="selectTask(t,$event.checked)"></mat-checkbox>
                     </td>
 
-                    <td>
+                    <td colspan="2">
                         <a class="action-link name" (click)="editTaskItem(t)">{{t.name}}</a>
                     </td>
 
