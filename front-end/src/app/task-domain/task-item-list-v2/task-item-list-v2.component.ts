@@ -120,7 +120,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
       this.snackbar.open("task moved to " + destination, '', {
         verticalPosition: 'top',
         horizontalPosition: 'center',
-        duration: 5000
+        duration: 3000
       });
     });
   }

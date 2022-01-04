@@ -1,7 +1,7 @@
 @import "../../../variables";
 
 .goal-item {
-    @include for-small() {
+    @include for-medium-and-below() {
         min-height: 155px;
     }
 }
