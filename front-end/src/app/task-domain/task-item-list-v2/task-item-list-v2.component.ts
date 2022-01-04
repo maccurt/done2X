@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Type } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { GoalService } from 'src/app/goal-domain/goal.service';
@@ -36,7 +37,8 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     private taskItemService: TaskItemService,
     public iconColorService: IconColorService,
     private goalService: GoalService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -102,16 +104,24 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   }
 
   public moveTaskStatus(taskItem: TaskItem) {
+    let destination: string;
     if (this.completedMode) {
       taskItem.taskItemStatusId = TaskItemStatus.inProgress;
+      destination = 'not completed.'
     }
     else {
       taskItem.taskItemStatusId = TaskItemStatus.completed;
+      destination = 'completed.'
     }
 
     this.taskItemService.updateTaskItem(taskItem).subscribe((response) => {
       this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
       this.actionEvent.emit(new TypeClickEvent(TypeAction.moveStatus, response));
+      this.snackbar.open("task moved to " + destination, '', {
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        duration: 5000
+      });
     });
   }
 
