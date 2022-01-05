@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { Confirm, ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { GoalModalComponent } from './goal-domain/goal-modal/goal-modal.component';
 import { Goal } from './goal-domain/goal.type';
@@ -12,7 +11,7 @@ import { TaskItem } from './task-domain/task-item/task-item.type';
 })
 export class ModalService {
 
-  constructor(private dialog: MatDialog, private deviceDetector: DeviceDetectorService) { }
+  constructor(private dialog: MatDialog) { }
 
   public goalModal(goal: Goal): MatDialogRef<GoalModalComponent, any> {
     return this.dialog.open(GoalModalComponent, {
