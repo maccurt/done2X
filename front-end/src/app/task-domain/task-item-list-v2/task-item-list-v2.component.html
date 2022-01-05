@@ -1,15 +1,5 @@
 <div [ngClass]="{'completed-mode':completedMode,'not-completed-mode':!completedMode}">
-
-    <div *ngIf="taskItemList.length === 0">
-        <div class="no-data" *ngIf="completedMode">
-            Completed Task Will Go Here
-        </div>
-
-        <div class="no-data" *ngIf="!completedMode">
-            <br>
-            <button class="button btn-primary" (click)="addTaskItem()">Add A Task</button>
-        </div>
-    </div>
+    
 
     <div class="mobile d-block d-md-none">
         <div style="margin-bottom:10px;" class="row">
@@ -71,6 +61,17 @@
     </div>
 
     <div class="desktop d-none d-md-block">
+
+        <div   *ngIf="taskItemList.length === 0">
+            <div class="no-data" *ngIf="completedMode">
+                Completed Task Will Go Here
+            </div>
+    
+            <div class="no-data" *ngIf="!completedMode">
+                <br>
+                <button class="button btn-primary" (click)="addTaskItem()">Add A Task</button>
+            </div>
+        </div>
 
         <div *ngIf="taskItemList.length > 0">
 
