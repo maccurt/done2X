@@ -12,6 +12,14 @@ import { TaskItem } from '../task-item/task-item.type';
 import { TypeAction } from '../task-item/TypeAction';
 import { TypeClickEvent } from '../task-item/TypeClickEvent';
 
+
+export class Column {
+  property!: string;
+  name!: string;
+  isAscending?: boolean = true;
+  isCurrentSort?: boolean;
+}
+
 @Component({
   selector: 'd2x-task-item-list-v2',
   templateUrl: './task-item-list-v2.component.html',
@@ -24,7 +32,9 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   @Output() actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
 
   allTaskSelected: boolean = false;
-  proprtyToSort: string = 'priority';
+  propertyToSort: string = 'priority';
+  sortAscending: boolean = true;
+  columns: Column[] = [{ name: 'Name', property: 'name' }, { name: 'Priority', property: 'priority' }];
   //subscription
   afterClosedSub$!: Subscription;
   addTaskItemSub$!: Subscription;
@@ -32,6 +42,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   updateTaskItemSub$!: Subscription;
   goalList: Goal[] = [];
   isMobile!: boolean;
+
 
   constructor(
     private taskItemService: TaskItemService,
@@ -99,6 +110,17 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     });
   }
 
+  public sortMobile(column: Column) {
+
+    this.columns.forEach((c)=>{
+      c.isCurrentSort = false;
+    })
+    column.isCurrentSort = true;
+
+    column.isAscending = this.propertyToSort === column.property ? !column.isAscending : true;
+    this.propertyToSort = column.property;    
+    this.taskItemService.sortTaskItemList(this.taskItemList, column.property, this.sortAscending);
+  }
   public sort(sort: Sort) {
     this.taskItemService.sortTaskItemList(this.taskItemList, sort.active, sort.direction !== 'desc');
   }

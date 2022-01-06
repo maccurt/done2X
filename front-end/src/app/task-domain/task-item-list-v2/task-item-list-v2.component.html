@@ -1,5 +1,4 @@
 <div [ngClass]="{'completed-mode':completedMode,'not-completed-mode':!completedMode}">
-    
 
     <div class="mobile d-block d-md-none">
         <div style="margin-bottom:10px;" class="row">
@@ -12,6 +11,22 @@
                 </button>
             </div>
         </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <a style="float:right" class="action-link" [matMenuTriggerFor]="mobileSortMenu">
+                    Sort
+                </a>
+            </div>
+        </div>
+
+        <mat-menu #mobileSortMenu="matMenu">
+            <button *ngFor="let c of columns" mat-menu-item (click)="sortMobile(c)"> {{c.name}}
+                <fa-icon *ngIf="c.isCurrentSort && c.isAscending" [icon]="iconColorService.icons.arrowUp"></fa-icon>
+                <fa-icon *ngIf="c.isCurrentSort && !c.isAscending" [icon]="iconColorService.icons.arrowDown"></fa-icon>
+            </button>
+        </mat-menu>
 
         <div class="task-item" *ngFor="let t of taskItemList">
 
@@ -62,11 +77,11 @@
 
     <div class="desktop d-none d-md-block">
 
-        <div   *ngIf="taskItemList.length === 0">
+        <div *ngIf="taskItemList.length === 0">
             <div class="no-data" *ngIf="completedMode">
                 Completed Task Will Go Here
             </div>
-    
+
             <div class="no-data" *ngIf="!completedMode">
                 <br>
                 <button class="button btn-primary" (click)="addTaskItem()">Add A Task</button>
@@ -116,7 +131,7 @@
                         <span *ngIf="!completedMode"> Not Completed</span>
                     </th>
 
-                    <th style="width:10%;border:0px !important;" >
+                    <th style="width:10%;border:0px !important;">
                         <button *ngIf="!completedMode" style="margin-left:3px;" (click)="addTaskItem()"
                             class="add-task-item btn btn-primary btn-sm">Add Task</button>
                     </th>
