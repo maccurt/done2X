@@ -12,7 +12,6 @@ import { TaskItem } from '../task-item/task-item.type';
 import { TypeAction } from '../task-item/TypeAction';
 import { TypeClickEvent } from '../task-item/TypeClickEvent';
 
-
 export class Column {
   property!: string;
   name!: string;
@@ -32,8 +31,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   @Output() actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
 
   allTaskSelected: boolean = false;
-  propertyToSort: string = 'priority';
-  sortAscending: boolean = true;
+  propertyToSort: string = 'priority';  
   columns: Column[] = [{ name: 'Name', property: 'name' }, { name: 'Priority', property: 'priority' }];
   //subscription
   afterClosedSub$!: Subscription;
@@ -42,7 +40,6 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   updateTaskItemSub$!: Subscription;
   goalList: Goal[] = [];
   isMobile!: boolean;
-
 
   constructor(
     private taskItemService: TaskItemService,
@@ -78,16 +75,14 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     this.taskItemList.forEach((t) => {
       t.selected = checked;
     })
-  }
+  }  
 
   moveTaskToGoal(goal: Goal) {
-
     const selectedTaskItemList = this.taskItemList.filter((t) => {
       return t.selected;
     });
 
     this.modalService.moveTaskModal(selectedTaskItemList.length, goal.name).afterClosed().subscribe((yesMove) => {
-
       if (yesMove) {
         this.taskItemService.moveTaskItemListToGoal(selectedTaskItemList, goal.id).subscribe(() => {
           selectedTaskItemList.forEach((t) => {
@@ -118,8 +113,8 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     column.isCurrentSort = true;
 
     column.isAscending = this.propertyToSort === column.property ? !column.isAscending : true;
-    this.propertyToSort = column.property;    
-    this.taskItemService.sortTaskItemList(this.taskItemList, column.property, this.sortAscending);
+    this.propertyToSort = column.property;        
+    this.taskItemService.sortTaskItemList(this.taskItemList, column.property, column.isAscending);
   }
   public sort(sort: Sort) {
     this.taskItemService.sortTaskItemList(this.taskItemList, sort.active, sort.direction !== 'desc');

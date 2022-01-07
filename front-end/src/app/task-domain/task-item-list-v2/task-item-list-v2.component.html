@@ -31,7 +31,6 @@
         <div class="task-item" *ngFor="let t of taskItemList">
 
             <div class="row">
-
                 <div class="col-12">
                     <a class="name-link" (click)="editTaskItem(t)">{{t.name}}</a>
                 </div>
@@ -60,17 +59,28 @@
                                 [icon]="iconColorService.icons.arrowUp"></fa-icon>
                         </a>
 
-                        <a title="edit task..." class="action-link edit-task-item" (click)="editTaskItem(t)">
+                        <!-- <a title="edit task..." class="action-link edit-task-item" (click)="editTaskItem(t)">
                             <fa-icon [icon]="iconColorService.icons.edit"></fa-icon>
+                        </a>                         -->
+
+                        <a class="action-link" [matMenuTriggerFor]="mobileActions">
+                            <fa-icon title="actions" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
                         </a>
-                        <a title="delete task..." class="action-link delete-task-item" (click)="deleteTaskItem(t)">
-                            <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
-                        </a>
+
+                        <mat-menu #mobileActions="matMenu">
+
+                            <button mat-menu-item (click)="deleteTaskItem(t)">
+                                Delete Task...
+                            </button>
+
+                            <button mat-menu-item [matMenuTriggerFor]="moveToGoals">
+                                <span>Move Task(s) To Goal...</span>
+                            </button>
+                        </mat-menu>
+
                     </div>
                 </div>
-
             </div>
-
         </div>
 
     </div>
