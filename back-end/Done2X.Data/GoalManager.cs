@@ -28,14 +28,6 @@ namespace Done2X.Data
             return goal;
         }
 
-        //public async Task<IEnumerable<Goal>> GetGoalList(int projectId)
-        //{
-        //    await using var connection = new SqlConnection(_connectionString);
-        //    connection.Open();
-        //    var list = await connection.SelectAsync<Goal>(g => g.ProjectId == projectId);
-        //    return list;
-        //}
-
         public async Task<IEnumerable<GoalExtended>> GetGoalList(ClaimsPrincipal user)
         {
             var authId = user.Identity.Name;

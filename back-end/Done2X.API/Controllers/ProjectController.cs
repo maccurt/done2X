@@ -21,10 +21,17 @@ namespace Done2X.API.Controllers
             _domainManager = domainManager;
         }
 
+        [HttpGet()]
+        [Route("list")]
+        public async Task<IActionResult> GetList()
+        {
+            var projectList = await _domainManager.Project.GetProjectList(User);
+            return Ok(projectList);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-
             var project = await _domainManager.Project.DefaultProject(User);
             return Ok(project);
         }

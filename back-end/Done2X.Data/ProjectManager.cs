@@ -33,5 +33,16 @@ namespace Done2X.Data
             //TODO null check, fix, etc..
             return project.FirstOrDefault();
         }
+
+        public async Task<IEnumerable<Project>> GetProjectList(ClaimsPrincipal user)
+        {
+            var authId = user.Identity.Name;
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var projectList = await connection.QueryAsync<Project>("API.ProjectList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
+            return projectList;
+
+        }
     }
 }
