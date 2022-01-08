@@ -1,20 +1,25 @@
-<div id="goal-{{goal.id}}" class="card"
+<div id="goal-{{goal.id}}" class="card goal-item"
     [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}">
     <div class="card-body">
 
-        <div class="action-icon-container">
-            <span class="card-title">
-                <a title="go to goal..." class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
-            </span>
+        <div class="row">
+            <div class="col-10">
+                <span class="card-titlec">
+                    <a title="go to goal..." class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
+                </span>
+            </div>
 
-            <div style="float:right;">                
-                <a *ngIf="goal.taskCount === 0" class="action-link delete-goal" title="delete goal..." (click)="deleteGoal()">
-                    <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
-                </a>
-                
-                <a class="action-link add-task-item" title="add task..." (click)="addTaskItem()">
-                    <fa-icon [icon]="iconColorService.icons.addTask"></fa-icon>
-                </a>
+            <div class="col-2">
+                <div style="float:right;">
+                    <a *ngIf="goal.taskCount === 0" class="action-link delete-goal" title="delete goal..."
+                        (click)="deleteGoal()">
+                        <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
+                    </a>
+
+                    <a class="action-link add-task-item" title="add task..." (click)="addTaskItem()">
+                        <fa-icon [icon]="iconColorService.icons.addTask"></fa-icon>
+                    </a>
+                </div>
             </div>
         </div>
 

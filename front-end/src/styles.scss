@@ -18,16 +18,30 @@ body {
 }
 
 .priority-2 {
- color:var(--medium-priority-color);
+  color: var(--medium-priority-color);
 }
 
 .priority-3 {
-  color:var(--low-priority-color);
+  color: var(--low-priority-color);
 }
 
-.app-modal {
-  max-width: 450px;
+.d2x-dialog-panel {
+  max-width: 450px !important;
 }
+mat-dialog-content {
+  min-width: 440px !important;
+}
+
+@include for-xsmall() {
+  .d2x-dialog-panel {
+    max-width: 100vw !important;
+  }
+  mat-dialog-content {
+    min-width: 95vw !important;
+    width: 95vw !important;
+  }
+}
+
 mat-dialog-actions {
   button {
     margin-left: 20px;

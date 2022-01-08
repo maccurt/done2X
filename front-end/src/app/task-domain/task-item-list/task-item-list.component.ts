@@ -1,17 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
-import { Confirm, ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
 import { Goal } from '../../goal-domain/goal.type';
-import { TaskItemModalComponent } from '../task-item-modal/task-item-modal.component';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
-
 import { TypeClickEvent } from "../task-item/TypeClickEvent";
 import { TypeAction } from "../task-item/TypeAction";
 import { TaskItem } from '../task-item/task-item.type';
+import { ModalService } from 'src/app/modal.service';
 
 @Component({
   selector: 'app-task-item-list',
@@ -20,7 +16,6 @@ import { TaskItem } from '../task-item/task-item.type';
 })
 
 export class TaskItemListComponent implements OnInit, OnDestroy {
-
   taskItemList: TaskItem[] = [];
   taskinProgress: TaskItem[] = [];
   taskinCompleted: TaskItem[] = [];
@@ -29,7 +24,6 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   goalControl: FormControl = new FormControl();
   formGroup!: FormGroup;
   goal!: Goal;
-
   getTaskItemListSub$!: Subscription;
   addTaskItemSub$!: Subscription;
   updateTaskItemSub$!: Subscription;
@@ -38,10 +32,10 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   valueChangesSub$!: Subscription;
   routeDataSub$!: Subscription;
 
-  constructor(private taskItemService: TaskItemService,    
+  constructor(private taskItemService: TaskItemService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog) { }
+    private modalService: ModalService) { }
 
   ngOnInit(): void {
 
@@ -67,7 +61,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   }
 
   getTaskItemList(): void {
-    
+
     this.getTaskItemListSub$ = this.taskItemService.getTaskItemList(this.goal.id).subscribe((taskItemList) => {
       this.taskItemList = taskItemList;
       this.splitTaskItemsIntoLanes();
@@ -116,7 +110,7 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
         list = this.taskinCompleted
         break;
     }
-    
+
     //TODO why -1 here, greater than 0 right?
     if (list.length > -1) {
       let index = list.indexOf(taskItem);
@@ -156,23 +150,15 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   }
 
   deleteTaskItem(taskItem: TaskItem) {
-    let confirm: Confirm = {
-      question: `Delete Task?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: taskItem.name
-    }
 
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {
-      disableClose: true,
-      data: confirm
-    });
-
-    this.deleteAfterClosedSub$ = dialogRef.afterClosed().subscribe((confirm: boolean) => {
-
-      if (confirm) {
-        this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
-          this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId);
-        })
-      }
-    })
+    this.deleteAfterClosedSub$ = this.modalService.deleteTaskModal(taskItem)
+      .afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
+            this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId);
+          })
+        }
+      })
   }
 
   addTaskToBacklog(): void {
@@ -192,13 +178,9 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
 
   editTaskItem(taskItem: TaskItem): void {
 
-    const previousStatus = taskItem.taskItemStatusId
-    const dialogRef = this.dialog.open(TaskItemModalComponent, {
-      data: taskItem,
-      disableClose: true
-    });
+    const previousStatus = taskItem.taskItemStatusId;
 
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((taskItem: TaskItem) => {
+    this.modalService.deleteTaskModal(taskItem).afterClosed().subscribe((taskItem: TaskItem) => {
       //Add Task Item
       if (taskItem && !taskItem.id) {
         this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((newTask) => {

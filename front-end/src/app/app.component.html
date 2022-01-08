@@ -7,7 +7,7 @@
 </div> -->
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light"  aria-expanded="false">
     <div class="container">
         <a class="navbar-brand" href="#">Done2X</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -20,8 +20,8 @@
                         <a class="nav-link" routerLink="dashboard">Dash Board</a>
                     </li> -->
 
-                <li *ngIf="isAuthenticated" class="nav-item">
-                    <a class="nav-link" routerLink="goal-list">Goal List</a>
+                <li *ngIf="isAuthenticated" class="nav-item" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show" >
+                    <a class="nav-link" routerLink="goal-list"   >Goal List</a>
                 </li>
 
                 <!-- <li *ngIf="isAuthenticated" class="nav-item">

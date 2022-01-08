@@ -6,7 +6,6 @@ export class Motivation {
   }
 }
 
-
 @Component({
   selector: 'app-motivation',
   templateUrl: './motivation.component.html',
@@ -19,32 +18,39 @@ export class MotivationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
-    const setMotivation = () => {
-      if (this.motivationList.length > 0) {
-        this.motivation = this.motivationList.pop() as Motivation
-      }
-    }
-
-    this.getMotivationList().subscribe((data) => {
-      this.motivationList = data;
-      setMotivation();
-    });
-
-    setInterval(() => {
-
-      if (this.motivationList.length === 0) {
-        this.getMotivationList().subscribe((data) => {
-          this.motivationList = data;
-          setMotivation();
-        });
-      }
-      else {
-        setMotivation();
-      }
-    }, 60000);
+    this.setMotivationList();
+    this.startMotivatioInterval();
   }
 
+  click(){
+    this.setMotivation();
+  }
+
+  startMotivatioInterval() {
+
+    setInterval(() => {
+      if (this.motivationList.length === 0) {
+        this.setMotivationList();
+      }
+      else {
+        this.setMotivation();
+      }
+    }, 60000);
+
+  }
+
+  public setMotivationList() {
+    this.getMotivationList().subscribe((data) => {
+      this.motivationList = data;
+      this.setMotivation();
+    });
+  }
+
+  public setMotivation() {
+    if (this.motivationList.length > 0) {
+      this.motivation = this.motivationList.pop() as Motivation
+    }
+  }
   //TODO put the shuffle in a more common spot
   public shuffle(array: any[]): any[] {
     let currentIndex = array.length, randomIndex;
@@ -66,10 +72,13 @@ export class MotivationComponent implements OnInit {
     let motivationList: Motivation[] = [];
     motivationList.push(new Motivation('Success is the progressive realization of a worthy goal or ideal.', 'Earl Nightingale'));
     motivationList.push(new Motivation('Do or do not! There is no try.', 'Master Yoda'));
-    motivationList.push(new Motivation('Ask yourself: Is what you are doing adding value.', 'M McGee'));
-    motivationList.push(new Motivation('Consistently working task everyday leads to great gain.', 'M McGee'));
     motivationList.push(new Motivation('Success is the ability to go from one failure to another with no loss of enthusiasm', 'Winston Churchill'));
     motivationList.push(new Motivation('Success is almost totally dependent upon drive and persistence. The extra energy required to make another effort or try another approach is the secret of winning.', 'Denis Waitley'));
+    motivationList.push(new Motivation('It always seems impossible until it\'s done.', 'Nelson Mandela'));
+    motivationList.push(new Motivation('Everybody needs a passion. That’s what keeps life interesting. If you live without passion, you can go through life without leaving any footprints.', 'Betty White'));
+    //Done 2x Quotes
+    motivationList.push(new Motivation('Ask yourself: Is what you are doing adding value.', 'Done2X.com'));
+    motivationList.push(new Motivation('Consistently working task everyday leads to great gain.', 'Done2X.com'));
     motivationList = this.shuffle(motivationList);
     return of(motivationList);
   }

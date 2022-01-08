@@ -1,17 +1,17 @@
-<div class="container-fluid">
+<div class="container-fluid">    
 
     <div class="row">
-        <div class="col-9">
+        <div class="col-8 col-lg-4 col-xxxl-3">
             <h1>Goals</h1>
         </div>
-        <div class="col-3">
-            <button id="add-goal" (click)="addGoal()" class="btn btn-primary float-end">Add Goal</button>
+        <div class="col-4">            
+            <button  style="margin-top:10px;" id="add-goal" (click)="addGoal()" class="btn btn-primary">Add Goal</button>
         </div>
     </div>
     <hr>
 
     <div class="row">
-        <div class="col-12 col-xl-4 col-xxl-4 col-xxxl-3">
+        <div class="d-none d-xl-block col-12 col-xl-4 col-xxl-4 col-xxxl-3">
             <div class="row">
 
                 <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
@@ -42,9 +42,9 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-6 col-xl-4 col-xxxl-3">
-            <h5>Up Next</h5>
+        
+        <div class="col-12 col-sm-6 col-xl-4 col-xxxl-3">            
+            <h5>Up Next</h5> 
             <div id="goal-list-not-completed" class="row">
                 <div *ngFor="let g of goalListNotCompleted" class="col-12">
                     <app-goal-item [goal]="g" (event)="goalEvent($event)"></app-goal-item>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-4 col-xxxl-3">
+        <div class="col-12 col-sm-6 col-xl-4 col-xxxl-3">
             <h5>Completed</h5>
             <div id="goal-list-completed" class="row">
                 <div *ngFor="let g of goalListCompleted" class="col-12">
@@ -67,5 +67,4 @@
             </div>
         </div>
     </div>
-
 </div>

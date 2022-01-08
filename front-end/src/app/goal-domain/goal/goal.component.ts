@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Code, CodeService } from 'src/app/code.service';
-
 import { TaskItem } from 'src/app/task-domain/task-item/task-item.type';
 import { Goal } from '../goal.type';
 import { FormControlService } from 'src/app/form-control.service';
@@ -29,10 +27,7 @@ export class Column {
 })
 export class GoalComponent implements OnInit, OnDestroy {
   @ViewChild(MatExpansionPanel, { static: true }) matExpansionPanelElement!: MatExpansionPanel;
-  //icons
-  //  
   goal!: Goal;
-
   completedTaskItemList: TaskItem[] = [];
   notCompletedTaskItemList: TaskItem[] = [];
   taskItemStatusList: Code[] = [];
@@ -44,7 +39,6 @@ export class GoalComponent implements OnInit, OnDestroy {
   column?: Column = this.columns[0];
   proprtyToSort: string = 'completed';
   priorityList: Code[] = [];
-
   hideCompleted = false;
 
   //form controls  
@@ -69,15 +63,12 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private taskItemService: TaskItemService,
-    private dialog: MatDialog,
     private codeService: CodeService,
     private goalService: GoalService,
     private chartService: ChartServiceDone2x,
     public formControlService: FormControlService) { }
 
-
   ngOnInit(): void {
-
     //Set up the data
     this.routeDataSub$ = this.route.data.subscribe((data) => {
       this.goal = data.goal;
@@ -154,7 +145,6 @@ export class GoalComponent implements OnInit, OnDestroy {
   }
 
   public save() {
-
     if (this.formGroup.valid) {
       Object.assign(this.goal, this.formGroup.value);
       this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
