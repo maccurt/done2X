@@ -47,6 +47,8 @@ import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count
 import { MatTabsModule } from '@angular/material/tabs';
 import { MotivationComponent } from './motivation/motivation.component';
 import { MatSortModule } from '@angular/material/sort';
+import { ProjectListComponent } from './project-domain/project-list/project-list.component';
+import { ProjectListResolver } from './resolvers/project-list.resolver';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,8 @@ import { MatSortModule } from '@angular/material/sort';
     GoalItemComponent,
     TaskCountInfoComponent,
     GoalCountInfoComponent,
-    MotivationComponent
+    MotivationComponent,
+    ProjectListComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +105,7 @@ import { MatSortModule } from '@angular/material/sort';
     GoalListResolver,
     TaskItemListResolver,
     TaskItemStatusListResolver,
+    ProjectListResolver,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

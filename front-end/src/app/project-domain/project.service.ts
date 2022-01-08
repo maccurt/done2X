@@ -8,12 +8,12 @@ import { Project } from './project.type';
   providedIn: 'root'
 })
 export class ProjectService {
+  constructor(private httpClient: HttpClient) { }
 
-  constructor(private httpClient: HttpClient) {
-
+  getProjectList(): Observable<Project[]> {
+    return this.httpClient.get<Project[]>(environment.API_URL + 'project/list');
   }
-
   getDefaultProject(): Observable<Project> {
-    return this.httpClient.get<Project>(environment.API_URL +'project');
+    return this.httpClient.get<Project>(environment.API_URL + 'project');
   }
 }
