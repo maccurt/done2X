@@ -33,7 +33,17 @@ namespace Done2X.Data
             var authId = user.Identity.Name;
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
-            var goalList = await connection.QueryAsync<GoalExtended>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
+            var goalList = await connection.QueryAsync<GoalExtended>("API.GetGoalList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
+            return goalList;
+        }
+
+        public async Task<IEnumerable<GoalExtended>> GetGoalList(int projectId)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var goalList = await connection.QueryAsync<GoalExtended>("API.GetProjectGoalList",
+                commandType: CommandType.StoredProcedure, param: new { projectId });
             return goalList;
         }
 

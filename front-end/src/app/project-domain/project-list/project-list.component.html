@@ -2,9 +2,12 @@
 
     <div class="row">
 
-        <div *ngFor="let p of projectList"  class="col-xxxl-4">
+        <div *ngFor="let p of projectList" class="col-xxxl-4">
 
-            {{p.name}}
+
+            <d2x-project-item [project]="p" > 
+
+            </d2x-project-item>
 
 
         </div>

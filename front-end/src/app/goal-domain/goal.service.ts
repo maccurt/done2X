@@ -36,8 +36,8 @@ export class GoalService {
       .put<Goal>(environment.API_URL + 'goal', goal);
   }
 
-  public GetGoalList(): Observable<Goal[]> {
-    return this.httpClient.get<Goal[]>(`${environment.API_URL}goal`);
+  public GetGoalList(projectId:number): Observable<Goal[]> {
+    return this.httpClient.get<Goal[]>(`${environment.API_URL}goal/project/${projectId}`);
   }
 
   public getGoal(goalId: number): Observable<Goal> {

@@ -29,7 +29,6 @@ namespace Done2X.Data
             connection.Open();
             var project = await connection.QueryAsync<Project>("API.GetDefaultProject",
                 commandType: CommandType.StoredProcedure, param: new { authId });
-
             //TODO null check, fix, etc..
             return project.FirstOrDefault();
         }

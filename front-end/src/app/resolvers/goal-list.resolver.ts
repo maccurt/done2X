@@ -11,6 +11,11 @@ export class GoalListResolver implements Resolve<Goal[]>{
 
     resolve(route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Goal[] | Observable<Goal[]> | Promise<Goal[]> {
-        return this.goalService.GetGoalList();
+
+        const projectId = route.paramMap.get('project-id');
+        if (projectId) {
+            return this.goalService.GetGoalList(+projectId);
+        }
+        return [];
     }
 }

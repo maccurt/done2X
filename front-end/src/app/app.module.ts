@@ -49,6 +49,7 @@ import { MotivationComponent } from './motivation/motivation.component';
 import { MatSortModule } from '@angular/material/sort';
 import { ProjectListComponent } from './project-domain/project-list/project-list.component';
 import { ProjectListResolver } from './resolvers/project-list.resolver';
+import { ProjectItemComponent } from './project-domain/project-item/project-item.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ProjectListResolver } from './resolvers/project-list.resolver';
     TaskCountInfoComponent,
     GoalCountInfoComponent,
     MotivationComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    ProjectItemComponent
   ],
   imports: [
     BrowserModule,

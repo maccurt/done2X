@@ -16,7 +16,6 @@ import { TaskItemStatusListResolver } from './resolvers/task-item-status-List-re
 import { TaskItemListComponent } from './task-domain/task-item-list/task-item-list.component';
 
 const routes: Routes = [
-
   { path: '', component: HomeComponent },
   { path: 'dashboard', component: DashBoardComponent },
   { path: 'experiment', component: ExperimentComponent },
@@ -32,7 +31,7 @@ const routes: Routes = [
     canActivate: [AppAuthGuard]
   },
   {
-    path: 'goal-list', component: GoalListComponent, resolve: { goalList: GoalListResolver }, canActivate: [AppAuthGuard]
+    path: 'goal-list/:project-id', component: GoalListComponent, resolve: { goalList: GoalListResolver }, canActivate: [AppAuthGuard]
   },
   {
     path: 'project-list', component: ProjectListComponent, resolve: { projectList: ProjectListResolver }, canActivate: [AppAuthGuard]
