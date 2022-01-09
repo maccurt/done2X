@@ -11,6 +11,6 @@ namespace Done2X.Data.IMangerInterfaces
     public interface IProjectManager
     {
         Task<Project> DefaultProject(ClaimsPrincipal user);
-        Task<IEnumerable<Project>> GetProjectList(ClaimsPrincipal user);
+        Task<IEnumerable<ProjectExtended>> GetProjectList(ClaimsPrincipal user);
     }
 }

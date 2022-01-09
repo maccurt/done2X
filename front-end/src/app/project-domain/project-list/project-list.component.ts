@@ -21,6 +21,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     });
   }
 
+  addProject(){
+    
+  }
+
   ngOnDestroy(): void {
     this.routeData$?.unsubscribe();
   }

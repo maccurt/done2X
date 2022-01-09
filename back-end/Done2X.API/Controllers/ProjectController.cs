@@ -29,7 +29,6 @@ namespace Done2X.API.Controllers
             return Ok(projectList);
         }
 
-        
 
         [HttpGet]
         public async Task<IActionResult> Get()

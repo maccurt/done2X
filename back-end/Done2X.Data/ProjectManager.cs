@@ -33,12 +33,12 @@ namespace Done2X.Data
             return project.FirstOrDefault();
         }
 
-        public async Task<IEnumerable<Project>> GetProjectList(ClaimsPrincipal user)
+        public async Task<IEnumerable<ProjectExtended>> GetProjectList(ClaimsPrincipal user)
         {
             var authId = user.Identity.Name;
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
-            var projectList = await connection.QueryAsync<Project>("API.ProjectList",
+            var projectList = await connection.QueryAsync<ProjectExtended>("API.ProjectList",
                 commandType: CommandType.StoredProcedure, param: new { authId });
             return projectList;
 
