@@ -87,6 +87,5 @@ namespace Done2X.Data
             goal.Id = Convert.ToInt32(id);
             return goal;
         }
-
     }
 }

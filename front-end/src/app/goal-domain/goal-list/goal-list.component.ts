@@ -18,13 +18,14 @@ import { ModalService } from 'src/app/modal.service';
   styleUrls: ['./goal-list.component.scss']
 })
 export class GoalListComponent implements OnInit, OnDestroy {
+  projectId: number = 0;
   goalList: Goal[] = [];
   goalListCompleted: Goal[] = [];
   goalListNotCompleted: Goal[] = [];
   routeData$!: Subscription;
   addGoalSub$!: Subscription;
   updateGoalSub$!: Subscription;
-
+  paramsSub$!: Subscription;
   taskCompletedCount = 0;
   taskNotCompletedCount = 0;
   taskCount = 0;
@@ -36,6 +37,11 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+
+    this.paramsSub$ = this.route.params.subscribe((params) => {
+      this.projectId = params['project-id'];
+    })
+
     this.routeData$ = this.route.data.subscribe((data) => {
       this.goalList = data.goalList;
       this.filterGoalList(this.goalList);
@@ -117,7 +123,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   public addGoalHere(date: Date) {
-    let newGoal = new Goal();
+    let newGoal = new Goal(this.projectId);    
     const d = new Date(date);
     d.setDate(d.getDate() + 1);
     newGoal.targetCompletionDate = d;
