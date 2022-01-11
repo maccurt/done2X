@@ -95,22 +95,34 @@
         </div>
 
         <div class="col-12 col-lg-8 col-xxxl-6">
-            <div id="goal-task-list">
-                <mat-tab-group animationDuration="0ms">
-                    <mat-tab label="Not Completed ({{notCompletedTaskItemList.length}})">
-                        <d2x-task-item-list-v2 id="task-item-list-not-completed" (actionEvent)="actionEvent($event)"
-                            [goal]="goal" [taskItemList]="notCompletedTaskItemList"></d2x-task-item-list-v2>
-                    </mat-tab>
-                    <mat-tab label="Completed ({{completedTaskItemList.length}})">
 
-                        <d2x-task-item-list-v2 id="task-item-list-completed" (actionEvent)="actionEvent($event)"
-                            [completedMode]=true [goal]="goal" [taskItemList]="completedTaskItemList">
-                        </d2x-task-item-list-v2>
-                    </mat-tab>
-                </mat-tab-group>
+            <div class="row">
 
+                <div class="col-12">
+                    <br>
+                    <a  class="action-link" title="Return To Project Goals..." routerLink="/goal-list/{{goal.projectId}}">
+                        <fa-icon style="margin-right:4px;"  [icon]="iconColorService.icons.arrowLeft"></fa-icon>
+                        Return To Project Goals</a>
+                </div>
+
+                <div class="col-12">
+                    <div id="goal-task-list">
+                        <mat-tab-group animationDuration="0ms">
+                            <mat-tab label="Not Completed ({{notCompletedTaskItemList.length}})">
+                                <d2x-task-item-list-v2 id="task-item-list-not-completed"
+                                    (actionEvent)="actionEvent($event)" [goal]="goal"
+                                    [taskItemList]="notCompletedTaskItemList"></d2x-task-item-list-v2>
+                            </mat-tab>
+                            <mat-tab label="Completed ({{completedTaskItemList.length}})">
+
+                                <d2x-task-item-list-v2 id="task-item-list-completed" (actionEvent)="actionEvent($event)"
+                                    [completedMode]=true [goal]="goal" [taskItemList]="completedTaskItemList">
+                                </d2x-task-item-list-v2>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </div>

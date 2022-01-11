@@ -14,6 +14,7 @@ import { TypeClickEvent } from 'src/app/task-domain/task-item/TypeClickEvent';
 import { TypeAction } from 'src/app/task-domain/task-item/TypeAction';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { PriorityData } from 'src/app/chart-domain/priority-data.type';
+import { IconColorService } from 'src/app/iconColor.service';
 
 export class Column {
   text!: string;
@@ -66,7 +67,8 @@ export class GoalComponent implements OnInit, OnDestroy {
     private codeService: CodeService,
     private goalService: GoalService,
     private chartService: ChartServiceDone2x,
-    public formControlService: FormControlService) { }
+    public formControlService: FormControlService,
+    public iconColorService: IconColorService) { }
 
   ngOnInit(): void {
     //Set up the data
