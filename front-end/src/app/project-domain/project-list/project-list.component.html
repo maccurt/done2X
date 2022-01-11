@@ -23,25 +23,20 @@
         </div>
 
         <div class="col-xxxl-9">
-
             <div class="row">
-
                 <div *ngFor="let p of projectList" class="col-xxxl-3">
                     <d2x-project-item (event)="projectEvent($event)" [project]="p">
                     </d2x-project-item>
                     <br>
     
-                    <d2x-completed-chart [completed]="p.goalCompleted" [notCompleted]="p.goalNotCompleted">
+                    <d2x-completed-chart [name]="'Goals'" [completed]="p.goalCompleted" [notCompleted]="p.goalNotCompleted">
                     </d2x-completed-chart>
     
                     <br>
                     <app-goal-count-info [completed]="p.goalCompleted" [goalCount]="p.goalCount">
-                    </app-goal-count-info>
-    
+                    </app-goal-count-info>    
                 </div>
-
-            </div>            
-
+            </div>  
         </div>
 
     </div>

@@ -1,10 +1,11 @@
 <div *ngIf="completed > 0 && notCompleted > 0" class="completed-chart" [chart]="chart"></div>
+
 <div *ngIf="completed === 0 && notCompleted > 0" class="no-data-chart">
-    <span>No Task Are Completed</span>
+    <span>No {{name}} Are Completed</span>
 </div>
 
 <div *ngIf="completed > 0 && notCompleted === 0" class="no-data-chart">
-    <span>All Task Are Completed</span>
+    <span>All {{name}} Are Completed</span>
 </div>
 <div *ngIf="completed === 0 && notCompleted === 0" class="no-data-chart">
     <span>No Data</span>
