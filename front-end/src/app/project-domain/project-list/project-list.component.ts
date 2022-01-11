@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ProjectEvent } from '../project-item/project-item.component';
 import { Project } from '../project.type';
 
 @Component({
@@ -23,6 +24,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   addProject(){
     
+  }
+
+  projectEvent(event:ProjectEvent){    
+
   }
 
   ngOnDestroy(): void {

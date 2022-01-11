@@ -27,7 +27,7 @@
             <div class="row">
 
                 <div *ngFor="let p of projectList" class="col-xxxl-3">
-                    <d2x-project-item [project]="p">
+                    <d2x-project-item (event)="projectEvent($event)" [project]="p">
                     </d2x-project-item>
                     <br>
     

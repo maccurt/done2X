@@ -53,6 +53,15 @@ mat-dialog-actions {
   font-weight: bold;
 }
 
+.app-action {
+  text-decoration: underline;
+  color: black !important;
+}
+
+.app-action:hover {
+  text-decoration: none;
+}
+
 .action-icon-container {
   .action-link {
     margin-left: 11px;
