@@ -1,5 +1,9 @@
 @import "../../../variables";
 
+.card-body {
+    padding-left: 10px;
+}
+
 .goal-item {
     @include for-medium-and-below() {
         min-height: 155px;
