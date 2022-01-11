@@ -28,6 +28,16 @@ export class GoalItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void { }
 
+  editGoal() {
+    this.modalService.goalModal(this.goal).afterClosed().subscribe(goal => {
+      if (goal) {
+        this.goalService.updateGoal(goal).subscribe((response) => {
+          this.event.emit(new GoalEvent(this.goal,GoalEventType.edit))
+        })
+      }
+    });
+  }
+
   deleteGoal() {
 
     this.afterClosedSub$ = this.modalService.deleteGoalModal(this.goal).afterClosed().subscribe((confirm: boolean) => {

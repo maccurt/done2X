@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-2">
-                <div class="action-icon-container"   style="float:right;">
+                <div class="action-icon-container" style="float:right;">
                     <a *ngIf="goal.taskCount === 0" class="action-link delete-goal" title="delete goal..."
                         (click)="deleteGoal()">
                         <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
@@ -41,7 +41,8 @@
                 <span class="task-count"
                     title="{{goal.taskCompleted}} of {{goal.taskCount}} task completed">{{goal.taskCompleted}}
                     / {{goal.taskCount}}</span>
-                <span title="target completion date" style="float: right;">{{goal.targetCompletionDate | date}}</span>
+                <span title="target completion date" style="float: right;"><a (click)="editGoal()" title="edit goal..." class="action-link"> {{goal.targetCompletionDate | date}}</a>
+                </span>
             </div>
         </div>
     </div>
