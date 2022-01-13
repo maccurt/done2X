@@ -1,4 +1,6 @@
-﻿namespace Done2X.Domain
+﻿using System.Collections.Generic;
+
+namespace Done2X.Domain
 {
     public class Project : DomainCommon
     {
@@ -12,5 +14,6 @@
         public int GoalCompleted { get; set; }
         public int GoalNotCompleted { get; set; }
         public int GoalCount => this.GoalCompleted + GoalNotCompleted;
+        public IEnumerable<GoalExtended> CurrentGoals { get; set; }
     }
 }

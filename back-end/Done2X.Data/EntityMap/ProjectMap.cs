@@ -18,6 +18,7 @@ namespace Done2X.Data.EntityMap
         {
             ToTable("Project");
             Map(x => x.Id).ToColumn("ProjectId").IsKey();
+            Map(x => x.CurrentGoals).Ignore();
         }
     }
 }

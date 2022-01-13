@@ -40,6 +40,16 @@ namespace Done2X.Data
             connection.Open();
             var projectList = await connection.QueryAsync<ProjectExtended>("API.ProjectList",
                 commandType: CommandType.StoredProcedure, param: new { authId });
+
+            var goalList = await connection.QueryAsync<GoalExtended>("API.GetCurrentGoalList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
+
+            foreach (var project in projectList)
+            {
+                var goals = goalList.Where(x => x.ProjectId == project.Id);
+                project.CurrentGoals = goals;
+            }
+
             return projectList;
 
         }

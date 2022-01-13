@@ -5,6 +5,7 @@
 }
 
 .goal-item {
+    min-height: 155px;
     @include for-medium-and-below() {
         min-height: 155px;
     }
@@ -25,4 +26,9 @@
 
 .action-link-container {
     margin-bottom: 10px;
+}
+
+.no-goal{
+    text-align: center;
+    font-size: 1.2rem;    
 }

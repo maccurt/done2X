@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Dapper;
@@ -45,6 +46,25 @@ namespace Done2X.Data
             var goalList = await connection.QueryAsync<GoalExtended>("API.GetProjectGoalList",
                 commandType: CommandType.StoredProcedure, param: new { projectId });
             return goalList;
+        }
+
+        public async Task<IEnumerable<GoalExtended>> GetCurrentGoalList(ClaimsPrincipal user)
+        {
+            var authId = user.Identity.Name;
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var projectIdList = await connection.QueryAsync<int>("API.ProjectIdList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
+            var goalList = new List<GoalExtended>();
+            foreach (var i in projectIdList)
+            {
+                var goals = await connection.QueryAsync<GoalExtended>("API.GetCurrentGoal",
+                    commandType: CommandType.StoredProcedure, param: new { authId });
+                goalList.Add(goals.FirstOrDefault());
+            }
+
+            return goalList;
+
         }
 
         public async Task<Goal> Update(Goal goal)

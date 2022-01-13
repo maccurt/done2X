@@ -27,15 +27,23 @@
                     <d2x-project-item (event)="projectEvent($event)" [project]="p">
                     </d2x-project-item>
                     <br>
-    
-                    <d2x-completed-chart [name]="'Goals'" [completed]="p.goalCompleted" [notCompleted]="p.goalNotCompleted">
+                    <app-goal-item *ngIf="p.currentGoals.length > 0" [goal]="p.currentGoals[0]">
+                    </app-goal-item>
+
+                    <app-goal-item *ngIf="p.currentGoals.length === 0">
+                    </app-goal-item>
+
+                    <br>
+                    <br>
+                    <d2x-completed-chart [name]="'Goals'" [completed]="p.goalCompleted"
+                        [notCompleted]="p.goalNotCompleted">
                     </d2x-completed-chart>
-    
+
                     <br>
                     <app-goal-count-info [completed]="p.goalCompleted" [goalCount]="p.goalCount">
-                    </app-goal-count-info>    
+                    </app-goal-count-info>
                 </div>
-            </div>  
+            </div>
         </div>
 
     </div>

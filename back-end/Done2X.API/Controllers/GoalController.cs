@@ -89,6 +89,7 @@ namespace Done2X.API.Controllers
             return Ok(list.OrderBy(g => g.TargetCompletionDate));
         }
 
+
         [HttpGet]
         [Route("project/{projectId}")]
         public async Task<IActionResult> GetGoalListByProject(int projectId)
