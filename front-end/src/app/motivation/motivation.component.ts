@@ -78,6 +78,7 @@ export class MotivationComponent implements OnInit {
     //Done 2x Quotes
     motivationList.push(new Motivation('Ask yourself: Is what you are doing adding value.', 'Done2X.com'));
     motivationList.push(new Motivation('Consistently working task everyday leads to great gain.', 'Done2X.com'));
+    motivationList.push(new Motivation('Focus on what will get you done and functional. Not perfect, you can make it better later.', 'Done2X.com'));
     motivationList = this.shuffle(motivationList);
     return of(motivationList);
   }
