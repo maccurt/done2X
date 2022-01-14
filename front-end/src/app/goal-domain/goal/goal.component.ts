@@ -22,7 +22,7 @@ export class Column {
 }
 
 @Component({
-  selector: 'app-goal',
+  selector: 'd2x-goal',
   templateUrl: './goal.component.html',
   styleUrls: ['./goal.component.scss']
 })

@@ -5,7 +5,7 @@ import { FormControlService } from 'src/app/form-control.service';
 import { Goal } from '../goal.type';
 
 @Component({
-  selector: 'app-goal-modal',
+  selector: 'd2x-goal-modal',
   templateUrl: './goal-modal.component.html',
   styleUrls: ['./goal-modal.component.scss']
 })

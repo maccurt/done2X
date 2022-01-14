@@ -6,7 +6,7 @@ import { Code, CodeService } from '../../code.service';
 import { TaskItem } from '../task-item/task-item.type';
 
 @Component({
-  selector: 'app-task-item-modal',
+  selector: 'd2x-task-item-modal',
   templateUrl: './task-item-modal.component.html',
   styleUrls: ['./task-item-modal.component.scss']
 })

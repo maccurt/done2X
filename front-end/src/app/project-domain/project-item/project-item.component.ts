@@ -26,7 +26,6 @@ export class ProjectItemComponent {
   constructor(private modalService: ModalService,
     private goalService: GoalService) { }
 
-
   addGoal() {
 
     this.modalService.goalModal(new Goal(this.project.id)).afterClosed().subscribe((goal) => {

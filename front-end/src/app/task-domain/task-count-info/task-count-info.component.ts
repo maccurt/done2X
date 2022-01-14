@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { MathService } from 'src/app/math.service';
 
 @Component({
-  selector: 'app-task-count-info',
+  selector: 'd2x-task-count-info',
   templateUrl: './task-count-info.component.html',
   styleUrls: ['./task-count-info.component.scss']
 })

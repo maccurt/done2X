@@ -5,7 +5,7 @@ import { ProjectEvent } from '../project-item/project-item.component';
 import { Project } from '../project.type';
 
 @Component({
-  selector: 'app-project-list',
+  selector: 'd2x-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss']
 })

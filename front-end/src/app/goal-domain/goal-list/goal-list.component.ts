@@ -13,7 +13,7 @@ import { Goal } from '../goal.type';
 import { ModalService } from 'src/app/modal.service';
 
 @Component({
-  selector: 'app-goal-list',
+  selector: 'd2x-goal-list',
   templateUrl: './goal-list.component.html',
   styleUrls: ['./goal-list.component.scss']
 })

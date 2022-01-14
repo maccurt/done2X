@@ -16,7 +16,7 @@
         <div class="d-none d-xl-block col-12 col-xl-4 col-xxl-4 col-xxxl-3">
             <div class="row">
                 <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
-                    <app-motivation></app-motivation>
+                    <d2x-motivation></d2x-motivation>
                 </div>
             </div>
         </div>
@@ -27,11 +27,11 @@
                     <d2x-project-item (event)="projectEvent($event)" [project]="p">
                     </d2x-project-item>
                     <br>
-                    <app-goal-item *ngIf="p.currentGoals.length > 0" [goal]="p.currentGoals[0]">
-                    </app-goal-item>
+                    <d2x-goal-item *ngIf="p.currentGoals.length > 0" [goal]="p.currentGoals[0]">
+                    </d2x-goal-item>
 
-                    <app-goal-item *ngIf="p.currentGoals.length === 0">
-                    </app-goal-item>
+                    <d2x-goal-item *ngIf="p.currentGoals.length === 0">
+                    </d2x-goal-item>
 
                     <br>
                     <br>
@@ -40,8 +40,8 @@
                     </d2x-completed-chart>
 
                     <br>
-                    <app-goal-count-info [completed]="p.goalCompleted" [goalCount]="p.goalCount">
-                    </app-goal-count-info>
+                    <d2x-goal-count-info [completed]="p.goalCompleted" [goalCount]="p.goalCount">
+                    </d2x-goal-count-info>
                 </div>
             </div>
         </div>

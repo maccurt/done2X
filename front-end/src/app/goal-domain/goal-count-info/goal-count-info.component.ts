@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { MathService } from 'src/app/math.service';
 
 @Component({
-  selector: 'app-goal-count-info',
+  selector: 'd2x-goal-count-info',
   templateUrl: './goal-count-info.component.html',
   styleUrls: ['./goal-count-info.component.scss']
 })

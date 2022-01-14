@@ -10,7 +10,7 @@ export class Confirm {
 }
 
 @Component({
-  selector: 'app-confirm-modal',
+  selector: 'd2x-confirm-modal',
   templateUrl: './confirm-modal.component.html',
   styleUrls: ['./confirm-modal.component.scss']
 })

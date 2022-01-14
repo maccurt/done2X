@@ -1,13 +1,13 @@
 {
-  "root": true,
+  "root": true,  
   "ignorePatterns": [
     "projects/**/*"
-  ],
-  "overrides": [
+  ],  
+  "overrides": [    
     {
       "files": [
         "*.ts"
-      ],
+      ],      
       "parserOptions": {
         "project": [
           "tsconfig.json"
@@ -23,7 +23,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
+            "prefix": "d2x",
             "style": "camelCase"
           }
         ],
@@ -31,7 +31,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "d2x",
             "style": "kebab-case"
           }
         ]

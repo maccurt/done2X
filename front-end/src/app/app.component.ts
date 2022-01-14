@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { ProjectService } from './project-domain/project.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'd2x-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

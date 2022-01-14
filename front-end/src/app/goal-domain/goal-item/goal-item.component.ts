@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { IconColorService } from 'src/app/iconColor.service';
 import { ModalService } from 'src/app/modal.service';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
@@ -11,11 +10,11 @@ import { GoalEvent } from './goal-event.type';
 import { GoalEventType } from './goal-event.enum';
 
 @Component({
-  selector: 'app-goal-item',
+  selector: 'd2x-goal-item',
   templateUrl: './goal-item.component.html',
   styleUrls: ['./goal-item.component.scss']
 })
-export class GoalItemComponent implements OnInit, OnDestroy {
+export class GoalItemComponent implements  OnDestroy {
   @Input() goal!: Goal;
   @Output() event: EventEmitter<GoalEvent> = new EventEmitter<GoalEvent>();
   afterClosedSub$!: Subscription;
@@ -25,8 +24,6 @@ export class GoalItemComponent implements OnInit, OnDestroy {
     private goalService: GoalService,
     private modalService: ModalService
   ) { }
-
-  ngOnInit(): void { }
 
   editGoal() {
     this.modalService.goalModal(this.goal).afterClosed().subscribe(goal => {

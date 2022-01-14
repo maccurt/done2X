@@ -3,7 +3,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'app-auth-button',
+  selector: 'd2x-auth-button',
   template: `
     <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
       <button id="log-out-button" (click)="auth.logout({ returnTo: document.location.origin })">

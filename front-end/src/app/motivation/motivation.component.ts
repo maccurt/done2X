@@ -7,7 +7,7 @@ export class Motivation {
 }
 
 @Component({
-  selector: 'app-motivation',
+  selector: 'd2x-motivation',
   templateUrl: './motivation.component.html',
   styleUrls: ['./motivation.component.scss']
 })

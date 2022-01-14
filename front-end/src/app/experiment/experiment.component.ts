@@ -8,7 +8,7 @@ import { Experiment } from './experiment.type';
 
 
 @Component({
-  selector: 'app-experiment',
+  selector: 'd2x-experiment',
   templateUrl: './experiment.component.html',
   styleUrls: ['./experiment.component.scss']
 })

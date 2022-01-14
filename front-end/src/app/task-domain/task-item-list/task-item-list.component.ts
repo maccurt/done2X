@@ -10,7 +10,7 @@ import { TaskItem } from '../task-item/task-item.type';
 import { ModalService } from 'src/app/modal.service';
 
 @Component({
-  selector: 'app-task-item-list',
+  selector: 'd2x-task-item-list',
   templateUrl: './task-item-list.component.html',
   styleUrls: ['./task-item-list.component.scss']
 })
