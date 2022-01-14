@@ -149,6 +149,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   public save() {
     if (this.formGroup.valid) {
       Object.assign(this.goal, this.formGroup.value);
+      
       this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
       })
       this.showErrors = false;

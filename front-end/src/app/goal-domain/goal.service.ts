@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { orderBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { environment } from 'src/environments/environment';
@@ -11,6 +12,18 @@ import { Goal } from './goal.type';
 export class GoalService {
 
   constructor(private httpClient: HttpClient) { }
+
+  // sortGoalist(goalList: Goal[], property: string, ascending = true) {
+
+  //   let sorted: Goal[] = [];
+  //   if (ascending) {
+  //     sorted = orderBy(goalList, [property], ['asc']);
+  //   }
+  //   else {
+  //     sorted = orderBy(goalList, [property], ['desc']);
+  //   }
+  //   Object.assign(goalList, sorted);
+  // }
 
   public deleteGoal(goalId: number): Observable<boolean> {
     return this.httpClient.delete<boolean>(environment.API_URL + `goal/${goalId}`);

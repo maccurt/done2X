@@ -45,8 +45,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
     this.routeData$ = this.route.data.subscribe((data) => {
       this.goalList = data.goalList;
       this.filterGoalList(this.goalList);
-      this.orderGoalList();
-
+      this.sortNotCompletedByDate();
       this.goalList.forEach((g) => {
         this.taskCompletedCount += g.taskCompleted;
         this.taskNotCompletedCount += g.taskNotCompleted;
@@ -55,18 +54,26 @@ export class GoalListComponent implements OnInit, OnDestroy {
     })
   }
 
-  orderGoalList() {
-    ///sort the goals by completion date
+  sortNotCompletedByDate() {  
     this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
+  }
+  sortCompletedByDate() {
+    this.goalListCompleted = orderBy(this.goalListCompleted, ['targetCompletionDate'], ['desc']);
+    this.goalListCompleted.forEach((g)=>{
+      console.log(g.targetCompletionDate);
+    })
   }
 
   goalEvent(goalEvent: GoalEvent) {
     switch (goalEvent.type) {
+      case GoalEventType.edit:
+        goalEvent.goal.isCompleted ? this.sortCompletedByDate() : this.sortNotCompletedByDate();
+        break;
       case GoalEventType.moveToCompleted:
-        this.moveToCompleted(goalEvent.goal)
+        this.moveToCompleted(goalEvent.goal);        
         break;
       case GoalEventType.moveToNotCompleted:
-        this.moveToNotCompleted(goalEvent.goal)
+        this.moveToNotCompleted(goalEvent.goal);        
         break;
       case GoalEventType.deleted:
         if (goalEvent.goal.isCompleted) {
@@ -104,6 +111,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
         this.goalListCompleted.splice(index, 1);
       }
       this.goalListNotCompleted.push(goal);
+      this.sortNotCompletedByDate();
     }, () => {
       goal.isCompleted = true;
     })
@@ -117,13 +125,14 @@ export class GoalListComponent implements OnInit, OnDestroy {
         this.goalListNotCompleted.splice(index, 1);
       }
       this.goalListCompleted.push(goal);
+      this.sortCompletedByDate()
     }, () => {
       goal.isCompleted = false;
     })
   }
 
   public addGoalHere(date: Date) {
-    let newGoal = new Goal(this.projectId);    
+    let newGoal = new Goal(this.projectId);
     const d = new Date(date);
     d.setDate(d.getDate() + 1);
     newGoal.targetCompletionDate = d;
@@ -137,7 +146,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
           response.taskNotCompleted = 0;
           response.taskCompleted = 0
           this.goalListNotCompleted.push(response);
-          this.orderGoalList();
+          this.sortNotCompletedByDate();
         })
       }
     });

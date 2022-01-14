@@ -19,15 +19,13 @@ export enum ProjectEvenType {
   templateUrl: './project-item.component.html',
   styleUrls: ['./project-item.component.scss']
 })
-export class ProjectItemComponent implements OnInit {
+export class ProjectItemComponent {
 
   @Input() project!: Project
   @Output() event: EventEmitter<ProjectEvent> = new EventEmitter<ProjectEvent>();
   constructor(private modalService: ModalService,
     private goalService: GoalService) { }
 
-  ngOnInit(): void {
-  }
 
   addGoal() {
 

@@ -23,6 +23,8 @@ export class TaskItemService {
 
   sortTaskItemList(taskItemList: TaskItem[], property: string, ascending = true) {
 
+    //TODO re-think this perhaps you have one service to sort everything?
+    //This is duplicated in goal-service to sort goals?
     let sorted: TaskItem[] = [];
     if (ascending) {
       sorted = orderBy(taskItemList, [property], ['asc']);

@@ -32,6 +32,9 @@ export class GoalItemComponent implements OnInit, OnDestroy {
     this.modalService.goalModal(this.goal).afterClosed().subscribe(goal => {
       if (goal) {
         this.goalService.updateGoal(goal).subscribe((response) => {
+          //TODO this is a hack because the material date picker changes the date format
+          //this is so it will sort correctly, can we find a better way
+          this.goal.targetCompletionDate = response.targetCompletionDate;
           this.event.emit(new GoalEvent(this.goal,GoalEventType.edit))
         })
       }
@@ -39,7 +42,6 @@ export class GoalItemComponent implements OnInit, OnDestroy {
   }
 
   deleteGoal() {
-
     this.afterClosedSub$ = this.modalService.deleteGoalModal(this.goal).afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.goalService.deleteGoal(this.goal.id).subscribe(() => {
@@ -48,6 +50,7 @@ export class GoalItemComponent implements OnInit, OnDestroy {
       }
     })
   }
+
   public addTaskItem() {
     const taskItem = new TaskItem();
     taskItem.goalId = this.goal.id;
