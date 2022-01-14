@@ -40,7 +40,7 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
 
     this.codeService.GetPriority().subscribe((codes) => {
       this.priorityList = codes;
-    })
+    });
   }
 
   ngAfterViewInit(): void {
@@ -54,11 +54,11 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   sort(property: string) {
 
     if (this.proprtyToSort !== property) {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['asc'])
+      this.taskItemList = orderBy(this.taskItemList, [property], ['asc']);
       this.proprtyToSort = property;
     }
     else {
-      this.taskItemList = orderBy(this.taskItemList, [property], ['desc'])
+      this.taskItemList = orderBy(this.taskItemList, [property], ['desc']);
       this.proprtyToSort = '';
     }
   }
@@ -74,7 +74,7 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   }
 
   changeStatus(item: IPriority) {
-    const max = 3
+    const max = 3;
     item.priority = item.priority + 1;
     if (item.priority > max) {
       item.priority = 1;

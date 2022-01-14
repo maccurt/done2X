@@ -39,8 +39,8 @@ export class ExperimentComponent implements AfterViewInit {
   experimentClick(change: MatButtonToggleChange) {
 
     let x = this.experimentList.find((e) => {
-      return e.id == change.value
-    })
+      return e.id == change.value;
+    });
 
     if (x) {
       this.experiment = x;      
@@ -50,16 +50,16 @@ export class ExperimentComponent implements AfterViewInit {
   //MOCKS
   getTaskItemList_mock(): TaskItem[] {
     const taskItemList: TaskItem[] = [];
-    taskItemList.push(this.getTaskItem_mock(1, 'Wash sheets for guest bedroom', 1,))
-    taskItemList.push(this.getTaskItem_mock(2, 'Clean guest bathroom', 1, true))
-    taskItemList.push(this.getTaskItem_mock(3, 'Order Trash Bin For Debris', 2))
-    taskItemList.push(this.getTaskItem_mock(4, 'Buy Barrell size trash liners', 2))
-    taskItemList.push(this.getTaskItem_mock(5, 'Caulk Windows', 2))
-    taskItemList.push(this.getTaskItem_mock(6, 'Fix Railing on Steps', 3))
-    taskItemList.push(this.getTaskItem_mock(7, 'Replace Light Bulbs in dining room', 3, true))
-    taskItemList.push(this.getTaskItem_mock(8, 'Buy Turkey', 3))
-    taskItemList.push(this.getTaskItem_mock(9, 'Clean Car & Get Gas', 3, true))
-    taskItemList.push(this.getTaskItem_mock(10, 'Cook Meal', 3))
+    taskItemList.push(this.getTaskItem_mock(1, 'Wash sheets for guest bedroom', 1,));
+    taskItemList.push(this.getTaskItem_mock(2, 'Clean guest bathroom', 1, true));
+    taskItemList.push(this.getTaskItem_mock(3, 'Order Trash Bin For Debris', 2));
+    taskItemList.push(this.getTaskItem_mock(4, 'Buy Barrell size trash liners', 2));
+    taskItemList.push(this.getTaskItem_mock(5, 'Caulk Windows', 2));
+    taskItemList.push(this.getTaskItem_mock(6, 'Fix Railing on Steps', 3));
+    taskItemList.push(this.getTaskItem_mock(7, 'Replace Light Bulbs in dining room', 3, true));
+    taskItemList.push(this.getTaskItem_mock(8, 'Buy Turkey', 3));
+    taskItemList.push(this.getTaskItem_mock(9, 'Clean Car & Get Gas', 3, true));
+    taskItemList.push(this.getTaskItem_mock(10, 'Cook Meal', 3));
     return taskItemList;
   }
 

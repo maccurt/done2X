@@ -21,7 +21,7 @@ export class AppComponent {
   constructor(public authService: AuthService, private projectService: ProjectService) {
 
     //DO NOT CHECK THIS IN
-    this.testing = environment.testing
+    this.testing = environment.testing;
     this.isAuthenticated = true;
     this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {
       localStorage.setItem('project-id', project.id.toString());

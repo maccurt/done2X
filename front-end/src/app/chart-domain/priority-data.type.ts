@@ -13,7 +13,7 @@ export class PriorityData {
 
     if (this.low === this.count()) {
       this.onePriorityText = "All Task Are Low Priority";
-      this.onePriority = Priority.low
+      this.onePriority = Priority.low;
       this.isOnePriority = true;     
     }
 

@@ -45,13 +45,13 @@ export class TaskItemService {
   getCompletedTaskItems = (taskItemList: TaskItem[]): TaskItem[] => {
     return taskItemList.filter((t) => {
       return (t.taskItemStatusId === TaskItemStatus.completed);
-    })
+    });
   }
 
   getNotCompletedTaskItems = (taskItemList: TaskItem[]): TaskItem[] => {
     return taskItemList.filter((t) => {
       return (t.taskItemStatusId !== TaskItemStatus.completed);
-    })
+    });
   }
 
   addTaskItem = (taskItem: TaskItem): Observable<TaskItem> => {
@@ -84,6 +84,6 @@ export class TaskItemService {
   filterTaskItemListByStatus = (taskItemList: TaskItem[], status: TaskItemStatus): TaskItem[] => {
     return taskItemList.filter((t) => {
       return t.taskItemStatusId == status;
-    })
+    });
   }
 }

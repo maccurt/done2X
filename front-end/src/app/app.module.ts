@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { MatDialogModule } from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TaskItemListComponent } from './task-domain/task-item-list/task-item-list.component';

@@ -39,9 +39,9 @@ export class ProjectItemComponent {
 
           const event = new ProjectEvent(this.project, ProjectEvenType.goalAdded);
           event.goal = response;
-          this.event.emit(event)
-        })
+          this.event.emit(event);
+        });
       }
-    })
+    });
   }
 }

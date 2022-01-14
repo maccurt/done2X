@@ -22,10 +22,10 @@ export class AppAuthGuard extends AuthGuard {
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {        
         if (environment.testing && !environment.production) {
             console.log('running in testing mode do not release this code');
-            return of(true)
+            return of(true);
         }
         else {
-            return super.canActivate(next, state)
+            return super.canActivate(next, state);
         }
     }
 }

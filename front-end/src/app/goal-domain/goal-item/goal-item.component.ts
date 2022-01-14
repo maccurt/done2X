@@ -32,8 +32,8 @@ export class GoalItemComponent implements  OnDestroy {
           //TODO this is a hack because the material date picker changes the date format
           //this is so it will sort correctly, can we find a better way
           this.goal.targetCompletionDate = response.targetCompletionDate;
-          this.event.emit(new GoalEvent(this.goal,GoalEventType.edit))
-        })
+          this.event.emit(new GoalEvent(this.goal,GoalEventType.edit));
+        });
       }
     });
   }
@@ -45,7 +45,7 @@ export class GoalItemComponent implements  OnDestroy {
           this.event.emit(new GoalEvent(this.goal, GoalEventType.deleted));
         });
       }
-    })
+    });
   }
 
   public addTaskItem() {
@@ -62,7 +62,7 @@ export class GoalItemComponent implements  OnDestroy {
           this.event.emit(new GoalEvent(this.goal, GoalEventType.taskAdded, taskResponse));
         });
       }
-    })
+    });
   }
 
   moveToCompleted(goal: Goal) {

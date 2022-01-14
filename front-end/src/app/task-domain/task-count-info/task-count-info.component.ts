@@ -15,12 +15,12 @@ export class TaskCountInfoComponent implements OnInit, OnChanges {
   constructor(private mathService: MathService) { }
 
   ngOnInit(): void {
-    this.calculatePercent()
+    this.calculatePercent();
     //this.percentage = this.mathService.getPercent(this.taskCompletedCount,this.taskCount);
   } 
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.calculatePercent()
+    this.calculatePercent();
   }
 
   calculatePercent(){

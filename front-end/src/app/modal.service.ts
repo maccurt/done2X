@@ -36,7 +36,7 @@ export class ModalService {
       question: `Move ${taskCount} Task To ${goalName}?`,
       yesAnswer: 'Yes, Move Task',
       noAnswer: 'No'
-    }
+    };
     return this.dialog.open(ConfirmModalComponent, {
       panelClass: 'd2x-dialog-panel',
       disableClose: true,
@@ -48,7 +48,7 @@ export class ModalService {
 
     let confirm: Confirm = {
       question: `Delete Task?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: taskItem.name
-    }
+    };
 
     return this.dialog.open(ConfirmModalComponent, {
       panelClass: 'd2x-dialog-panel',
@@ -61,7 +61,7 @@ export class ModalService {
 
     let confirm: Confirm = {
       question: `Delete Goal?`, yesAnswer: 'Delete', noAnswer: 'Cancel', nameOfEntity: goal.name
-    }    
+    };    
 
     return this.dialog.open(ConfirmModalComponent, {
       panelClass: 'd2x-dialog-panel',

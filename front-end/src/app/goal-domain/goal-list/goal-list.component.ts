@@ -40,7 +40,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
 
     this.paramsSub$ = this.route.params.subscribe((params) => {
       this.projectId = params['project-id'];
-    })
+    });
 
     this.routeData$ = this.route.data.subscribe((data) => {
       this.goalList = data.goalList;
@@ -49,9 +49,9 @@ export class GoalListComponent implements OnInit, OnDestroy {
       this.goalList.forEach((g) => {
         this.taskCompletedCount += g.taskCompleted;
         this.taskNotCompletedCount += g.taskNotCompleted;
-      })
-      this.taskCount = this.taskCompletedCount + this.taskNotCompletedCount
-    })
+      });
+      this.taskCount = this.taskCompletedCount + this.taskNotCompletedCount;
+    });
   }
 
   sortNotCompletedByDate() {  
@@ -61,7 +61,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
     this.goalListCompleted = orderBy(this.goalListCompleted, ['targetCompletionDate'], ['desc']);
     this.goalListCompleted.forEach((g)=>{
       console.log(g.targetCompletionDate);
-    })
+    });
   }
 
   goalEvent(goalEvent: GoalEvent) {
@@ -95,11 +95,11 @@ export class GoalListComponent implements OnInit, OnDestroy {
 
   public filterGoalList(goalList: Goal[]) {
     this.goalListCompleted = goalList.filter((g) => {
-      return g.isCompleted
+      return g.isCompleted;
     });
 
     this.goalListNotCompleted = goalList.filter((g) => {
-      return !g.isCompleted
+      return !g.isCompleted;
     });
   }
 
@@ -114,7 +114,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
       this.sortNotCompletedByDate();
     }, () => {
       goal.isCompleted = true;
-    })
+    });
   }
 
   public moveToCompleted(goal: Goal) {
@@ -125,10 +125,10 @@ export class GoalListComponent implements OnInit, OnDestroy {
         this.goalListNotCompleted.splice(index, 1);
       }
       this.goalListCompleted.push(goal);
-      this.sortCompletedByDate()
+      this.sortCompletedByDate();
     }, () => {
       goal.isCompleted = false;
-    })
+    });
   }
 
   public addGoalHere(date: Date) {
@@ -144,10 +144,10 @@ export class GoalListComponent implements OnInit, OnDestroy {
           //OR FIX the backend to return it correctly
           response.taskCount = 0;
           response.taskNotCompleted = 0;
-          response.taskCompleted = 0
+          response.taskCompleted = 0;
           this.goalListNotCompleted.push(response);
           this.sortNotCompletedByDate();
-        })
+        });
       }
     });
   }
@@ -162,7 +162,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
     this.showGoalModal(goal).afterClosed().subscribe((modalGoal) => {
       if (modalGoal) {
         this.updateGoalSub$ = this.goalService.updateGoal(modalGoal).subscribe((response) => {
-        })
+        });
       }
     });
   }

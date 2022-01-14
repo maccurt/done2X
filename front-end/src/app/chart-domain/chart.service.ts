@@ -86,10 +86,10 @@ export class ChartServiceDone2x {
       options.plotOptions.pie.startAngle = -90;
       options.plotOptions.pie.endAngle = 90;
       options.plotOptions.pie.center = ['50%', '75%'];
-      options.plotOptions.pie.size = '150%'
+      options.plotOptions.pie.size = '150%';
       options.plotOptions.pie.innerSize = 150;
       if (options.plotOptions.pie.dataLabels) {
-        options.plotOptions.pie.dataLabels = { enabled: true, distance: 20 }
+        options.plotOptions.pie.dataLabels = { enabled: true, distance: 20 };
       }
 
     }
@@ -113,7 +113,7 @@ export class ChartServiceDone2x {
 
     pieChartDataList = pieChartDataList.filter((d) => {
       return d.y > 0;
-    })
+    });
 
     let options: Highcharts.Options = {
       chart: {
@@ -147,9 +147,9 @@ export class ChartServiceDone2x {
           slicedOffset: chartOptions.slicedOffset
         }
       ]
-    }
+    };
 
-    return options
+    return options;
   }
 
   getBarChart = (title: string, data: any[], xAxisCategories: any[] = []): Chart => {

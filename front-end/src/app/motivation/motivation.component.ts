@@ -46,7 +46,7 @@ export class MotivationComponent implements OnInit {
 
   public setMotivation() {
     if (this.motivationList.length > 0) {
-      this.motivation = this.motivationList.pop() as Motivation
+      this.motivation = this.motivationList.pop() as Motivation;
     }
   }
   //TODO put the shuffle in a more common spot

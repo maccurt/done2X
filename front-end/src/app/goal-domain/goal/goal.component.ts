@@ -84,8 +84,8 @@ export class GoalComponent implements OnInit, OnDestroy {
       this.createPriorityChart();
 
       this.getPrioritySub$ = this.codeService.GetPriority().subscribe((priorityList) => {
-        this.priorityList = priorityList
-      })
+        this.priorityList = priorityList;
+      });
 
       //set up the form
       this.nameControl = new FormControl(this.goal.name, Validators.required);
@@ -114,12 +114,12 @@ export class GoalComponent implements OnInit, OnDestroy {
   public actionEvent(event: TypeClickEvent<TaskItem>) {
     switch (event.action) {
       case TypeAction.add:
-        this.addTaskToCorrectLane(event.item)
+        this.addTaskToCorrectLane(event.item);
         this.createPriorityChart();
         this.createCompletedChart();
         break;
       case TypeAction.moveStatus:
-        this.addTaskToCorrectLane(event.item)
+        this.addTaskToCorrectLane(event.item);
         this.createCompletedChart();
         break;
       case TypeAction.delete:
@@ -135,7 +135,7 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   public createCompletedChart() {
     this.completedChart = this.chartService.completedPieChart(this.completedTaskItemList.length,
-      this.notCompletedTaskItemList.length)
+      this.notCompletedTaskItemList.length);
   }
 
   public createPriorityChart() {
@@ -151,7 +151,7 @@ export class GoalComponent implements OnInit, OnDestroy {
       Object.assign(this.goal, this.formGroup.value);
       
       this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
-      })
+      });
       this.showErrors = false;
       this.createCompletedChart();
       this.matExpansionPanelElement.close();
