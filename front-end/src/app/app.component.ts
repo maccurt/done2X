@@ -21,25 +21,15 @@ export class AppComponent {
   constructor(public authService: AuthService, private projectService: ProjectService) {
 
     //DO NOT CHECK THIS IN
-    this.testing = environment.testing;
-    this.isAuthenticated = true;
-    this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {
-      localStorage.setItem('project-id', project.id.toString());
-    });
-
-    //DO NOT CHECK THIS IN
-    // authService.isAuthenticated$.subscribe((isAuthenticated) => {
-    //   this.isAuthenticated = isAuthenticated;
-
-    //   if (this.isAuthenticated) {
-    //     if (!localStorage.getItem('project-id')) {
-
-    //       this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {    
-    //         localStorage.setItem('project-id', project.id.toString());
-    //       });
-    //     }
-    //   }
+    //this.testing = environment.testing;
+    //this.isAuthenticated = true;
+    // this.getDefaultProjectSub$ = projectService.getDefaultProject().subscribe((project) => {
+    //   localStorage.setItem('project-id', project.id.toString());
     // });
+
+    authService.isAuthenticated$.subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+    });
 
   }
 }
