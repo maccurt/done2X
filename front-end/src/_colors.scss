@@ -1,6 +1,9 @@
 
 //if you change colors also change then in color.service.ts
 :root{
+
+    --border-default:#cccccc;    
+
     --completed-color-1:#ccffcc;    
     --completed-color-2:#e6ffe6;    
  
@@ -10,4 +13,6 @@
     --low-priority-color:#ffff4d;    
     --medium-priority-color:#4dff4d;    
     --high-priority-color:#ff4d4d;    
+
+    --container-background-color: #f0f5f5;
 }

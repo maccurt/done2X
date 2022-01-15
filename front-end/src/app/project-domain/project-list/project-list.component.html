@@ -10,30 +10,24 @@
         </div>
     </div>
     <hr>
+    <div class="row justify-content-sm-center justify-content-md-start ">
+        <div *ngFor="let p of projectList;" class="col-sm-10 col-md-6 col-4 col-xxl-3 ">
 
-    <div class="row">
+            <div class="component-container" >
+                <d2x-project-item (event)="projectEvent($event)" [project]="p">
+                </d2x-project-item>
 
-        <div class="d-none d-xl-block col-12 col-xl-4 col-xxl-4 col-xxxl-3">
-            <div class="row">
-                <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
-                    <d2x-motivation></d2x-motivation>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xxxl-9">
-            <div class="row">
-                <div *ngFor="let p of projectList" class="col-xxxl-3">
-                    <d2x-project-item (event)="projectEvent($event)" [project]="p">
-                    </d2x-project-item>
-                    <br>
-                    <d2x-goal-item *ngIf="p.currentGoals.length > 0" [goal]="p.currentGoals[0]">
-                    </d2x-goal-item>
+                <br>
+                <div class="d-none d-lg-block">
+                    <div *ngIf="p.currentGoals.length > 0">
+                        <h6>Current Goal</h6>
+                        <d2x-goal-item [goal]="p.currentGoals[0]">
+                        </d2x-goal-item>
+                    </div>
 
                     <d2x-goal-item *ngIf="p.currentGoals.length === 0">
                     </d2x-goal-item>
 
-                    <br>
                     <br>
                     <d2x-completed-chart [name]="'Goals'" [completed]="p.goalCompleted"
                         [notCompleted]="p.goalNotCompleted">
@@ -44,7 +38,8 @@
                     </d2x-goal-count-info>
                 </div>
             </div>
-        </div>
-
+            
+        </div>        
     </div>
+
 </div>
