@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Dapper;
@@ -28,21 +29,42 @@ namespace Done2X.Data
             return goal;
         }
 
-        //public async Task<IEnumerable<Goal>> GetGoalList(int projectId)
-        //{
-        //    await using var connection = new SqlConnection(_connectionString);
-        //    connection.Open();
-        //    var list = await connection.SelectAsync<Goal>(g => g.ProjectId == projectId);
-        //    return list;
-        //}
-
         public async Task<IEnumerable<GoalExtended>> GetGoalList(ClaimsPrincipal user)
         {
             var authId = user.Identity.Name;
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
-            var goalList = await connection.QueryAsync<GoalExtended>("API.GetGoalList", commandType: CommandType.StoredProcedure, param: new { authId });
+            var goalList = await connection.QueryAsync<GoalExtended>("API.GetGoalList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
             return goalList;
+        }
+
+        public async Task<IEnumerable<GoalExtended>> GetGoalList(int projectId)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var goalList = await connection.QueryAsync<GoalExtended>("API.GetProjectGoalList",
+                commandType: CommandType.StoredProcedure, param: new { projectId });
+            return goalList;
+        }
+
+        public async Task<IEnumerable<GoalExtended>> GetCurrentGoalList(ClaimsPrincipal user)
+        {
+            var authId = user.Identity.Name;
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var projectIdList = await connection.QueryAsync<int>("API.ProjectIdList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
+            var goalList = new List<GoalExtended>();
+            foreach (var i in projectIdList)
+            {
+                var goals = await connection.QueryAsync<GoalExtended>("API.GetCurrentGoal",
+                    commandType: CommandType.StoredProcedure, param: new { authId });
+                goalList.Add(goals.FirstOrDefault());
+            }
+
+            return goalList;
+
         }
 
         public async Task<Goal> Update(Goal goal)
@@ -85,6 +107,5 @@ namespace Done2X.Data
             goal.Id = Convert.ToInt32(id);
             return goal;
         }
-
     }
 }

@@ -14,6 +14,7 @@ import { TypeClickEvent } from 'src/app/task-domain/task-item/TypeClickEvent';
 import { TypeAction } from 'src/app/task-domain/task-item/TypeAction';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { PriorityData } from 'src/app/chart-domain/priority-data.type';
+import { IconColorService } from 'src/app/iconColor.service';
 
 export class Column {
   text!: string;
@@ -21,7 +22,7 @@ export class Column {
 }
 
 @Component({
-  selector: 'app-goal',
+  selector: 'd2x-goal',
   templateUrl: './goal.component.html',
   styleUrls: ['./goal.component.scss']
 })
@@ -66,7 +67,8 @@ export class GoalComponent implements OnInit, OnDestroy {
     private codeService: CodeService,
     private goalService: GoalService,
     private chartService: ChartServiceDone2x,
-    public formControlService: FormControlService) { }
+    public formControlService: FormControlService,
+    public iconColorService: IconColorService) { }
 
   ngOnInit(): void {
     //Set up the data
@@ -82,8 +84,8 @@ export class GoalComponent implements OnInit, OnDestroy {
       this.createPriorityChart();
 
       this.getPrioritySub$ = this.codeService.GetPriority().subscribe((priorityList) => {
-        this.priorityList = priorityList
-      })
+        this.priorityList = priorityList;
+      });
 
       //set up the form
       this.nameControl = new FormControl(this.goal.name, Validators.required);
@@ -112,12 +114,12 @@ export class GoalComponent implements OnInit, OnDestroy {
   public actionEvent(event: TypeClickEvent<TaskItem>) {
     switch (event.action) {
       case TypeAction.add:
-        this.addTaskToCorrectLane(event.item)
+        this.addTaskToCorrectLane(event.item);
         this.createPriorityChart();
         this.createCompletedChart();
         break;
       case TypeAction.moveStatus:
-        this.addTaskToCorrectLane(event.item)
+        this.addTaskToCorrectLane(event.item);
         this.createCompletedChart();
         break;
       case TypeAction.delete:
@@ -133,7 +135,7 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   public createCompletedChart() {
     this.completedChart = this.chartService.completedPieChart(this.completedTaskItemList.length,
-      this.notCompletedTaskItemList.length)
+      this.notCompletedTaskItemList.length);
   }
 
   public createPriorityChart() {
@@ -147,8 +149,9 @@ export class GoalComponent implements OnInit, OnDestroy {
   public save() {
     if (this.formGroup.valid) {
       Object.assign(this.goal, this.formGroup.value);
+      
       this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
-      })
+      });
       this.showErrors = false;
       this.createCompletedChart();
       this.matExpansionPanelElement.close();

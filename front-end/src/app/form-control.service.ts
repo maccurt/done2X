@@ -36,6 +36,6 @@ export class FormControlService {
     if (date.getFullYear() < 2000) {
       return false;
     }
-    return (date instanceof Date && !isNaN(date as any))
+    return (date instanceof Date && !isNaN(date as any));
   }
 }

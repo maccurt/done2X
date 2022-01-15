@@ -1,21 +1,19 @@
-#dash-board{
-
-    .bar-chart{    
-   }
+#dash-board {
+    .bar-chart {
+    }
 }
 
-
-.chart-1{    
+.chart-1 {
     height: 250px;
     border: 1px solid #cccccc;
 }
 
-
 .no-data-chart {
-    text-align: center;    
+    text-align: center;
     border: 1px solid #cccccc;
     width: 200x;
     height: 200px;
     line-height: 200px;
     font-size: 1.2rem;
+    background-color: white;
 }

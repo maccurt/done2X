@@ -1,0 +1,45 @@
+<div class="containe-fluid">
+
+    <div class="row">
+        <div class="col-8 col-lg-4 col-xxxl-3">
+            <h1>Projects</h1>
+        </div>
+        <div class="col-4">
+            <button style="margin-top:10px;" id="add-project" (click)="addProject()" class="btn btn-primary">Add
+                Project</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row justify-content-sm-center justify-content-md-start ">
+        <div *ngFor="let p of projectList;" class="col-sm-10 col-md-6 col-4 col-xxl-3 ">
+
+            <div class="component-container" >
+                <d2x-project-item (event)="projectEvent($event)" [project]="p">
+                </d2x-project-item>
+
+                <br>
+                <div class="d-none d-lg-block">
+                    <div *ngIf="p.currentGoals.length > 0">
+                        <h6>Current Goal</h6>
+                        <d2x-goal-item [goal]="p.currentGoals[0]">
+                        </d2x-goal-item>
+                    </div>
+
+                    <d2x-goal-item *ngIf="p.currentGoals.length === 0">
+                    </d2x-goal-item>
+
+                    <br>
+                    <d2x-completed-chart [name]="'Goals'" [completed]="p.goalCompleted"
+                        [notCompleted]="p.goalNotCompleted">
+                    </d2x-completed-chart>
+
+                    <br>
+                    <d2x-goal-count-info [completed]="p.goalCompleted" [goalCount]="p.goalCount">
+                    </d2x-goal-count-info>
+                </div>
+            </div>
+            
+        </div>        
+    </div>
+
+</div>

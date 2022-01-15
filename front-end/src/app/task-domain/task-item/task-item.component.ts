@@ -6,7 +6,7 @@ import { TypeAction } from './TypeAction';
 import { TypeClickEvent } from './TypeClickEvent';
 
 @Component({
-  selector: 'app-task-item',
+  selector: 'd2x-task-item',
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss']
 })

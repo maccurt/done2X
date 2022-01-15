@@ -7,7 +7,7 @@ import { PriorityData } from '../chart-domain/priority-data.type';
 import { IconColorService } from '../iconColor.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'd2x-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

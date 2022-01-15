@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Confirm, ConfirmModalComponent } from 'src/app/confirm-modal/confirm-modal.component';
 import { IconColorService } from 'src/app/iconColor.service';
 import { ModalService } from 'src/app/modal.service';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
@@ -11,11 +10,11 @@ import { GoalEvent } from './goal-event.type';
 import { GoalEventType } from './goal-event.enum';
 
 @Component({
-  selector: 'app-goal-item',
+  selector: 'd2x-goal-item',
   templateUrl: './goal-item.component.html',
   styleUrls: ['./goal-item.component.scss']
 })
-export class GoalItemComponent implements OnInit, OnDestroy {
+export class GoalItemComponent implements  OnDestroy {
   @Input() goal!: Goal;
   @Output() event: EventEmitter<GoalEvent> = new EventEmitter<GoalEvent>();
   afterClosedSub$!: Subscription;
@@ -26,18 +25,29 @@ export class GoalItemComponent implements OnInit, OnDestroy {
     private modalService: ModalService
   ) { }
 
-  ngOnInit(): void { }
+  editGoal() {
+    this.modalService.goalModal(this.goal).afterClosed().subscribe(goal => {
+      if (goal) {
+        this.goalService.updateGoal(goal).subscribe((response) => {
+          //TODO this is a hack because the material date picker changes the date format
+          //this is so it will sort correctly, can we find a better way
+          this.goal.targetCompletionDate = response.targetCompletionDate;
+          this.event.emit(new GoalEvent(this.goal,GoalEventType.edit));
+        });
+      }
+    });
+  }
 
   deleteGoal() {
-
     this.afterClosedSub$ = this.modalService.deleteGoalModal(this.goal).afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.goalService.deleteGoal(this.goal.id).subscribe(() => {
           this.event.emit(new GoalEvent(this.goal, GoalEventType.deleted));
         });
       }
-    })
+    });
   }
+
   public addTaskItem() {
     const taskItem = new TaskItem();
     taskItem.goalId = this.goal.id;
@@ -52,7 +62,7 @@ export class GoalItemComponent implements OnInit, OnDestroy {
           this.event.emit(new GoalEvent(this.goal, GoalEventType.taskAdded, taskResponse));
         });
       }
-    })
+    });
   }
 
   moveToCompleted(goal: Goal) {

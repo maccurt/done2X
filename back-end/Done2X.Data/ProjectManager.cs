@@ -29,9 +29,29 @@ namespace Done2X.Data
             connection.Open();
             var project = await connection.QueryAsync<Project>("API.GetDefaultProject",
                 commandType: CommandType.StoredProcedure, param: new { authId });
-
             //TODO null check, fix, etc..
             return project.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<ProjectExtended>> GetProjectList(ClaimsPrincipal user)
+        {
+            var authId = user.Identity.Name;
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            var projectList = await connection.QueryAsync<ProjectExtended>("API.ProjectList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
+
+            var goalList = await connection.QueryAsync<GoalExtended>("API.GetCurrentGoalList",
+                commandType: CommandType.StoredProcedure, param: new { authId });
+
+            foreach (var project in projectList)
+            {
+                var goals = goalList.Where(x => x.ProjectId == project.Id);
+                project.CurrentGoals = goals;
+            }
+
+            return projectList;
+
         }
     }
 }

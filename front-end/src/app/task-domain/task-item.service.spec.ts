@@ -12,7 +12,7 @@ describe('TaskItemService', () => {
     const list:TaskItem[] = [];
     const inProgressTask: TaskItem = {  taskItemStatusId: 2 } as any;
     list.push(inProgressTask);
-    const result = service.filterTaskItemListByStatus(list,TaskItemStatus.inProgress)
+    const result = service.filterTaskItemListByStatus(list,TaskItemStatus.inProgress);
     expect(result.length).toBe(1);
 
   });

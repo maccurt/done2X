@@ -31,7 +31,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   @Output() actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
 
   allTaskSelected: boolean = false;
-  propertyToSort: string = 'priority';  
+  propertyToSort: string = 'priority';
   columns: Column[] = [{ name: 'Name', property: 'name' }, { name: 'Priority', property: 'priority' }];
   //subscription
   afterClosedSub$!: Subscription;
@@ -40,22 +40,23 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   updateTaskItemSub$!: Subscription;
   goalList: Goal[] = [];
   isMobile!: boolean;
+  getGoalSub$!: Subscription;
+  paramsSub$!: Subscription;
 
   constructor(
     private taskItemService: TaskItemService,
     public iconColorService: IconColorService,
     private goalService: GoalService,
     private modalService: ModalService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,    
   ) { }
 
   ngOnInit(): void {
-    //TODO make it so it only get the completed goals
-    this.goalService.GetGoalList().subscribe((goalList) => {
+
+    this.getGoalSub$ = this.goalService.GetGoalList(this.goal.projectId).subscribe((goalList) => {
       this.goalList = goalList.filter((g) => {
         return !g.isCompleted && g.id !== this.goal.id;
-      })
-
+      });
       this.goalList = this.goalList.splice(0, 10);
     });
   }
@@ -74,8 +75,8 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   selectAllClick(checked: boolean) {
     this.taskItemList.forEach((t) => {
       t.selected = checked;
-    })
-  }  
+    });
+  }
 
   moveTaskToGoal(goal: Goal) {
     const selectedTaskItemList = this.taskItemList.filter((t) => {
@@ -87,14 +88,14 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
         this.taskItemService.moveTaskItemListToGoal(selectedTaskItemList, goal.id).subscribe(() => {
           selectedTaskItemList.forEach((t) => {
             this.taskItemService.removeTaskFromList(t, this.taskItemList);
-          })
+          });
           //TODO we are passing the first item in the list and that is not correct
           //re think this typeclick event make it specific to task with no generic
           const event = new TypeClickEvent<TaskItem>(TypeAction.moveTaskItemListToGoal, selectedTaskItemList[0]);
           this.actionEvent.emit(event);
-        })
+        });
       }
-    })
+    });
   }
 
   priorityToggle(change: MatButtonToggleChange, taskItem: TaskItem) {
@@ -107,13 +108,13 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
 
   public sortMobile(column: Column) {
 
-    this.columns.forEach((c)=>{
+    this.columns.forEach((c) => {
       c.isCurrentSort = false;
-    })
+    });
     column.isCurrentSort = true;
 
     column.isAscending = this.propertyToSort === column.property ? !column.isAscending : true;
-    this.propertyToSort = column.property;        
+    this.propertyToSort = column.property;
     this.taskItemService.sortTaskItemList(this.taskItemList, column.property, column.isAscending);
   }
   public sort(sort: Sort) {
@@ -124,11 +125,11 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     let destination: string;
     if (this.completedMode) {
       taskItem.taskItemStatusId = TaskItemStatus.inProgress;
-      destination = 'not completed.'
+      destination = 'not completed.';
     }
     else {
       taskItem.taskItemStatusId = TaskItemStatus.completed;
-      destination = 'completed.'
+      destination = 'completed.';
     }
 
     this.taskItemService.updateTaskItem(taskItem).subscribe((response) => {
@@ -156,7 +157,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
             this.actionEvent.emit(new TypeClickEvent(TypeAction.add, response));
           });
         }
-      })
+      });
   }
 
   deleteTaskItem(taskItem: TaskItem) {
@@ -166,9 +167,9 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
         this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
           this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
           this.actionEvent.emit(new TypeClickEvent(TypeAction.delete, taskItem));
-        })
+        });
       }
-    })
+    });
   }
 
   public editTaskItem(taskItem: TaskItem) {
@@ -185,13 +186,15 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
           }
         });
       }
-    })
+    });
   }
 
   ngOnDestroy(): void {
-    this.afterClosedSub$?.unsubscribe;
-    this.addTaskItemSub$?.unsubscribe;
-    this.deleteAfterClosedSub$?.unsubscribe;
-    this.updateTaskItemSub$?.unsubscribe;
+    this.afterClosedSub$?.unsubscribe();
+    this.addTaskItemSub$?.unsubscribe();
+    this.deleteAfterClosedSub$?.unsubscribe();
+    this.updateTaskItemSub$?.unsubscribe();
+    this.paramsSub$?.unsubscribe();
+    this.getGoalSub$?.unsubscribe();
   }
 }

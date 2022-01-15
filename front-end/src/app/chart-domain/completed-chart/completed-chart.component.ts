@@ -10,6 +10,7 @@ import { ChartServiceDone2x } from '../chart.service';
 })
 export class CompletedChartComponent implements OnInit,OnChanges {
 
+  @Input() name:string = "Task"
   @Input() completed!: number;
   @Input() notCompleted!: number;
   change = false;

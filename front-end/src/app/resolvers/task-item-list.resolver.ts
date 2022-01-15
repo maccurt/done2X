@@ -15,11 +15,11 @@ export class TaskItemListResolver implements Resolve<TaskItem[]>{
 
         const goalId = route.paramMap.get('goal-id');
         if (goalId) {
-            return this.taskService.getTaskItemList(+goalId)
+            return this.taskService.getTaskItemList(+goalId);
         }
         else {
             //TODO this should never happen, what is the better fix?
-            return of([])
+            return of([]);
         }
     }
 }

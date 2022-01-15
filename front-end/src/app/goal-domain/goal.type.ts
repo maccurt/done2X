@@ -5,7 +5,11 @@ export class Describer {
 }
 
 export class Goal extends Describer {
-  projectId!: number;
+
+  constructor(public projectId: number) {
+    super();    
+  }
+
   whatIsDone!: string;
   targetCompletionDate: Date = new Date();
   isCompleted: boolean = false;

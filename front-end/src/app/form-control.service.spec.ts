@@ -12,7 +12,7 @@ describe('FormControlService', () => {
 
   it('should be created', () => {
     
-    expect(service.isValidDate(new Date('11/22/299'))).toBe(false)
+    expect(service.isValidDate(new Date('11/22/299'))).toBe(false);
 
   });
 });

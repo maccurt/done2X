@@ -7,7 +7,7 @@ export class Motivation {
 }
 
 @Component({
-  selector: 'app-motivation',
+  selector: 'd2x-motivation',
   templateUrl: './motivation.component.html',
   styleUrls: ['./motivation.component.scss']
 })
@@ -27,7 +27,6 @@ export class MotivationComponent implements OnInit {
   }
 
   startMotivatioInterval() {
-
     setInterval(() => {
       if (this.motivationList.length === 0) {
         this.setMotivationList();
@@ -36,7 +35,6 @@ export class MotivationComponent implements OnInit {
         this.setMotivation();
       }
     }, 60000);
-
   }
 
   public setMotivationList() {
@@ -48,7 +46,7 @@ export class MotivationComponent implements OnInit {
 
   public setMotivation() {
     if (this.motivationList.length > 0) {
-      this.motivation = this.motivationList.pop() as Motivation
+      this.motivation = this.motivationList.pop() as Motivation;
     }
   }
   //TODO put the shuffle in a more common spot
@@ -76,9 +74,11 @@ export class MotivationComponent implements OnInit {
     motivationList.push(new Motivation('Success is almost totally dependent upon drive and persistence. The extra energy required to make another effort or try another approach is the secret of winning.', 'Denis Waitley'));
     motivationList.push(new Motivation('It always seems impossible until it\'s done.', 'Nelson Mandela'));
     motivationList.push(new Motivation('Everybody needs a passion. That’s what keeps life interesting. If you live without passion, you can go through life without leaving any footprints.', 'Betty White'));
+    motivationList.push(new Motivation('Stay on target. Stay On Target!', '"Pops" David Krail'));
     //Done 2x Quotes
     motivationList.push(new Motivation('Ask yourself: Is what you are doing adding value.', 'Done2X.com'));
     motivationList.push(new Motivation('Consistently working task everyday leads to great gain.', 'Done2X.com'));
+    motivationList.push(new Motivation('Focus on what will get you done and functional. Not perfect, you can make it better later.', 'Done2X.com'));
     motivationList = this.shuffle(motivationList);
     return of(motivationList);
   }

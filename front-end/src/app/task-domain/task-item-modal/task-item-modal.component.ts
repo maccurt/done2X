@@ -6,7 +6,7 @@ import { Code, CodeService } from '../../code.service';
 import { TaskItem } from '../task-item/task-item.type';
 
 @Component({
-  selector: 'app-task-item-modal',
+  selector: 'd2x-task-item-modal',
   templateUrl: './task-item-modal.component.html',
   styleUrls: ['./task-item-modal.component.scss']
 })
@@ -43,24 +43,24 @@ export class TaskItemModalComponent implements OnInit, OnDestroy {
       //this.taskItemStatusSelected
       const code = this.taskItemStatusList.find((item) => {
         return item.id == this.taskItem.taskItemStatusId;
-      })
+      });
       this.taskItemStatusControl.setValue(code);
-    })
+    });
 
     this.codeService.GetPriority().subscribe((codes) => {
       this.priorityList = codes;
       const code = this.priorityList.find((item) => {
-        return item.id == this.taskItem.priority
-      })
+        return item.id == this.taskItem.priority;
+      });
       this.priorityControl.setValue(code);
-    })
+    });
 
     this.formGroup = new FormGroup({
       name: this.nameControl,
       description: this.descriptionControl,
       taskItemStatus: this.taskItemStatusControl,
       priority: this.priorityControl
-    })
+    });
   }
 
   public cancel() {
@@ -69,10 +69,10 @@ export class TaskItemModalComponent implements OnInit, OnDestroy {
   
   public save(): void {
     if (this.formGroup.valid) {
-      Object.assign(this.taskItem, this.formGroup.value)
+      Object.assign(this.taskItem, this.formGroup.value);
       this.taskItem.taskItemStatusId = this.taskItemStatusControl.value.id;
       this.taskItem.priority = this.priorityControl.value.id;
-      this.dialogRef.close(this.taskItem)
+      this.dialogRef.close(this.taskItem);
     }
     else {
       this.showErrors = true;

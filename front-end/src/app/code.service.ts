@@ -26,7 +26,7 @@ export class CodeService {
     priorityList.push({ id: 1, name: 'High' });
     priorityList.push({ id: 2, name: 'Medium' });
     priorityList.push({ id: 3, name: 'Low' });
-    return of(priorityList)
+    return of(priorityList);
 
   }
 }

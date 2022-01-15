@@ -24,21 +24,21 @@
             <div class="row">
                 <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
                     <br>
-                    <app-goal-count-info [completed]="goalListCompleted.length"
+                    <d2x-goal-count-info [completed]="goalListCompleted.length"
                         [goalCount]="goalListNotCompleted.length + goalListCompleted.length">
 
-                    </app-goal-count-info>
+                    </d2x-goal-count-info>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
                     <br>
-                    <app-task-count-info [taskCompletedCount]='taskCompletedCount' [taskCount]="taskCount">
-                    </app-task-count-info>
+                    <d2x-task-count-info [taskCompletedCount]='taskCompletedCount' [taskCount]="taskCount">
+                    </d2x-task-count-info>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-12 col-xxl-12 col-xxxl-12">
                     <br>
-                    <app-motivation></app-motivation>
+                    <d2x-motivation></d2x-motivation>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <h5>Up Next</h5> 
             <div id="goal-list-not-completed" class="row">
                 <div *ngFor="let g of goalListNotCompleted" class="col-12">
-                    <app-goal-item [goal]="g" (event)="goalEvent($event)"></app-goal-item>
+                    <d2x-goal-item [goal]="g" (event)="goalEvent($event)"></d2x-goal-item>
                     <div class="add-goal-after" >
                         <a (click)="addGoalHere(g.targetCompletionDate)" title="add goal here">+</a>
                     </div>
@@ -60,7 +60,7 @@
             <h5>Completed</h5>
             <div id="goal-list-completed" class="row">
                 <div *ngFor="let g of goalListCompleted" class="col-12">
-                    <app-goal-item [goal]="g" (event)="goalEvent($event)"></app-goal-item>
+                    <d2x-goal-item [goal]="g" (event)="goalEvent($event)"></d2x-goal-item>
                     <div class="add-goal-after"></div>
                     <br>
                 </div>

@@ -4,7 +4,7 @@ import { ChartServiceDone2x } from '../chart-domain/chart.service';
 import { TaskItem } from '../task-domain/task-item/task-item.type';
 
 @Component({
-  selector: 'app-dash-board',
+  selector: 'd2x-dash-board',
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.scss']
 })

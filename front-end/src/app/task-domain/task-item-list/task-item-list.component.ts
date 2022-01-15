@@ -10,7 +10,7 @@ import { TaskItem } from '../task-item/task-item.type';
 import { ModalService } from 'src/app/modal.service';
 
 @Component({
-  selector: 'app-task-item-list',
+  selector: 'd2x-task-item-list',
   templateUrl: './task-item-list.component.html',
   styleUrls: ['./task-item-list.component.scss']
 })
@@ -77,13 +77,13 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
   actionEvent(event: TypeClickEvent<TaskItem>): void {
     switch (event.action) {
       case TypeAction.edit:
-        this.editTaskItem(event.item)
+        this.editTaskItem(event.item);
         break;
       case TypeAction.delete:
         this.deleteTaskItem(event.item);
         break;
       case TypeAction.moveStatus:
-        this.updateStatus(event.item, event.status)
+        this.updateStatus(event.item, event.status);
         break;
     }
   }
@@ -101,13 +101,13 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     let list: TaskItem[] = [];
     switch (removeFromStatus) {
       case TaskItemStatus.backLog:
-        list = this.taskInBacklog
+        list = this.taskInBacklog;
         break;
       case TaskItemStatus.inProgress:
-        list = this.taskinProgress
+        list = this.taskinProgress;
         break;
       case TaskItemStatus.completed:
-        list = this.taskinCompleted
+        list = this.taskinCompleted;
         break;
     }
 
@@ -156,9 +156,9 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
         if (confirm) {
           this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
             this.removeTaskFromStatusLane(taskItem, taskItem.taskItemStatusId);
-          })
+          });
         }
-      })
+      });
   }
 
   addTaskToBacklog(): void {
@@ -192,12 +192,12 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
       if (taskItem && taskItem.id) {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           if (previousStatus !== updatedTask.taskItemStatusId) {
-            this.removeTaskFromStatusLane(taskItem, previousStatus)
+            this.removeTaskFromStatusLane(taskItem, previousStatus);
             this.moveTaskToStatusLane(updatedTask, updatedTask.taskItemStatusId);
           }
         });
       };
-    })
+    });
   }
 
   ngOnDestroy(): void {

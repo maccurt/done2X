@@ -5,7 +5,7 @@ import { FormControlService } from 'src/app/form-control.service';
 import { Goal } from '../goal.type';
 
 @Component({
-  selector: 'app-goal-modal',
+  selector: 'd2x-goal-modal',
   templateUrl: './goal-modal.component.html',
   styleUrls: ['./goal-modal.component.scss']
 })
@@ -47,7 +47,7 @@ export class GoalModalComponent implements OnInit {
       this.showErrors = false;
       const formValue = this.formGroup.value;
       Object.assign(this.goal, this.formGroup.value);
-      this.dialogRef.close(this.goal)
+      this.dialogRef.close(this.goal);
     }
     else {
       this.showErrors = true;
@@ -55,6 +55,6 @@ export class GoalModalComponent implements OnInit {
   }
 
   cancel(): void {
-    this.dialogRef.close()
+    this.dialogRef.close();
   }
 }

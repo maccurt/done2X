@@ -69,6 +69,7 @@ namespace Done2X.API
                 config.AddMap(new GoalMap());
                 config.AddMap(new GoalExtendedMap());
                 config.AddMap(new ProjectMap());
+                config.AddMap(new ProjectExtendedMap());
                 config.ForDommel();
             });
 
