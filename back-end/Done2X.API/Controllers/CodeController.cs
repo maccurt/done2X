@@ -24,5 +24,13 @@ namespace Done2X.API.Controllers
             var list = await _domainManger.Code.GetTaskStatusList();
             return Ok(list);
         }
+
+        [HttpGet()]
+        [Route("TaskType")]
+        public async Task<IActionResult> GetTaskTypeList()
+        {
+            var list = await _domainManger.Code.GetTaskTypeList();
+            return Ok(list);
+        }
     }
 }

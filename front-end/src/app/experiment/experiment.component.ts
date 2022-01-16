@@ -22,7 +22,7 @@ export class ExperimentComponent implements AfterViewInit {
   experimentList: Experiment[] = [{ id: 1, name: 'Experiment 1', version: 1 },
   { id: 2, name: 'Experiment 2', version: 2 },
   { id: 3, name: 'Experiment 3', version: 3 }]
-  experiment!: Experiment; 
+  experiment!: Experiment;
 
   constructor(public chartService: ChartServiceDone2x,
     public fontService: IconColorService,
@@ -30,7 +30,7 @@ export class ExperimentComponent implements AfterViewInit {
   ) {
     this.experiment = this.experimentList[0];
     this.taskItemList = this.getTaskItemList_mock();
-  }  
+  }
 
   ngAfterViewInit(): void {
     this.loaded = true;
@@ -43,7 +43,7 @@ export class ExperimentComponent implements AfterViewInit {
     });
 
     if (x) {
-      this.experiment = x;      
+      this.experiment = x;
     }
   }
 
@@ -66,7 +66,8 @@ export class ExperimentComponent implements AfterViewInit {
   getTaskItem_mock(id: number, name: string, priority: number, completed = false): TaskItem {
 
     let taskItem: TaskItem = {
-      selected:false,
+      selected: false,
+      taskTypeId: 1,
       id,
       goalId: 1,
       name,

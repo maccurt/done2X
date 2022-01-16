@@ -11,4 +11,13 @@ namespace Done2X.Data.EntityMap
             Map(x => x.Id).ToColumn("TaskItemStatusId").IsKey();
         }
     }
+
+    public class TaskTypeMap : DommelEntityMap<TaskType>
+    {
+        public TaskTypeMap()
+        {
+            ToTable("TaskType");
+            Map(x => x.Id).ToColumn("TaskTypeId").IsKey();
+        }
+    }
 }

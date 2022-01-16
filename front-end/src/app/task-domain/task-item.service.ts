@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { orderBy } from 'lodash';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { PriorityPipe } from '../pipes/priority.pipe';
+import { CodeService } from '../code.service';
 import { TaskItem } from './task-item/task-item.type';
-
 
 export enum TaskItemStatus {
   unknown = 0,
@@ -19,7 +19,8 @@ export enum TaskItemStatus {
 })
 export class TaskItemService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private codeService: CodeService) { }
 
   sortTaskItemList(taskItemList: TaskItem[], property: string, ascending = true) {
 
@@ -56,7 +57,10 @@ export class TaskItemService {
 
   addTaskItem = (taskItem: TaskItem): Observable<TaskItem> => {
     return this.httpClient
-      .post<TaskItem>(environment.API_URL + 'taskItem', taskItem);
+      .post<TaskItem>(environment.API_URL + 'taskItem', taskItem).pipe(map(taskItem => {
+        taskItem.taskTypeCode = this.codeService.getTaskType(taskItem.taskTypeId)
+        return taskItem;
+      }))
   }
 
   updateTaskItem = (taskItem: TaskItem): Observable<TaskItem> => {
@@ -71,7 +75,13 @@ export class TaskItemService {
 
   getTaskItemList = (goalId: number): Observable<TaskItem[]> => {
     return this.httpClient
-      .get<TaskItem[]>(`${environment.API_URL}taskItem/goal/${goalId}`);
+      .get<TaskItem[]>(`${environment.API_URL}taskItem/goal/${goalId}`).pipe(map((response) => {
+        //put the taskTypeCode on each task item;
+        response.forEach((t) => {
+          t.taskTypeCode = this.codeService.getTaskType(t.taskTypeId)
+        })
+        return response;
+      }))
   }
 
   moveTaskItemListToGoal = (taskItemList: TaskItem[], goalId: number): Observable<any> => {

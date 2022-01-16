@@ -66,6 +66,7 @@ namespace Done2X.API
             {
                 config.AddMap(new TaskItemMap());
                 config.AddMap(new TaskItemStatusMap());
+                config.AddMap(new TaskTypeMap());
                 config.AddMap(new GoalMap());
                 config.AddMap(new GoalExtendedMap());
                 config.AddMap(new ProjectMap());

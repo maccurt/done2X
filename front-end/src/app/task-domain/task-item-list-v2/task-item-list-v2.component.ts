@@ -3,6 +3,7 @@ import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
+import { Code, CodeService } from 'src/app/code.service';
 import { GoalService } from 'src/app/goal-domain/goal.service';
 import { Goal } from 'src/app/goal-domain/goal.type';
 import { IconColorService } from 'src/app/iconColor.service';
@@ -42,16 +43,22 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   isMobile!: boolean;
   getGoalSub$!: Subscription;
   paramsSub$!: Subscription;
+  taskTypeList: Code[] = [];
 
   constructor(
     private taskItemService: TaskItemService,
     public iconColorService: IconColorService,
     private goalService: GoalService,
     private modalService: ModalService,
-    private snackbar: MatSnackBar,    
+    private snackbar: MatSnackBar,
+    private codeService: CodeService,
   ) { }
 
   ngOnInit(): void {
+
+    this.codeService.GetTaskTypeList().subscribe((codes) => {
+      this.taskTypeList = codes;
+    })
 
     this.getGoalSub$ = this.goalService.GetGoalList(this.goal.projectId).subscribe((goalList) => {
       this.goalList = goalList.filter((g) => {
