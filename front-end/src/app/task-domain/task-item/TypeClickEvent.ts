@@ -1,8 +1,11 @@
 import { TaskItemStatus } from '../task-item.service';
-import { TypeAction } from './TypeAction';
+import { TaskItem } from './task-item.type';
+import { TaskEvenType } from './TypeAction';
 
-//TODO, I don't like this make it for specfic to just TASK, perhaps
-export class TypeClickEvent<Type> {
-  constructor(public action: TypeAction, public item: Type, public status: TaskItemStatus = TaskItemStatus.unknown) {
+
+export class TaskEvent {
+  constructor(public action: TaskEvenType,
+    public taskItem: TaskItem,
+    public status: TaskItemStatus = TaskItemStatus.unknown) {
   }
 }

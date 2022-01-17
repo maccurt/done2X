@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IconColorService } from 'src/app/iconColor.service';
 import { TaskItemStatus } from '../task-item.service';
 import { TaskItem } from './task-item.type';
-import { TypeAction } from './TypeAction';
-import { TypeClickEvent } from './TypeClickEvent';
+import { TaskEvenType } from './TypeAction';
+import { TaskEvent } from './TypeClickEvent';
 
 @Component({
   selector: 'd2x-task-item',
@@ -15,28 +15,28 @@ export class TaskItemComponent {
   @Input()
   taskItem!: TaskItem;
   @Output()
-  actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
+  actionEvent = new EventEmitter<TaskEvent>();
   @Output()
   deleteClicked = new EventEmitter<TaskItem>();
 
   constructor(public iconColorService:IconColorService) { }
 
   taskItemClick(): void {
-    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.edit, this.taskItem));
+    this.actionEvent.emit(new TaskEvent(TaskEvenType.edit, this.taskItem));
   }
 
   delete(): void {
-    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.delete, this.taskItem));
+    this.actionEvent.emit(new TaskEvent(TaskEvenType.delete, this.taskItem));
   }
 
   public moveToBacklog(): void {
-    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.backLog));
+    this.actionEvent.emit(new TaskEvent(TaskEvenType.moveStatus, this.taskItem, TaskItemStatus.backLog));
   }
   public moveToCompleted(): void {
-    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.completed));
+    this.actionEvent.emit(new TaskEvent(TaskEvenType.moveStatus, this.taskItem, TaskItemStatus.completed));
   }
 
   public moveToInProgress(): void {
-    this.actionEvent.emit(new TypeClickEvent<TaskItem>(TypeAction.moveStatus, this.taskItem, TaskItemStatus.inProgress));
+    this.actionEvent.emit(new TaskEvent(TaskEvenType.moveStatus, this.taskItem, TaskItemStatus.inProgress));
   }
 }

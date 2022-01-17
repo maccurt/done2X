@@ -1,5 +1,5 @@
 
-export enum TypeAction {
+export enum TaskEvenType {
   add = 1,
   edit,
   delete,

@@ -50,6 +50,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { ProjectListComponent } from './project-domain/project-list/project-list.component';
 import { ProjectListResolver } from './resolvers/project-list.resolver';
 import { ProjectItemComponent } from './project-domain/project-item/project-item.component';
+import { TaskTypeCountComponent } from './task-domain/task-type-count/task-type-count.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ProjectItemComponent } from './project-domain/project-item/project-item
     GoalCountInfoComponent,
     MotivationComponent,
     ProjectListComponent,
-    ProjectItemComponent
+    ProjectItemComponent,
+    TaskTypeCountComponent
   ],
   imports: [
     BrowserModule,

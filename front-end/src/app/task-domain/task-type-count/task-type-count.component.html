@@ -1,0 +1,22 @@
+<div class="task-type-count">
+    <table class="table">
+
+        <thead>
+            <th style="width:40%" colspan="2">Task Type</th>
+            <th>Count</th>
+            <th>%</th>
+        </thead>
+        <tr *ngFor="let t of taskTypeCountList">
+            <td>
+                <fa-icon [icon]="t.type.icon!" style="margin-right:10px;"></fa-icon>
+            </td>
+            <td>
+
+                {{ t.type.name}}
+            </td>
+
+            <td>{{ t.count}}</td>
+            <td>{{ t.percent}}%</td>
+        </tr>
+    </table>
+</div>

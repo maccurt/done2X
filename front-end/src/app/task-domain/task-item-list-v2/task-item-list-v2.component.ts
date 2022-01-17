@@ -10,8 +10,8 @@ import { IconColorService } from 'src/app/iconColor.service';
 import { ModalService } from 'src/app/modal.service';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
 import { TaskItem } from '../task-item/task-item.type';
-import { TypeAction } from '../task-item/TypeAction';
-import { TypeClickEvent } from '../task-item/TypeClickEvent';
+import { TaskEvenType } from '../task-item/TypeAction';
+import { TaskEvent } from '../task-item/TypeClickEvent';
 
 export class Column {
   property!: string;
@@ -29,7 +29,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   @Input() completedMode: boolean = false;
   @Input() taskItemList: TaskItem[] = [];
   @Input() goal!: Goal;
-  @Output() actionEvent = new EventEmitter<TypeClickEvent<TaskItem>>();
+  @Output() actionEvent = new EventEmitter<TaskEvent>();
 
   allTaskSelected: boolean = false;
   propertyToSort: string = 'priority';
@@ -98,7 +98,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
           });
           //TODO we are passing the first item in the list and that is not correct
           //re think this typeclick event make it specific to task with no generic
-          const event = new TypeClickEvent<TaskItem>(TypeAction.moveTaskItemListToGoal, selectedTaskItemList[0]);
+          const event = new TaskEvent(TaskEvenType.moveTaskItemListToGoal, selectedTaskItemList[0]);
           this.actionEvent.emit(event);
         });
       }
@@ -109,7 +109,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     //TODO is there a way to bind to the value and not need this method    
     taskItem.priority = parseInt(change.value);
     this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
-      this.actionEvent.emit(new TypeClickEvent(TypeAction.priorityChange, updatedTask));
+      this.actionEvent.emit(new TaskEvent(TaskEvenType.priorityChange, updatedTask));
     });
   }
 
@@ -141,7 +141,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
 
     this.taskItemService.updateTaskItem(taskItem).subscribe((response) => {
       this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
-      this.actionEvent.emit(new TypeClickEvent(TypeAction.moveStatus, response));
+      this.actionEvent.emit(new TaskEvent(TaskEvenType.moveStatus, response));
       this.snackbar.open("task moved to " + destination, '', {
         verticalPosition: 'top',
         horizontalPosition: 'center',
@@ -161,7 +161,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
           this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
             //TODO remove this if we are not going to use the completed property
             response.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
-            this.actionEvent.emit(new TypeClickEvent(TypeAction.add, response));
+            this.actionEvent.emit(new TaskEvent(TaskEvenType.add, response));
           });
         }
       });
@@ -173,7 +173,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
       if (confirm) {
         this.taskItemService.deleteTaskItem(taskItem.id).subscribe(() => {
           this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
-          this.actionEvent.emit(new TypeClickEvent(TypeAction.delete, taskItem));
+          this.actionEvent.emit(new TaskEvent(TaskEvenType.delete, taskItem));
         });
       }
     });
@@ -186,10 +186,13 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
       if (taskItem) {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           Object.assign(taskItem, updatedTask);
-          taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
+          taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);          
           if (taskItemStatusId !== taskItem.taskItemStatusId) {
             this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
-            this.actionEvent.emit(new TypeClickEvent(TypeAction.moveStatus, taskItem));
+            this.actionEvent.emit(new TaskEvent(TaskEvenType.moveStatus, taskItem));
+          }
+          else{
+            this.actionEvent.emit(new TaskEvent(TaskEvenType.edit, taskItem));
           }
         });
       }

@@ -31,10 +31,10 @@ body {
 }
 
 .d2x-dialog-panel {
-  max-width: 450px !important;
+  max-width: 550px !important;
 }
 mat-dialog-content {
-  min-width: 440px !important;
+  min-width: 540px !important;
 }
 
 @include for-xsmall() {

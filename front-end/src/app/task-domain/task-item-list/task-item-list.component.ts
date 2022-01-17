@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Goal } from '../../goal-domain/goal.type';
 import { TaskItemService, TaskItemStatus } from '../task-item.service';
-import { TypeClickEvent } from "../task-item/TypeClickEvent";
-import { TypeAction } from "../task-item/TypeAction";
+import { TaskEvent } from "../task-item/TypeClickEvent";
+import { TaskEvenType } from "../task-item/TypeAction";
 import { TaskItem } from '../task-item/task-item.type';
 import { ModalService } from 'src/app/modal.service';
 
@@ -74,16 +74,16 @@ export class TaskItemListComponent implements OnInit, OnDestroy {
     this.taskInBacklog = this.taskItemService.filterTaskItemListByStatus(this.taskItemList, TaskItemStatus.backLog);
   }
 
-  actionEvent(event: TypeClickEvent<TaskItem>): void {
+  actionEvent(event: TaskEvent): void {
     switch (event.action) {
-      case TypeAction.edit:
-        this.editTaskItem(event.item);
+      case TaskEvenType.edit:
+        this.editTaskItem(event.taskItem);
         break;
-      case TypeAction.delete:
-        this.deleteTaskItem(event.item);
+      case TaskEvenType.delete:
+        this.deleteTaskItem(event.taskItem);
         break;
-      case TypeAction.moveStatus:
-        this.updateStatus(event.item, event.status);
+      case TaskEvenType.moveStatus:
+        this.updateStatus(event.taskItem, event.status);
         break;
     }
   }

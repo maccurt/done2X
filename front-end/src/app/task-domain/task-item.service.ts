@@ -65,7 +65,10 @@ export class TaskItemService {
 
   updateTaskItem = (taskItem: TaskItem): Observable<TaskItem> => {
     return this.httpClient
-      .put<TaskItem>(environment.API_URL + 'taskItem', taskItem);
+      .put<TaskItem>(environment.API_URL + 'taskItem', taskItem).pipe(map(taskItem => {
+        taskItem.taskTypeCode = this.codeService.getTaskType(taskItem.taskTypeId)
+        return taskItem;
+      }))
   }
 
   deleteTaskItem = (taskItemId: number): Observable<Boolean> => {

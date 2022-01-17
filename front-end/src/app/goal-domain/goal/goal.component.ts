@@ -10,8 +10,8 @@ import { GoalService } from '../goal.service';
 import { TaskItemService, TaskItemStatus } from 'src/app/task-domain/task-item.service';
 import { Chart } from 'angular-highcharts';
 import { ChartServiceDone2x } from 'src/app/chart-domain/chart.service';
-import { TypeClickEvent } from 'src/app/task-domain/task-item/TypeClickEvent';
-import { TypeAction } from 'src/app/task-domain/task-item/TypeAction';
+import { TaskEvent } from 'src/app/task-domain/task-item/TypeClickEvent';
+import { TaskEvenType } from 'src/app/task-domain/task-item/TypeAction';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { PriorityData } from 'src/app/chart-domain/priority-data.type';
 import { IconColorService } from 'src/app/iconColor.service';
@@ -111,26 +111,30 @@ export class GoalComponent implements OnInit, OnDestroy {
     }
   }
 
-  public actionEvent(event: TypeClickEvent<TaskItem>) {
+  public actionEvent(event: TaskEvent) {
     switch (event.action) {
-      case TypeAction.add:
-        this.addTaskToCorrectLane(event.item);
+      case TaskEvenType.edit:
+        break;
+      case TaskEvenType.add:
+        this.addTaskToCorrectLane(event.taskItem);
         this.createPriorityChart();
         this.createCompletedChart();
         break;
-      case TypeAction.moveStatus:
-        this.addTaskToCorrectLane(event.item);
+      case TaskEvenType.moveStatus:
+        this.addTaskToCorrectLane(event.taskItem);
         this.createCompletedChart();
         break;
-      case TypeAction.delete:
-      case TypeAction.moveTaskItemListToGoal:
+      case TaskEvenType.delete:
+      case TaskEvenType.moveTaskItemListToGoal:
         this.createPriorityChart();
         this.createCompletedChart();
         break;
-      case TypeAction.priorityChange:
+      case TaskEvenType.priorityChange:
         this.createPriorityChart();
         break;
     }
+
+    this.taskItemList = this.notCompletedTaskItemList.concat(this.completedTaskItemList);
   }
 
   public createCompletedChart() {
@@ -149,7 +153,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   public save() {
     if (this.formGroup.valid) {
       Object.assign(this.goal, this.formGroup.value);
-      
+
       this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
       });
       this.showErrors = false;
