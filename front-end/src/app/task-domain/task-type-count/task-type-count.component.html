@@ -1,6 +1,5 @@
 <div class="task-type-count">
     <table class="table">
-
         <thead>
             <th style="width:40%" colspan="2">Task Type</th>
             <th>Count</th>
@@ -11,12 +10,18 @@
                 <fa-icon [icon]="t.type.icon!" style="margin-right:10px;"></fa-icon>
             </td>
             <td>
-
-                {{ t.type.name}}
+                {{t.type.name}}
             </td>
-
             <td>{{ t.count}}</td>
             <td>{{ t.percent}}%</td>
         </tr>
+        <tfoot>
+            <tr>
+                <td colspan="2"></td>
+
+                <td><b> {{list.length}} Total </b> </td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
 </div>
