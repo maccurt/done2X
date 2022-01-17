@@ -32,7 +32,7 @@ export class CodeService {
 
     return this.taskListCodes().find((code) => {
       return code.id === taskTypeId;
-    })
+    });
   }
 
   private taskListCodes():Code[]{

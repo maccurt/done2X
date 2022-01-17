@@ -6,7 +6,6 @@ import { TaskItemStatus } from '../task-domain/task-item.service';
 import { TaskItem } from '../task-domain/task-item/task-item.type';
 import { Experiment } from './experiment.type';
 
-
 @Component({
   selector: 'd2x-experiment',
   templateUrl: './experiment.component.html',

@@ -58,7 +58,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
 
     this.codeService.GetTaskTypeList().subscribe((codes) => {
       this.taskTypeList = codes;
-    })
+    });
 
     this.getGoalSub$ = this.goalService.GetGoalList(this.goal.projectId).subscribe((goalList) => {
       this.goalList = goalList.filter((g) => {

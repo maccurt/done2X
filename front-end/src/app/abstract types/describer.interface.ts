@@ -3,7 +3,6 @@ export interface IDescriber {
     name: string;
 }
 
-
 export interface ITaskCount {
     taskCompleted: number;
     taskNotCompleted: number;

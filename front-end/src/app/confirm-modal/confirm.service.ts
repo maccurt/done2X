@@ -8,8 +8,6 @@
 // export class ConfirmService {
 
 //   constructor(private modal: MatDialog) { }
-  
-
 
 //   confirmDelete = (entityType: string, entityName: string): MatDialogRef<ConfirmModalComponent> => {
 //     const confirm: Confirm = {

@@ -24,9 +24,7 @@ export class TaskPriorityWidgetV1Component implements OnInit, AfterViewInit {
   @Input() version = 1;
   @Input() title: string = '';
   @Input() taskItemList: TaskItem[] = [];
-
-
-
+  
   chart!: Chart;
   priorityData!: PriorityData;
   proprtyToSort = 'priority';

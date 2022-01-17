@@ -58,17 +58,17 @@ export class TaskItemService {
   addTaskItem = (taskItem: TaskItem): Observable<TaskItem> => {
     return this.httpClient
       .post<TaskItem>(environment.API_URL + 'taskItem', taskItem).pipe(map(taskItem => {
-        taskItem.taskTypeCode = this.codeService.getTaskType(taskItem.taskTypeId)
+        taskItem.taskTypeCode = this.codeService.getTaskType(taskItem.taskTypeId);
         return taskItem;
-      }))
+      }));
   }
 
   updateTaskItem = (taskItem: TaskItem): Observable<TaskItem> => {
     return this.httpClient
       .put<TaskItem>(environment.API_URL + 'taskItem', taskItem).pipe(map(taskItem => {
-        taskItem.taskTypeCode = this.codeService.getTaskType(taskItem.taskTypeId)
+        taskItem.taskTypeCode = this.codeService.getTaskType(taskItem.taskTypeId);
         return taskItem;
-      }))
+      }));
   }
 
   deleteTaskItem = (taskItemId: number): Observable<Boolean> => {
@@ -81,10 +81,10 @@ export class TaskItemService {
       .get<TaskItem[]>(`${environment.API_URL}taskItem/goal/${goalId}`).pipe(map((response) => {
         //put the taskTypeCode on each task item;
         response.forEach((t) => {
-          t.taskTypeCode = this.codeService.getTaskType(t.taskTypeId)
-        })
+          t.taskTypeCode = this.codeService.getTaskType(t.taskTypeId);
+        });
         return response;
-      }))
+      }));
   }
 
   moveTaskItemListToGoal = (taskItemList: TaskItem[], goalId: number): Observable<any> => {

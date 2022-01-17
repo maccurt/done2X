@@ -7,7 +7,6 @@ import { ChartOptions } from './ChartOptions';
 import { IconColorService } from '../iconColor.service';
 import { PriorityData } from './priority-data.type';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -107,7 +106,6 @@ export class ChartServiceDone2x {
     }
     return new Chart(options);
   }
-
 
   pieChartOptions(title: string, pieChartDataList: PieChartData[], chartOptions: ChartOptions = new ChartOptions()): Highcharts.Options {
 

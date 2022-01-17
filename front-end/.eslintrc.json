@@ -20,6 +20,7 @@
       ],
       "rules": {
         "semi": [2, "always"],
+        "no-multiple-empty-lines": [2, {"max": 1}],
         "@angular-eslint/directive-selector": [
           "error",
           {

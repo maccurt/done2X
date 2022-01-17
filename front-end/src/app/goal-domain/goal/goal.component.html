@@ -3,12 +3,20 @@
         <div class="d-none d-lg-block col-4 col-xxxl-3">
             <div class="row">
                 <div class="col-12">
+                    <br>
+                    <a class="action-link" title="Return To Project Goals..."
+                        routerLink="/goal-list/{{goal.projectId}}">
+                        <fa-icon style="margin-right:4px;" [icon]="iconColorService.icons.arrowLeft"></fa-icon>
+                        Return To Project Goals
+                    </a>
+                </div>
+                <div class="col-12">
+                    <br>
                     <mat-accordion>
                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
                             #matExpansionPanel>
-                            <mat-expansion-panel-header collapsedHeight="175px">
+                            <mat-expansion-panel-header collapsedHeight="50px">
                                 <mat-panel-title>
-
                                     <h4 *ngIf="!panelOpenState">{{goal.name}}</h4>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
@@ -89,26 +97,19 @@
 
                 <div class="col-12">
                     <br>
-                    <d2x-task-type-count [list]="taskItemList" ></d2x-task-type-count>
+                    <d2x-task-type-count [list]="taskItemList"></d2x-task-type-count>
                 </div>
 
-                <!-- <div class="col-12">
+                <div class="col-12">
                     <br>
                     <d2x-motivation></d2x-motivation>
-                </div> -->
+                </div>
             </div>
         </div>
 
         <div class="col-12 col-lg-8 col-xxxl-6">
 
             <div class="row">
-
-                <div class="col-12">
-                    <br>
-                    <a  class="action-link" title="Return To Project Goals..." routerLink="/goal-list/{{goal.projectId}}">
-                        <fa-icon style="margin-right:4px;"  [icon]="iconColorService.icons.arrowLeft"></fa-icon>
-                        Return To Project Goals</a>
-                </div>
 
                 <div class="col-12">
                     <div id="goal-task-list">

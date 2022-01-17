@@ -4,7 +4,6 @@ import { Observable } from "rxjs";
 import { GoalService } from "../goal-domain/goal.service";
 import { Goal } from "../goal-domain/goal.type";
 
-
 @Injectable()
 export class GoalResolver implements Resolve<Goal | undefined> {
 

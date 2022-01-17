@@ -51,7 +51,6 @@ export class TaskItemModalComponent implements OnInit, OnDestroy {
     });
 
     //set the taskType
-
     
     this.codeService.GetTaskTypeList().subscribe((codes) => {
       this.taskTypeList = codes;
