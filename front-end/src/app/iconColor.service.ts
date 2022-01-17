@@ -10,8 +10,8 @@ import {
 })
 export class IconColorService {
   icons = {
-    completedTask:faSquare,
-    notCompletedTask:faCheckSquare,
+    moveTaskToCompleted:faArrowDown,
+    notCompletedTask:faArrowUp,
     priority: faCircle,
     learnIcon: faGraduationCap,
     wartsAndAllIcon: faFrog,
