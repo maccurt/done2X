@@ -97,7 +97,7 @@
 
                 <div class="col-12">
                     <br>
-                    <d2x-task-type-count [list]="taskItemList"></d2x-task-type-count>
+                    <d2x-task-type-count [goal]="goal"  [list]="taskItemList" (actionEvent)="actionEvent($event)" ></d2x-task-type-count>
                 </div>
 
                 <div class="col-12">
