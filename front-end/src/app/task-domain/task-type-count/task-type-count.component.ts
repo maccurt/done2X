@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { TaskItem } from '../task-item/task-item.type';
-import { countBy, orderBy, sortBy } from 'lodash';
+import { countBy, difference, map, orderBy, sortBy } from 'lodash';
 import { Code, CodeService } from 'src/app/code.service';
 import { MathService } from 'src/app/math.service';
 import { TaskTypeCount } from './task-type-count.type';
@@ -27,6 +27,8 @@ export class TaskTypeCountComponent implements OnInit, OnChanges, OnDestroy {
   taskTypeCountList: TaskTypeCount[] = [];
   afterClosedSub$!: Subscription;
   addTaskItemSub$!: Subscription;
+  taskTypeList: Code[] = [];
+
   constructor(private codeService: CodeService,
     private taskItemService: TaskItemService,
     private mathService: MathService,
@@ -34,7 +36,12 @@ export class TaskTypeCountComponent implements OnInit, OnChanges, OnDestroy {
     private modalService: ModalService) { }
 
   ngOnInit(): void {
-    this.taskTypeCountList = this.getCountByData(this.list);
+
+    this.codeService.GetTaskTypeList().subscribe(codes => {
+      this.taskTypeList = codes;
+      this.taskTypeCountList = this.getCountByData(this.list);
+    });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,7 +53,7 @@ export class TaskTypeCountComponent implements OnInit, OnChanges, OnDestroy {
 
   //TODO this code is duplicatesd is there a way to make it a service,component, etc.
   public addTask(taskTypeCode: Code) {
-    
+
     const taskItem = new TaskItem();
     taskItem.taskTypeCode = taskTypeCode;
     taskItem.taskTypeId = taskTypeCode.id;
@@ -56,34 +63,36 @@ export class TaskTypeCountComponent implements OnInit, OnChanges, OnDestroy {
       afterClosed().subscribe((taskItem: TaskItem) => {
         if (taskItem) {
           this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
-            //TODO remove this if we are not going to use the completed property            
             this.actionEvent.emit(new TaskEvent(TaskEvenType.add, response));
           });
         }
       });
   }
 
-  getCountByData(taskItemList: TaskItem[]): TaskTypeCount[] {
     //TODO Move this to the service if it makes sense
+  getCountByData(taskItemList: TaskItem[]): TaskTypeCount[] {
+  
     let taskTypeCountList: TaskTypeCount[] = [];
-    // this.taskTypeCountList = [];
-    const countByData = countBy(this.list, 'taskTypeId');
-
     let length = taskItemList.length;
-    for (const [key, value] of Object.entries(countByData)) {
-      const code = this.codeService.getTaskType(+key);
-      let taskTypeCount: TaskTypeCount = {
-        count: value,
-        type: code!,
-        percent: this.mathService.getPercent(value, length)
-      };
-      taskTypeCountList.push(taskTypeCount);
-    }
+    const countByData = countBy(this.list, 'taskTypeId');
+    const entries = Object.entries(countByData);
+    
+    this.taskTypeList.forEach(taskType => {
+      const entry = entries.find(e => {
+        return +e[0] === taskType.id;
+      });
+
+      const taskCount: TaskTypeCount = entry ?
+        { count: entry[1], type: taskType, percent: this.mathService.getPercent(entry[1], length) } :
+        { count: 0, type: taskType, percent: 0 };
+      taskTypeCountList.push(taskCount);
+
+    });
 
     taskTypeCountList = orderBy(taskTypeCountList, ['type.name']);
     return taskTypeCountList;
   }
-
+  
   ngOnDestroy(): void {
     this.afterClosedSub$?.unsubscribe();
     this.addTaskItemSub$?.unsubscribe();

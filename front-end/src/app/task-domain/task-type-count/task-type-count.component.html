@@ -14,7 +14,10 @@
             </td>
             <td>{{ t.count}}</td>
             <td>{{ t.percent}}%</td>
-            <td> <a (click)="addTask(t.type)" >   <fa-icon [icon]="iconColorService.icons.addTask"></fa-icon> </a> </td>
+            <td> <a (click)="addTask(t.type)">
+                    <fa-icon title="Add {{t.type.name}} task to goal..." [icon]="iconColorService.icons.addTask">
+                    </fa-icon>
+                </a> </td>
         </tr>
         <tfoot>
             <tr>
