@@ -2,9 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GoalService } from 'src/app/goal-domain/goal.service';
 import { Goal } from 'src/app/goal-domain/goal.type';
 import { ModalService } from 'src/app/modal.service';
-
 import { Project } from '../project.type';
-
 export class ProjectEvent {
   constructor(public project: Project, public eventType: ProjectEvenType) { }
   goal!: Goal;

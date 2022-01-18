@@ -1,8 +1,8 @@
 <div id="project-{{project.id}}" class="card">
     <div class="card-body">        
         <h3 class="card-title"><a class="action-link" routerLink="/goal-list/{{project.id}}">{{project.name}}</a> </h3>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
+        <hr>
+        <p class="card-text">{{project.description}}</p>
         <div>
             <a title="add goal..." class="app-action" (click)="addGoal()" >add goal</a>
         </div>

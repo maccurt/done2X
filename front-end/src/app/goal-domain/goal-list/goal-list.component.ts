@@ -58,10 +58,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
     this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
   }
   sortCompletedByDate() {
-    this.goalListCompleted = orderBy(this.goalListCompleted, ['targetCompletionDate'], ['desc']);
-    this.goalListCompleted.forEach((g)=>{
-      console.log(g.targetCompletionDate);
-    });
+    this.goalListCompleted = orderBy(this.goalListCompleted, ['targetCompletionDate'], ['desc']);    
   }
 
   goalEvent(goalEvent: GoalEvent) {

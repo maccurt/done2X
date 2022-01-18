@@ -7,9 +7,10 @@ namespace Done2X.Domain
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
     }
 
-    public class ProjectExtended: Project
+    public class ProjectExtended : Project
     {
         public int GoalCompleted { get; set; }
         public int GoalNotCompleted { get; set; }
