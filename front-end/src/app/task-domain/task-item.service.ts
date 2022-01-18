@@ -96,7 +96,7 @@ export class TaskItemService {
 
   filterTaskItemListByStatus = (taskItemList: TaskItem[], status: TaskItemStatus): TaskItem[] => {
     return taskItemList.filter((t) => {
-      return t.taskItemStatusId == status;
+      return t.taskItemStatusId === status;
     });
   }
 }

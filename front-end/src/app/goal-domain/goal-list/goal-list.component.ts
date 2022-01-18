@@ -54,11 +54,11 @@ export class GoalListComponent implements OnInit, OnDestroy {
     });
   }
 
-  sortNotCompletedByDate() {  
+  sortNotCompletedByDate() {
     this.goalListNotCompleted = orderBy(this.goalListNotCompleted, ['targetCompletionDate'], ['asc']);
   }
   sortCompletedByDate() {
-    this.goalListCompleted = orderBy(this.goalListCompleted, ['targetCompletionDate'], ['desc']);    
+    this.goalListCompleted = orderBy(this.goalListCompleted, ['targetCompletionDate'], ['desc']);
   }
 
   goalEvent(goalEvent: GoalEvent) {
@@ -67,10 +67,10 @@ export class GoalListComponent implements OnInit, OnDestroy {
         goalEvent.goal.isCompleted ? this.sortCompletedByDate() : this.sortNotCompletedByDate();
         break;
       case GoalEventType.moveToCompleted:
-        this.moveToCompleted(goalEvent.goal);        
+        this.moveToCompleted(goalEvent.goal);
         break;
       case GoalEventType.moveToNotCompleted:
-        this.moveToNotCompleted(goalEvent.goal);        
+        this.moveToNotCompleted(goalEvent.goal);
         break;
       case GoalEventType.deleted:
         if (goalEvent.goal.isCompleted) {
@@ -101,31 +101,47 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   public moveToNotCompleted(goal: Goal) {
-    goal.isCompleted = false;
-    this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
-      const index = this.goalListCompleted.indexOf(goal);
-      if (index > -1) {
-        this.goalListCompleted.splice(index, 1);
-      }
-      this.goalListNotCompleted.push(goal);
-      this.sortNotCompletedByDate();
-    }, () => {
-      goal.isCompleted = true;
-    });
+
+    const index = this.goalListCompleted.indexOf(goal);
+    if (index > -1) {
+      this.goalListCompleted.splice(index, 1);
+    }
+    this.goalListNotCompleted.push(goal);
+    this.sortNotCompletedByDate();
+
+    // goal.isCompleted = false;
+    // this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
+    //   const index = this.goalListCompleted.indexOf(goal);
+    //   if (index > -1) {
+    //     this.goalListCompleted.splice(index, 1);
+    //   }
+    //   this.goalListNotCompleted.push(goal);
+    //   this.sortNotCompletedByDate();
+    // }, () => {
+    //   goal.isCompleted = true;
+    // });
   }
 
   public moveToCompleted(goal: Goal) {
-    goal.isCompleted = true;
-    this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
-      const index = this.goalListNotCompleted.indexOf(goal);
-      if (index > -1) {
-        this.goalListNotCompleted.splice(index, 1);
-      }
-      this.goalListCompleted.push(goal);
-      this.sortCompletedByDate();
-    }, () => {
-      goal.isCompleted = false;
-    });
+
+    const index = this.goalListNotCompleted.indexOf(goal);
+    if (index > -1) {
+      this.goalListNotCompleted.splice(index, 1);
+    }
+    this.goalListCompleted.push(goal);
+    this.sortCompletedByDate();
+
+    // goal.isCompleted = true;
+    // this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
+    //   const index = this.goalListNotCompleted.indexOf(goal);
+    //   if (index > -1) {
+    //     this.goalListNotCompleted.splice(index, 1);
+    //   }
+    //   this.goalListCompleted.push(goal);
+    //   this.sortCompletedByDate();
+    // }, () => {
+    //   goal.isCompleted = false;
+    // });
   }
 
   public addGoalHere(date: Date) {

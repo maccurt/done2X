@@ -22,7 +22,7 @@ export class MathService {
     }
 
     getPercent = (amount: number, total: number): number => {
-        if (amount == 0 || total === 0) {
+        if (amount === 0 || total === 0) {
             return 0;
         }
         return this.round(amount / total * 100, 2);

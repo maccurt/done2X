@@ -64,7 +64,7 @@ export class TaskItemModalComponent implements OnInit, OnDestroy {
     this.codeService.GetPriority().subscribe((codes) => {
       this.priorityList = codes;
       const code = this.priorityList.find((item) => {
-        return item.id == this.taskItem.priority;
+        return item.id === this.taskItem.priority;
       });
       this.priorityControl.setValue(code);
     });

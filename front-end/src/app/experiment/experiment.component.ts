@@ -38,7 +38,7 @@ export class ExperimentComponent implements AfterViewInit {
   experimentClick(change: MatButtonToggleChange) {
 
     let x = this.experimentList.find((e) => {
-      return e.id == change.value;
+      return e.id === change.value;
     });
 
     if (x) {

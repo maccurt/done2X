@@ -14,11 +14,12 @@ import { GoalEventType } from './goal-event.enum';
   templateUrl: './goal-item.component.html',
   styleUrls: ['./goal-item.component.scss']
 })
-export class GoalItemComponent implements  OnDestroy {
+export class GoalItemComponent implements OnDestroy {
   @Input() goal!: Goal;
   @Output() event: EventEmitter<GoalEvent> = new EventEmitter<GoalEvent>();
   afterClosedSub$!: Subscription;
   addTaskItemSub$!: Subscription;
+  updateGoalSub$!: Subscription;
   constructor(public iconColorService: IconColorService,
     private taskItemService: TaskItemService,
     private goalService: GoalService,
@@ -32,7 +33,7 @@ export class GoalItemComponent implements  OnDestroy {
           //TODO this is a hack because the material date picker changes the date format
           //this is so it will sort correctly, can we find a better way
           this.goal.targetCompletionDate = response.targetCompletionDate;
-          this.event.emit(new GoalEvent(this.goal,GoalEventType.edit));
+          this.event.emit(new GoalEvent(this.goal, GoalEventType.edit));
         });
       }
     });
@@ -66,15 +67,27 @@ export class GoalItemComponent implements  OnDestroy {
   }
 
   moveToCompleted(goal: Goal) {
-    this.event.emit(new GoalEvent(goal, GoalEventType.moveToCompleted));
+    goal.isCompleted = true;
+    this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
+      this.event.emit(new GoalEvent(goal, GoalEventType.moveToCompleted));
+    }, () => {
+      goal.isCompleted = false;
+    });
+
   }
 
   moveToNotCompleted(goal: Goal) {
-    this.event.emit(new GoalEvent(goal, GoalEventType.moveToNotCompleted));
+    goal.isCompleted = false;
+    this.updateGoalSub$ = this.goalService.updateGoal(goal).subscribe((response) => {
+      this.event.emit(new GoalEvent(goal, GoalEventType.moveToNotCompleted));
+    }, () => {
+      goal.isCompleted = true;
+    });
   }
 
   ngOnDestroy(): void {
     this.afterClosedSub$?.unsubscribe();
     this.addTaskItemSub$?.unsubscribe();
+    this.updateGoalSub$?.unsubscribe();
   }
 }
