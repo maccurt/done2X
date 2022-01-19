@@ -113,13 +113,13 @@
         </div>
 
         <mat-menu #menu="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="moveToGoals">
+            <button (click)="removeTaskToMove()"  mat-menu-item [matMenuTriggerFor]="moveToGoals">
                 <span>Move Task(s) To Goal...</span>
             </button>
         </mat-menu>
 
         <mat-menu class="goal-menu"  #moveToGoals>
-            <button *ngFor="let g of goalList" (click)="moveTaskToGoal(g)" mat-menu-item>
+            <button *ngFor="let g of goalList" (click)="moveSelectedTaskToGoal(g)" mat-menu-item>
                 <span>{{g.targetCompletionDate | date }}</span> - <span>{{g.name}}</span> 
             </button>
         </mat-menu>
@@ -200,6 +200,14 @@
                             <a title="delete task..." class="action-link delete-task-item" (click)="deleteTaskItem(t)">
                                 <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
                             </a>
+
+                            <a title="Move task to goal..." (click)="setTaskToMove(t)"  [matMenuTriggerFor]="moveToGoals"  class="action-link" >
+                                <fa-icon title="action for selected items" [icon]="iconColorService.icons.moveTaskToGoal"></fa-icon>
+                            </a>
+                            
+                            <!-- <a title="move task to..." class="action-link delete-task-item" (click)="(t)">
+                                <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
+                            </a> -->
                         </div>
                     </td>
                 </tr>

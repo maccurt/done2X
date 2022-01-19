@@ -45,6 +45,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   getGoalSub$!: Subscription;
   paramsSub$!: Subscription;
   taskTypeList: Code[] = [];
+  taskItemToMove?: TaskItem;
 
   constructor(
     private taskItemService: TaskItemService,
@@ -66,7 +67,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
         return !g.isCompleted && g.id !== this.goal.id;
       });
       this.goalList = this.goalList.splice(0, 10);
-      this.goalList = orderBy(this.goalList,['targetCompletionDate']);
+      this.goalList = orderBy(this.goalList, ['targetCompletionDate']);
     });
   }
 
@@ -87,20 +88,38 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     });
   }
 
-  moveTaskToGoal(goal: Goal) {
-    const selectedTaskItemList = this.taskItemList.filter((t) => {
-      return t.selected;
-    });
+  removeTaskToMove() {
+    this.taskItemToMove = undefined;
+  }
+  setTaskToMove(taskItem: TaskItem) {
+    this.taskItemToMove = taskItem;    
+  }
+  
+  moveSelectedTaskToGoal(goal: Goal) {
 
-    this.modalService.moveTaskModal(selectedTaskItemList.length, goal.name).afterClosed().subscribe((yesMove) => {
+    if (this.taskItemToMove) {
+      const taskItemList: TaskItem[] = [];
+      taskItemList.push(this.taskItemToMove);
+      this.moveTask(goal, taskItemList);
+      this.taskItemToMove = undefined;
+    }
+    else{
+      this.moveTask(goal, this.taskItemList.filter((t) => { return t.selected; }));
+    }
+    
+  }
+
+  moveTask(goal: Goal, taskItemList: TaskItem[]) {
+    console.log(taskItemList);
+    this.modalService.moveTaskModal(taskItemList.length, goal.name).afterClosed().subscribe((yesMove) => {
       if (yesMove) {
-        this.taskItemService.moveTaskItemListToGoal(selectedTaskItemList, goal.id).subscribe(() => {
-          selectedTaskItemList.forEach((t) => {
+        this.taskItemService.moveTaskItemListToGoal(taskItemList, goal.id).subscribe(() => {
+          taskItemList.forEach((t) => {
             this.taskItemService.removeTaskFromList(t, this.taskItemList);
           });
           //TODO we are passing the first item in the list and that is not correct
           //re think this typeclick event make it specific to task with no generic
-          const event = new TaskEvent(TaskEvenType.moveTaskItemListToGoal, selectedTaskItemList[0]);
+          const event = new TaskEvent(TaskEvenType.moveTaskItemListToGoal, taskItemList[0]);
           this.actionEvent.emit(event);
         });
       }
@@ -188,12 +207,12 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
       if (taskItem) {
         this.updateTaskItemSub$ = this.taskItemService.updateTaskItem(taskItem).subscribe((updatedTask) => {
           Object.assign(taskItem, updatedTask);
-          taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);          
+          taskItem.completed = (taskItem.taskItemStatusId === TaskItemStatus.completed);
           if (taskItemStatusId !== taskItem.taskItemStatusId) {
             this.taskItemService.removeTaskFromList(taskItem, this.taskItemList);
             this.actionEvent.emit(new TaskEvent(TaskEvenType.moveStatus, taskItem));
           }
-          else{
+          else {
             this.actionEvent.emit(new TaskEvent(TaskEvenType.edit, taskItem));
           }
         });

@@ -29,7 +29,7 @@ export class ModalService {
     });
   }
 
-  public moveTaskModal(taskCount: number,goalName:string): MatDialogRef<ConfirmModalComponent, any> {
+  public moveTaskModal(taskCount: number,goalName:string): MatDialogRef<ConfirmModalComponent, any> {    
 
     let confirm: Confirm = {
       title: '',

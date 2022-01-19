@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { faCheckSquare, faTrashAlt, faArrowAltCircleLeft, faArrowAltCircleRight, faPlusSquare, faSmile, IconDefinition, faCalendarCheck, faSquare } from '@fortawesome/free-regular-svg-icons';
 import {
   faGraduationCap, faFrog, faChalkboardTeacher, 
-  faGlassCheers, faCircle, faArrowDown, faArrowUp, faEllipsisH, faTasks, faPencilAlt, faBug, faMoneyBill, faSearchDollar, faVial, faCheck
+  faGlassCheers, faCircle, faArrowDown, faArrowUp, faEllipsisH, faTasks, faPencilAlt, faBug, faMoneyBill, faSearchDollar, faVial, faCheck, faExpandArrowsAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
@@ -31,7 +31,8 @@ export class IconColorService {
     defect: faBug,
     feature: faCalendarCheck,
     techDebt:faSearchDollar,
-    test:faVial
+    test:faVial,
+    moveTaskToGoal:faExpandArrowsAlt
   }
 
   colors = {
