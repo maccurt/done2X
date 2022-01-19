@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Type } from 
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
+import { orderBy } from 'lodash';
 import { Subscription } from 'rxjs';
 import { Code, CodeService } from 'src/app/code.service';
 import { GoalService } from 'src/app/goal-domain/goal.service';
@@ -65,6 +66,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
         return !g.isCompleted && g.id !== this.goal.id;
       });
       this.goalList = this.goalList.splice(0, 10);
+      this.goalList = orderBy(this.goalList,['targetCompletionDate']);
     });
   }
 

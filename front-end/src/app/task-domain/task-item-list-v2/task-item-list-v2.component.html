@@ -118,9 +118,9 @@
             </button>
         </mat-menu>
 
-        <mat-menu #moveToGoals>
+        <mat-menu class="goal-menu"  #moveToGoals>
             <button *ngFor="let g of goalList" (click)="moveTaskToGoal(g)" mat-menu-item>
-                <span>{{g.name}}</span>
+                <span>{{g.targetCompletionDate | date }}</span> - <span>{{g.name}}</span> 
             </button>
         </mat-menu>
 

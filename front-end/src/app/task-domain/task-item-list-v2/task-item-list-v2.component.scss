@@ -1,8 +1,11 @@
+::ng-deep.mat-menu-panel {
+    max-width: fit-content !important;
+}
 .mobile {
     margin-top: 15px;
     .task-item {
         border: 1px solid #737373;
-        min-height: 100px;        
+        min-height: 100px;
         margin-bottom: 13px;
         padding: 7px;
     }

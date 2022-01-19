@@ -30,7 +30,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     //TODO do you need switch statment here for each each event
     this.projectService.getProjectList().subscribe(projectList => {
       this.projectList = projectList;
-    })
+    });
   }
 
   addProject() {
