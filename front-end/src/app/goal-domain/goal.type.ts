@@ -7,7 +7,7 @@ export class Describer {
 export class Goal extends Describer {
 
   constructor(public projectId: number) {
-    super();    
+    super();
   }
 
   whatIsDone!: string;
@@ -16,6 +16,7 @@ export class Goal extends Describer {
   completionDate?: Date;
   createdDate!: Date;
   taskCompleted = 0;
-  taskNotCompleted = 0
-  taskCount = 0
+  taskNotCompleted = 0;
+  taskCount = 0;
+  percentCompleted = 0;
 }

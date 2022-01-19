@@ -8,6 +8,7 @@ import { GoalService } from '../goal.service';
 import { Goal } from '../goal.type';
 import { GoalEvent } from './goal-event.type';
 import { GoalEventType } from './goal-event.enum';
+import { MathService } from 'src/app/math.service';
 
 @Component({
   selector: 'd2x-goal-item',
@@ -23,7 +24,8 @@ export class GoalItemComponent implements OnDestroy {
   constructor(public iconColorService: IconColorService,
     private taskItemService: TaskItemService,
     private goalService: GoalService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private mathService: MathService
   ) { }
 
   editGoal() {
@@ -60,6 +62,7 @@ export class GoalItemComponent implements OnDestroy {
           if (taskResponse.taskItemStatusId === TaskItemStatus.completed) {
             this.goal.taskCompleted++;
           }
+          this.goal.percentCompleted = this.mathService.getPercent(this.goal.taskCompleted, this.goal.taskCount);
           this.event.emit(new GoalEvent(this.goal, GoalEventType.taskAdded, taskResponse));
         });
       }

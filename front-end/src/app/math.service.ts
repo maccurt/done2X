@@ -26,16 +26,5 @@ export class MathService {
             return 0;
         }
         return this.round(amount / total * 100, 2);
-    }
-
-    //   getFloat = (value: any, ifNotNumberValue: any = null): number  => {
-
-    //     if (value !== null && !isNaN(value) && value.toString().trim() !== '') {
-    //       return parseFloat(value.toString());
-    //     }
-
-    //     if (ifNotNumberValue !== null) {
-    //       return ifNotNumberValue;
-    //     }
-    //   }
+    }    
 }

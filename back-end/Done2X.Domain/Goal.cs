@@ -20,5 +20,6 @@ namespace Done2X.Domain
         public int TaskCompleted { get; set; }
         public int TaskNotCompleted { get; set; }
         public int TaskCount => this.TaskCompleted + this.TaskNotCompleted;
+        public decimal PercentCompleted => TaskCount > 0 ? Math.Round((decimal)TaskCompleted / TaskCount * 100, 2) : 0;
     }
 }
