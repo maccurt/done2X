@@ -2,8 +2,9 @@
     <br>
     No Current Goal
 </div>
-<div *ngIf="goal" id="goal-{{goal.id}}" class="card goal-item"
-    [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}">
+
+<div *ngIf="goal" id="goal-{{goal.id}}" class="card goal-item"> 
+    <!-- [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}"" -->
     <div class="card-body">
 
         <div class="row">

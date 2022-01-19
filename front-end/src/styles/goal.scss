@@ -1,0 +1,11 @@
+#goal-list-completed {
+    .goal-item {
+        background-color: var(--completed-color-2);
+    }
+}
+
+#goal-list-not-completed, .goal-not-completed {
+    .goal-item {
+        background-color: var(--not-completed-color-2);
+    }
+}

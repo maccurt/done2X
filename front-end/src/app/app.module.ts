@@ -45,12 +45,13 @@ import { GoalItemComponent } from './goal-domain/goal-item/goal-item.component';
 import { TaskCountInfoComponent } from './task-domain/task-count-info/task-count-info.component';
 import { GoalCountInfoComponent } from './goal-domain/goal-count-info/goal-count-info.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MotivationComponent } from './motivation/motivation.component';
+import { MotivationComponent } from './motivation-domain/motivation/motivation.component';
 import { MatSortModule } from '@angular/material/sort';
 import { ProjectListComponent } from './project-domain/project-list/project-list.component';
 import { ProjectListResolver } from './resolvers/project-list.resolver';
 import { ProjectItemComponent } from './project-domain/project-item/project-item.component';
 import { TaskTypeCountComponent } from './task-domain/task-type-count/task-type-count.component';
+import { MotivationTextComponent } from './motivation-domain/motivation-text/motivation-text.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { TaskTypeCountComponent } from './task-domain/task-type-count/task-type-
     MotivationComponent,
     ProjectListComponent,
     ProjectItemComponent,
-    TaskTypeCountComponent
+    TaskTypeCountComponent,
+    MotivationTextComponent
   ],
   imports: [
     BrowserModule,

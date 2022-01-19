@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./customize-bootstrap.scss";
-@import "./variables";
-@import "./colors";
-@import "./chart.styles.scss";
-
+@import "./styles/customize-bootstrap.scss";
+@import "./styles/variables";
+@import "./styles/colors";
+@import "./styles/chart.styles.scss";
+@import "./styles/goal.scss";
 
 .fa-bug{
   color:red;

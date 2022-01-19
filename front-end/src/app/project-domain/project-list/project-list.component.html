@@ -19,14 +19,17 @@
 
                 <br>
                 <div class="d-none d-lg-block">
-                    <h6>Current Goal</h6>
-                    <div *ngIf="p.currentGoals.length > 0">
-                        <d2x-goal-item (event)="goalItemEvent($event)" [goal]="p.currentGoals[0]">
-                        </d2x-goal-item>
-                    </div>
+                    <div class="goal-not-completed" >
+                        <h6>Current Goal</h6>
+                        <div *ngIf="p.currentGoals.length > 0">
+                            <d2x-goal-item (event)="goalItemEvent($event)" [goal]="p.currentGoals[0]">
+                            </d2x-goal-item>
+                        </div>
 
-                    <d2x-goal-item *ngIf="p.currentGoals.length === 0">
-                    </d2x-goal-item>
+                        <d2x-goal-item *ngIf="p.currentGoals.length === 0">
+                        </d2x-goal-item>
+
+                    </div>
 
                     <br>
                     <d2x-completed-chart [name]="'Goals'" [completed]="p.goalCompleted"
