@@ -73,7 +73,6 @@ export class GoalItemComponent implements OnDestroy {
     }, () => {
       goal.isCompleted = false;
     });
-
   }
 
   moveToNotCompleted(goal: Goal) {
