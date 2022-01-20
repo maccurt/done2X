@@ -7,13 +7,8 @@ import { MotivationService } from '../motivation.service';
   templateUrl: './motivation-text.component.html',
   styleUrls: ['./motivation-text.component.scss']
 })
-export class MotivationTextComponent extends MotivationComponentBase implements OnInit {
-
+export class MotivationTextComponent extends MotivationComponentBase {
   constructor(motivationService: MotivationService) {
     super(motivationService);
   }
-
-  ngOnInit(): void {
-  }
-
 }

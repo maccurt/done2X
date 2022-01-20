@@ -29,11 +29,12 @@ export class ModalService {
     });
   }
 
-  public moveTaskModal(taskCount: number,goalName:string): MatDialogRef<ConfirmModalComponent, any> {    
+  public moveTaskModal(taskItemList:TaskItem[],goalName:string,): MatDialogRef<ConfirmModalComponent, any> {    
 
+    const question = taskItemList.length === 1 ? `Move ${taskItemList[0].name}` : `Move ${taskItemList.length} Task To`;
     let confirm: Confirm = {
       title: '',
-      question: `Move ${taskCount} Task To ${goalName}?`,
+      question: `${question} To ${goalName}?`,
       yesAnswer: 'Yes, Move Task',
       noAnswer: 'No'
     };

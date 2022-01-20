@@ -105,13 +105,11 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     }
     else{
       this.moveTask(goal, this.taskItemList.filter((t) => { return t.selected; }));
-    }
-    
+    }    
   }
 
-  moveTask(goal: Goal, taskItemList: TaskItem[]) {
-    console.log(taskItemList);
-    this.modalService.moveTaskModal(taskItemList.length, goal.name).afterClosed().subscribe((yesMove) => {
+  moveTask(goal: Goal, taskItemList: TaskItem[]) {    
+    this.modalService.moveTaskModal(taskItemList, goal.name).afterClosed().subscribe((yesMove) => {
       if (yesMove) {
         this.taskItemService.moveTaskItemListToGoal(taskItemList, goal.id).subscribe(() => {
           taskItemList.forEach((t) => {

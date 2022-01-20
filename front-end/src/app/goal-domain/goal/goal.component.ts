@@ -39,8 +39,7 @@ export class GoalComponent implements OnInit, OnDestroy {
     { text: 'Priority', property: 'priority' }]
   column?: Column = this.columns[0];
   proprtyToSort: string = 'completed';
-  priorityList: Code[] = [];
-  hideCompleted = false;
+  priorityList: Code[] = [];  
 
   //form controls  
   formGroup!: FormGroup
@@ -165,12 +164,8 @@ export class GoalComponent implements OnInit, OnDestroy {
     }
   }
 
-  hideCompletedClick() {
-    this.hideCompleted = !this.hideCompleted;
-  }
-
   public cancel() {
-    this.hideCompleted = !this.hideCompleted;
+    this.matExpansionPanelElement.close();
   }
 
   ngOnDestroy(): void {
