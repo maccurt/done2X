@@ -43,6 +43,7 @@ export class CodeService {
     priorityList.push({ id: 3, name: 'Tech Debt', icon: this.iconColorService.icons.techDebt });
     priorityList.push({ id: 4, name: 'Test/Quality', icon: this.iconColorService.icons.test });
     priorityList.push({ id: 5, name: 'Learn', icon: this.iconColorService.icons.learnIcon });
+    priorityList.push({ id: 6, name: 'Planning', icon: this.iconColorService.icons.planning });
     return orderBy(priorityList, ['name'], ['asc']);
 
   }
