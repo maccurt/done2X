@@ -1,24 +1,18 @@
-@import "../../../variables";
+@import "../../../styles/variables";
 
 .card-body {
     padding-left: 10px;
 }
 
 .goal-item {
-    min-height: 155px;
-    @include for-medium-and-below() {
-        min-height: 155px;
+    .name-title {
+        min-height: 48px;
+        margin-bottom:0px ;
+        @include for-medium-and-below() {
+            min-height: 50px;
+        }
     }
 }
-
-// .goal-not-completed {
-//     background-color: var(--not-completed-color-2);
-// }
-
-// .goal-completed {
-//     background-color: var(--completed-color-2);
-// }
-
 .detail-container {
     margin-top: 10px;
     font-size: small;
@@ -28,7 +22,7 @@
     margin-bottom: 10px;
 }
 
-.no-goal{
+.no-goal {
     text-align: center;
-    font-size: 1.2rem;    
+    font-size: 1.2rem;
 }

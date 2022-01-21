@@ -94,9 +94,8 @@
                 Completed Task Will Go Here
             </div>
             <br>
-            <div class="row">
-                <div class="col-5">
-                  
+            <div *ngIf="!completedMode"  class="row">
+                <div class="col-5">                  
                     <div class="card" style="margin-bottom:20px;">
                         <div class="card-body">
                             <h4 class="card-title">Your Goal Has No Task</h4>

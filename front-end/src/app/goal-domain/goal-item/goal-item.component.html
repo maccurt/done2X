@@ -3,15 +3,14 @@
     No Current Goal
 </div>
 
-<div *ngIf="goal" id="goal-{{goal.id}}" class="card goal-item"> 
-    <!-- [ngClass]="{'goal-not-completed':!goal.isCompleted, 'goal-completed':goal.isCompleted}"" -->
+<div *ngIf="goal" id="goal-{{goal.id}}" class="card goal-item">     
     <div class="card-body">
 
         <div class="row">
             <div class="col-9">
-                <span class="card-title">
+                <div class="card-title name-title">
                     <a title="go to goal..." class="action-link" routerLink="/goal/{{goal.id}}">{{goal.name}}</a>
-                </span>
+                </div>
             </div>
 
             <div class="col-3">
