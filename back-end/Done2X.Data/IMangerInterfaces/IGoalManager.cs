@@ -7,8 +7,7 @@ namespace Done2X.Data.IMangerInterfaces
 {
     public interface IGoalManager
     {
-        public Task<Goal> GetGoal(int goalId);
-        //public Task<IEnumerable<Goal>> GetGoalList(int projectId);
+        public Task<GoalExtended> GetGoal(int goalId);
         public Task<IEnumerable<GoalExtended>> GetGoalList(ClaimsPrincipal user);
         public Task<IEnumerable<GoalExtended>> GetGoalList(int projectId);
         public Task<IEnumerable<GoalExtended>> GetCurrentGoalList(ClaimsPrincipal user);

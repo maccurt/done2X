@@ -104,10 +104,11 @@ export class GoalComponent implements OnInit, OnDestroy {
   public addTaskToCorrectLane(taskItem: TaskItem) {
     if (taskItem.taskItemStatusId === TaskItemStatus.completed) {
       this.completedTaskItemList.unshift(taskItem);
+
     }
     else {
       this.notCompletedTaskItemList.unshift(taskItem);
-    }
+    }    
   }
 
   public actionEvent(event: TaskEvent) {
@@ -130,10 +131,15 @@ export class GoalComponent implements OnInit, OnDestroy {
         break;
       case TaskEvenType.priorityChange:
         this.createPriorityChart();
-        break;
+        break;        
     }
 
     this.taskItemList = this.notCompletedTaskItemList.concat(this.completedTaskItemList);
+    //Set the the counts
+    this.goal.taskCount = this.taskItemList.length;
+    this.goal.taskCompleted = this.completedTaskItemList.length;
+    this.goal.taskNotCompleted = this.notCompletedTaskItemList.length;
+    
   }
 
   public createCompletedChart() {

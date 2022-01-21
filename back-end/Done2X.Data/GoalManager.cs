@@ -21,12 +21,13 @@ namespace Done2X.Data
             _connectionString = connectionString;
         }
 
-        public async Task<Goal> GetGoal(int goalId)
+        public async Task<GoalExtended> GetGoal(int goalId)
         {
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
-            var goal = await connection.GetAsync<Goal>(goalId);
-            return goal;
+            var goal = await connection.QueryAsync<GoalExtended>("API.GetGoal",
+                commandType: CommandType.StoredProcedure, param: new {goalId});
+            return goal.FirstOrDefault();
         }
 
         public async Task<IEnumerable<GoalExtended>> GetGoalList(ClaimsPrincipal user)

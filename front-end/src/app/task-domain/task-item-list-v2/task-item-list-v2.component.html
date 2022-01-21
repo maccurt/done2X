@@ -88,8 +88,8 @@
 
     <div class="desktop d-none d-md-block">
 
-        <!-- No Task Section ********* -->
-        <div *ngIf="taskItemList.length === 0">
+        <!-- No Task Section ********* -->        
+        <div *ngIf="goal.taskCount === 0">
             <div class="no-data" *ngIf="completedMode">
                 Completed Task Will Go Here
             </div>
