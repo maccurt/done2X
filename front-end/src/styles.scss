@@ -5,10 +5,7 @@
 @import "./styles/chart.styles.scss";
 @import "./styles/goal.scss";
 @import "./styles/icons.scss";
-
-.fa-bug{
-  color:red;
-}
+@import "./styles/d2x-alert.scss";
 
 html,
 body {
@@ -17,6 +14,13 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.help-list{
+  li{
+    margin-bottom: 10px ;
+  }
 }
 
 .priority-1 {

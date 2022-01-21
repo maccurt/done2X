@@ -71,6 +71,10 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     });
   }
 
+  taskEventHandler(taskEvent: TaskEvent) {
+    this.actionEvent.emit(taskEvent);
+  }
+  
   isATaskSelected(): boolean {
     return this.taskItemList.findIndex((t) => { return t.selected; }) > -1;
   }
@@ -92,9 +96,9 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     this.taskItemToMove = undefined;
   }
   setTaskToMove(taskItem: TaskItem) {
-    this.taskItemToMove = taskItem;    
+    this.taskItemToMove = taskItem;
   }
-  
+
   moveSelectedTaskToGoal(goal: Goal) {
 
     if (this.taskItemToMove) {
@@ -103,12 +107,12 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
       this.moveTask(goal, taskItemList);
       this.taskItemToMove = undefined;
     }
-    else{
+    else {
       this.moveTask(goal, this.taskItemList.filter((t) => { return t.selected; }));
-    }    
+    }
   }
 
-  moveTask(goal: Goal, taskItemList: TaskItem[]) {    
+  moveTask(goal: Goal, taskItemList: TaskItem[]) {
     this.modalService.moveTaskModal(taskItemList, goal.name).afterClosed().subscribe((yesMove) => {
       if (yesMove) {
         this.taskItemService.moveTaskItemListToGoal(taskItemList, goal.id).subscribe(() => {

@@ -97,17 +97,19 @@
 
                 <div class="col-12">
                     <br>
-                    <d2x-task-type-count [goal]="goal"  [list]="taskItemList" (actionEvent)="actionEvent($event)" ></d2x-task-type-count>
-                </div>
+                    <div *ngIf="taskItemList.length ===0" class="d2x-alert">
+                        <fa-icon class="fa-2x" [icon]="iconColorService.icons.information">
+                        </fa-icon>
+                        <span>Task can also be added from the task type chart</span>
+                    </div>
 
-                <div class="col-12">
-                    <br>
-                    <d2x-motivation></d2x-motivation>
+                    <d2x-task-type-count [goal]="goal" [list]="taskItemList" (taskEvent)="actionEvent($event)">
+                    </d2x-task-type-count>
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-lg-8 col-xxxl-6">
+        <div class="col-12 col-lg-8 col-xxxl-7">
 
             <div class="row">
 

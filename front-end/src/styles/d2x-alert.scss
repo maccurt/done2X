@@ -1,0 +1,25 @@
+//https://www.w3docs.com/tools/code-editor/11089
+.d2x-alert {
+  border: 1px solid #cccccc;
+  border-radius: 0.25rem;
+  background-color: #e2e3e5; //TODO this should be a variable
+
+  display: inline-block;
+  padding: 5px 10px 5px 10px;
+  fa-icon {
+    vertical-align: middle;
+    font-size: 40px;
+    margin-right: 10px;
+  }
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.alert-2 {
+  background-color: white;
+  .alert-text {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+}

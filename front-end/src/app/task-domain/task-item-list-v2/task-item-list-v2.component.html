@@ -6,7 +6,8 @@
                 <b>{{goal.name}}</b>
             </div>
             <div class="col-4">
-                <button (click)="addTaskItem()" title="add task to goal..." style="float: right;" class="btn btn-primary btn-sm">
+                <button (click)="addTaskItem()" title="add task to goal..." style="float: right;"
+                    class="btn btn-primary btn-sm">
                     Add Task
                 </button>
             </div>
@@ -87,17 +88,43 @@
 
     <div class="desktop d-none d-md-block">
 
+        <!-- No Task Section ********* -->
         <div *ngIf="taskItemList.length === 0">
             <div class="no-data" *ngIf="completedMode">
                 Completed Task Will Go Here
             </div>
+            <br>
+            <div class="row">
+                <div class="col-5">
+                  
+                    <div class="card" style="margin-bottom:20px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Your Goal Has No Task</h4>
+                            <hr>
+                            <ul style="margin-left:0px;padding-left: 1rem;" class="help-list">
+                                <li>Task can also be added from the task type chart </li>
+                                <li>Add task that are specific to completing your goal</li>
+                                <li>Do not stress, task can be moved to other goals </li>                                
+                            </ul>
 
-            <div class="no-data" *ngIf="!completedMode">
-                <br>
-                <button class="button btn-primary" title="add task to goal..." (click)="addTaskItem()">Add A Task</button>
+                            <button  class="btn btn-primary" title="add task to goal..."
+                                (click)="addTaskItem()">
+                                <fa-icon [icon]="iconColorService.icons.addTask" class="button-icon"></fa-icon> Add A
+                                Task To Goal
+                            </button>
+                        </div>                        
+                    </div>                    
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <d2x-motivation></d2x-motivation>
+                </div>
             </div>
         </div>
 
+        <!-- Has Task Section ********* -->
         <div *ngIf="taskItemList.length > 0">
             <a *ngIf="!isATaskSelected()" [matMenuTriggerFor]="menuNothingSelected">
                 <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>
@@ -113,17 +140,17 @@
         </div>
 
         <mat-menu #menu="matMenu">
-            <button (click)="removeTaskToMove()"  mat-menu-item [matMenuTriggerFor]="moveToGoals">
+            <button (click)="removeTaskToMove()" mat-menu-item [matMenuTriggerFor]="moveToGoals">
                 <span>Move Task(s) To Goal...</span>
             </button>
         </mat-menu>
 
-        <mat-menu class="goal-menu"  #moveToGoals>
+        <mat-menu class="goal-menu" #moveToGoals>
             <br>
-            <h5 style="margin-left:16px;" >Move Task(s) To Goal</h5>
+            <h5 style="margin-left:16px;">Move Task(s) To Goal</h5>
             <hr>
             <button *ngFor="let g of goalList" (click)="moveSelectedTaskToGoal(g)" mat-menu-item>
-                <span>{{g.targetCompletionDate | date }}</span> - <span>{{g.name}}</span> 
+                <span>{{g.targetCompletionDate | date }}</span> - <span>{{g.name}}</span>
             </button>
         </mat-menu>
 
@@ -132,16 +159,16 @@
             <thead>
                 <tr>
                     <th style="width:4%;">
-                        <mat-checkbox title="select/un-select all task" class="example-margin" [(ngModel)]="allTaskSelected"
-                            (change)="selectAllClick($event.checked)">
+                        <mat-checkbox title="select/un-select all task" class="example-margin"
+                            [(ngModel)]="allTaskSelected" (change)="selectAllClick($event.checked)">
                         </mat-checkbox>
                     </th>
 
-                    <th title="sort by type" mat-sort-header="taskTypeCode.name" style="width:5%" id="type">                        
+                    <th title="sort by type" mat-sort-header="taskTypeCode.name" style="width:5%" id="type">
                         Type
                     </th>
 
-                    <th title="sort by name"   mat-sort-header="name" style="width:55%" id="task-col">
+                    <th title="sort by name" mat-sort-header="name" style="width:55%" id="task-col">
                         <span *ngIf="completedMode">Completed</span>
                         <span *ngIf="!completedMode"> Not Completed</span>
                     </th>
@@ -151,7 +178,7 @@
                             class="add-task-item btn btn-primary btn-sm" title="add task to goal...">Add Task</button>
                     </th>
 
-                    <th title="sort by task priority"  mat-sort-header="priority" style="width:11%" id="priority-col">
+                    <th title="sort by task priority" mat-sort-header="priority" style="width:11%" id="priority-col">
                         Priority
                     </th>
                     <th style="width:15%" id="action-col">
@@ -204,10 +231,11 @@
                                 <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
                             </a>
 
-                            <a title="Move task to goal..." (click)="setTaskToMove(t)"  [matMenuTriggerFor]="moveToGoals"  class="action-link" >
+                            <a title="Move task to goal..." (click)="setTaskToMove(t)" [matMenuTriggerFor]="moveToGoals"
+                                class="action-link">
                                 <fa-icon [icon]="iconColorService.icons.moveTaskToGoal"></fa-icon>
                             </a>
-                            
+
                             <!-- <a title="move task to..." class="action-link delete-task-item" (click)="(t)">
                                 <fa-icon [icon]="iconColorService.icons.delete"></fa-icon>
                             </a> -->

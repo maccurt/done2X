@@ -39,7 +39,7 @@ export class GoalComponent implements OnInit, OnDestroy {
     { text: 'Priority', property: 'priority' }]
   column?: Column = this.columns[0];
   proprtyToSort: string = 'completed';
-  priorityList: Code[] = [];  
+  priorityList: Code[] = [];
 
   //form controls  
   formGroup!: FormGroup

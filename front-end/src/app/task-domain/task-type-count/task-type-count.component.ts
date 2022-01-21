@@ -21,7 +21,7 @@ export class TaskTypeCountComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() public list!: TaskItem[];
   @Input() public goal!: Goal;
-  @Output() public actionEvent: EventEmitter<TaskEvent> = new EventEmitter();
+  @Output() public taskEvent: EventEmitter<TaskEvent> = new EventEmitter();
 
   private firstCall: boolean = true;
   taskTypeCountList: TaskTypeCount[] = [];
@@ -63,7 +63,7 @@ export class TaskTypeCountComponent implements OnInit, OnChanges, OnDestroy {
       afterClosed().subscribe((taskItem: TaskItem) => {
         if (taskItem) {
           this.addTaskItemSub$ = this.taskItemService.addTaskItem(taskItem).subscribe((response) => {
-            this.actionEvent.emit(new TaskEvent(TaskEvenType.add, response));
+            this.taskEvent.emit(new TaskEvent(TaskEvenType.add, response));
           });
         }
       });
