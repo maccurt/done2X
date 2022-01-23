@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Type } from 
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { orderBy } from 'lodash';
 import { Subscription } from 'rxjs';
 import { Code, CodeService } from 'src/app/code.service';
@@ -46,6 +47,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   paramsSub$!: Subscription;
   taskTypeList: Code[] = [];
   taskItemToMove?: TaskItem;
+  updateGoalSub$!: Subscription;
 
   constructor(
     private taskItemService: TaskItemService,
@@ -54,6 +56,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     private modalService: ModalService,
     private snackbar: MatSnackBar,
     private codeService: CodeService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -74,7 +77,7 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
   taskEventHandler(taskEvent: TaskEvent) {
     this.actionEvent.emit(taskEvent);
   }
-  
+
   isATaskSelected(): boolean {
     return this.taskItemList.findIndex((t) => { return t.selected; }) > -1;
   }
@@ -173,6 +176,20 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     });
   }
 
+  completeGoalAndRoute() {
+    this.modalService.completeGoalModal(this.goal).afterClosed().subscribe((confirm) => {
+      if (confirm) {
+        this.goal.isCompleted = true;
+        this.updateGoalSub$ = this.goalService.updateGoal(this.goal).subscribe((response) => {
+
+          this.router.navigate([`goal-list/${this.goal.projectId}`]);
+        }, () => {
+          this.goal.isCompleted = false;
+        });
+      }
+    });
+  }
+
   //TODO this code is duplicatesd is there a way to make it a service,component, etc.
   public addTaskItem() {
     const taskItem = new TaskItem();
@@ -229,5 +246,6 @@ export class TaskItemListV2Component implements OnInit, OnDestroy {
     this.updateTaskItemSub$?.unsubscribe();
     this.paramsSub$?.unsubscribe();
     this.getGoalSub$?.unsubscribe();
+    this.updateGoalSub$?.unsubscribe();
   }
 }

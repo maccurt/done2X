@@ -45,6 +45,20 @@ export class ModalService {
     });
   }
 
+  public completeGoalModal(goal:Goal): MatDialogRef<ConfirmModalComponent, any> {
+
+    let confirm: Confirm = {
+      question: `Move ${goal.name} to complete?`, yesAnswer: 'Move To Complete', noAnswer: 'Cancel', nameOfEntity: goal.name
+    };
+
+    return this.dialog.open(ConfirmModalComponent, {
+      panelClass: 'd2x-dialog-panel',
+      disableClose: true,
+      data: confirm
+    });
+
+  }
+
   public deleteTaskModal(taskItem: TaskItem): MatDialogRef<ConfirmModalComponent, any> {
 
     let confirm: Confirm = {

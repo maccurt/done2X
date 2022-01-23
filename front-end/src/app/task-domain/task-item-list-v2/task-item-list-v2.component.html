@@ -88,42 +88,68 @@
 
     <div class="desktop d-none d-md-block">
 
-        <!-- No Task Section ********* -->        
-        <div *ngIf="goal.taskCount === 0">
-            <div class="no-data" *ngIf="completedMode">
-                Completed Task Will Go Here
-            </div>
+        <!--NO TASK NOT COMPLETED SECTION -->
+        <div *ngIf="!completedMode && taskItemList.length ===0">
             <br>
-            <div *ngIf="!completedMode"  class="row">
-                <div class="col-5">                  
-                    <div class="card" style="margin-bottom:20px;">
+            <div class="row">
+
+                <div class="col-5">
+                    <!-- NO TASK IN GOALS -->
+                    <div *ngIf="goal.taskCount ===0" class="card" style="margin-bottom:20px;">
                         <div class="card-body">
                             <h4 class="card-title">Your Goal Has No Task</h4>
                             <hr>
                             <ul style="margin-left:0px;padding-left: 1rem;" class="help-list">
                                 <li>Task can also be added from the task type chart </li>
                                 <li>Add task that are specific to completing your goal</li>
-                                <li>Do not stress, task can be moved to other goals </li>                                
+                                <li>Do not stress, task can be moved to other goals </li>
                             </ul>
 
-                            <button  class="btn btn-primary" title="add task to goal..."
-                                (click)="addTaskItem()">
+                            <button class="btn btn-primary" title="add task to goal..." (click)="addTaskItem()">
                                 <fa-icon [icon]="iconColorService.icons.addTask" class="button-icon"></fa-icon> Add A
                                 Task To Goal
                             </button>
-                        </div>                        
-                    </div>                    
+                        </div>
+                    </div>
 
+                    <!-- TASK IN GOALS -->
+                    <div *ngIf="goal.taskCount > 0" class="card" style="margin-bottom:20px;">
+                        <div class="card-body">
+                            <h4 class="card-title">All Your Task Are Complete</h4>
+                            <hr>
+                            <h6>Add More Task</h6>
+                            <button style="width:100%;text-align:left;margin-bottom:20px" class="btn btn-primary"
+                                title="add task to goal..." (click)="addTaskItem()">
+                                <fa-icon [icon]="iconColorService.icons.addTask" class="button-icon"></fa-icon> Add A
+                                Task To Goal
+                            </button>
+
+                            <h6>Complete Your Goal</h6>
+                            <button style="width:100%;text-align: left;margin-bottom:20px" class="btn btn-success"
+                                title="Complete goal and go to project goal list" (click)="completeGoalAndRoute()">
+                                <fa-icon [icon]="iconColorService.icons.completeGoal" class="button-icon"></fa-icon>
+                                Complete Goal & Go To Project Goals
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
+
                 <div class="col-5">
                     <d2x-motivation></d2x-motivation>
                 </div>
             </div>
+
         </div>
 
-        <!-- Has Task Section ********* -->
+        <!--NO TASK COMPLETED SECTION **********************************************-->
+        <div *ngIf="completedMode && taskItemList.length === 0 ">
+
+            <div class="no-data">
+                Completed Task Will Go Here
+            </div>
+        </div>
+
+        <!-- Has Task Section ******************************************************** -->
         <div *ngIf="taskItemList.length > 0">
             <a *ngIf="!isATaskSelected()" [matMenuTriggerFor]="menuNothingSelected">
                 <fa-icon title="action for selected items" [icon]="iconColorService.icons.ellipisHorz"></fa-icon>

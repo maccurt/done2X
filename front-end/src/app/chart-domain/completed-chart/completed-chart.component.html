@@ -1,12 +1,25 @@
 <div *ngIf="completed > 0 && notCompleted > 0" class="completed-chart" [chart]="chart"></div>
 
-<div *ngIf="completed === 0 && notCompleted > 0" class="no-data-chart">
-    <span>No {{name}} Are Completed</span>
+<div *ngIf="completed === 0 && notCompleted > 0" class="center" >
+    <div  style="vertical-align:center" class="icon-container">
+        <fa-icon [icon]="iconColorService.icons.information"></fa-icon>
+        <span>No {{name}} Task Completed</span>
+    </div>
 </div>
 
-<div *ngIf="completed > 0 && notCompleted === 0" class="no-data-chart">
-    <span>All {{name}} Are Completed</span>
+
+<div *ngIf="completed > 0 && notCompleted === 0" class="center" >
+    <div  style="vertical-align:center" class="icon-container">
+        <fa-icon [icon]="iconColorService.icons.celebrate"></fa-icon>
+        <span>All {{name}} Are Completed</span>
+    </div>
 </div>
-<div *ngIf="completed === 0 && notCompleted === 0" class="no-data-chart">
-    <span>No Data</span>
+
+
+<div *ngIf="completed === 0 && notCompleted === 0" class="center">
+    <div  style="vertical-align:center" class="icon-container">
+        <fa-icon [icon]="iconColorService.icons.noPieChartData"></fa-icon>
+        <span>There Are No {{name}}</span>
+        <br>        
+    </div>    
 </div>
