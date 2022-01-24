@@ -144,8 +144,30 @@
         <!--NO TASK COMPLETED SECTION **********************************************-->
         <div *ngIf="completedMode && taskItemList.length === 0 ">
 
-            <div class="no-data">
-                Completed Task Will Go Here
+            <br>
+            <div class="row">
+                <div class="col-5">
+
+                    <div class="card" style="margin-bottom:20px;">
+                        <div class="card-body">
+                            <h4 class="card-title">Your Goal Has No Completed Task</h4>
+                            <hr>
+                            <ul style="margin-left:0px;padding-left: 1rem;" class="help-list">
+                                <li>Completed task will be moved to this area </li>
+                                <li>Add task that are specific to completing your goal</li>
+                                <li>Task can be moved back to not completed </li>
+                            </ul>
+
+                            <button class="btn btn-primary" title="add task to goal..." (click)="addTaskItem()">
+                                <fa-icon [icon]="iconColorService.icons.addTask" class="button-icon"></fa-icon> Add A
+                                Task To Goal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <d2x-motivation></d2x-motivation>
+                </div>
             </div>
         </div>
 
